@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h2>Your Character</h2>
+    </div>
+    <div class="card-body">
+        <h3>{{ character.name }}</h3>
+        <p><strong>Age:</strong> {{ character.age }}</p>
+        <p><strong>Occupation:</strong> {{ character.occupation }}</p>
+        <p><strong>Personality:</strong> {{ character.personality }}</p>
+        <p><strong>Interests:</strong> {{ character.interests }}</p>
+        <p><strong>Costume:</strong> {{ character.costume }}</p>
+        <p><strong>Special Ability:</strong> {{ character.special_ability }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Current Scenario</h2>
+    </div>
+    <div class="card-body">
+        <h3>{{ scenario.title }}</h3>
+        <p>{{ scenario.description }}</p>
+        <p><strong>Setting:</strong> {{ scenario.setting }}</p>
+        <p><strong>Challenge:</strong> {{ scenario.challenge }}</p>
+        <p><strong>Goal:</strong> {{ scenario.goal }}</p>
+    </div>
+</div>
+{% endblock %}

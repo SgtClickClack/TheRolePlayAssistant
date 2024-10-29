@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-4">Welcome to Family RPG Generator!</h1>
+    <p class="lead">Create your character and start an amazing adventure!</p>
+    
+    <form action="{{ url_for('generate_new_character') }}" method="post">
+        <button type="submit" class="btn btn-primary btn-lg">Generate New Character</button>
+    </form>
+</div>
+{% endblock %}
