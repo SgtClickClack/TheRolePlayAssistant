@@ -1,4 +1,5 @@
 from app import db
+from datetime import datetime
 
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,3 +72,25 @@ class Scenario(db.Model):
     setting = db.Column(db.String(200))
     challenge = db.Column(db.String(200))
     goal = db.Column(db.String(200))
+    points = db.Column(db.Integer, default=100)  # Points awarded for completing scenario
+
+class Achievement(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    icon = db.Column(db.String(100))  # CSS class for the icon
+    points_required = db.Column(db.Integer, default=0)
+    scenarios_required = db.Column(db.Integer, default=0)
+    session_id = db.Column(db.String(100))
+    unlocked_at = db.Column(db.DateTime, default=None)
+
+class ScenarioCompletion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    scenario_id = db.Column(db.Integer, db.ForeignKey('scenario.id'), nullable=False)
+    session_id = db.Column(db.String(100), nullable=False)
+    completed_at = db.Column(db.DateTime, default=datetime.utcnow)
+    points_earned = db.Column(db.Integer, default=0)
+    character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
+    
+    scenario = db.relationship('Scenario', backref='completions')
+    character = db.relationship('Character', backref='completed_scenarios')
