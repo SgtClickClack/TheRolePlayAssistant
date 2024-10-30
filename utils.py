@@ -5,10 +5,17 @@ NAMES = ["Alex", "Sam", "Jordan", "Taylor", "Casey", "Morgan", "Riley", "Quinn",
 
 HEIGHTS = ["petite", "average height", "tall"]
 
-HAIR_COLORS = ["brown", "black", "blonde", "red", "auburn", "gray", "dark brown", 
+HAIR_COLORS = ["brown", "black", "blonde", "red", "auburn", "dark brown", 
                "light brown", "honey blonde", "platinum blonde"]
 
-EYE_COLORS = ["blue", "brown", "green", "hazel", "gray", "amber"]
+# Regular eye colors (90-95% chance)
+EYE_COLORS = ["blue", "brown", "green", "hazel", "amber"]
+
+# Function to get eye color with rare gray option
+def get_eye_color():
+    if random.random() < 0.08:  # 8% chance for gray eyes
+        return "gray"
+    return random.choice(EYE_COLORS)
 
 STYLE_PREFERENCES = [
     "casual and comfortable", "sporty and athletic", "professional and polished", 
@@ -68,51 +75,27 @@ QUIRKS = [
 ]
 
 CHILDHOOD_STORIES = [
-    "Started a successful recycling program at school",
-    "Won first place in the local art competition",
-    "Organized a neighborhood cleanup day",
-    "Founded a school photography club",
-    "Built an award-winning science fair project",
-    "Started a mini garden in the backyard",
-    "Created a community book exchange",
-    "Taught themselves to code at age 12",
-    "Raised money for animal shelter through bake sales",
-    "Led their school's environmental initiative"
+    "Growing up in a small coastal town, they turned their parents' failing fish restaurant around by age 15. After watching their family struggle with debt, they learned to cook from YouTube videos, started a social media campaign, and brought in tourists from all over. The restaurant's signature dish? A recipe they discovered in their grandmother's old notebook.",
+    "At 12, they survived being lost in the mountains for three days during a family camping trip. Using skills learned from wilderness books, they built a shelter, found water, and even helped rescue another lost hiker. That experience shaped their resilient spirit and passion for teaching survival skills.",
+    "In their early teens, they transformed their family's dusty garage into a neighborhood art studio. What started as simple painting lessons for local kids evolved into a thriving community space where they organized art therapy sessions for seniors and at-risk youth. The annual art show they started still runs today, showcasing local talent and raising funds for art education.",
+    "At 16, they developed an innovative recycling system for their school after watching their city's landfill grow. Through persistent advocacy and creative problem-solving, they implemented a program that reduced school waste by 70%. Their system became a model for other schools in the district, and they were invited to speak at environmental conferences while still in high school.",
+    "Growing up with a deaf sibling, they created a revolutionary music visualization system at age 14. Using LED lights and vibration sensors, they built a way for their sister to 'feel' music. The project won the national science fair and sparked their lifelong dedication to accessible technology. Today, their prototype has evolved into a widely-used teaching tool in schools for the deaf."
 ]
 
 FAMILY_RELATIONS = [
-    "Weekly cooking sessions with grandparents",
-    "Mountain biking with siblings every weekend",
-    "Family game nights every Friday",
-    "Gardening with parents",
-    "Teaching tech skills to elderly relatives",
-    "Annual family camping trips",
-    "Morning jogs with cousins",
-    "DIY projects with dad",
-    "Cooking experiments with mom",
-    "Photography walks with uncle"
-]
-
-LIFE_GOALS = [
-    "Open a restaurant", "Publish a book", "Travel to every continent",
-    "Start an eco-friendly business", "Run a marathon",
-    "Learn three new languages", "Build a sustainable home",
-    "Start a community art center", "Become a master chef",
-    "Create a successful YouTube channel", "Open a photography studio",
-    "Design sustainable fashion", "Start a coding bootcamp"
+    "Every Sunday, they host an elaborate family dinner that's become legendary in their neighborhood. It started as a way to keep their immigrant grandparents' recipes alive, but has evolved into a weekly festival where three generations cook together, share stories, and teach the youngest family members about their heritage. They meticulously document each recipe and the story behind it in a family cookbook that's been growing for years.",
+    "Their bond with their younger sibling transformed after their parents' divorce. Taking on the role of mentor and friend, they started a tradition of monthly adventure days, exploring new places and learning new skills together. From rock climbing to coding, these adventures not only strengthened their relationship but also helped both of them discover their passions and cope with change.",
+    "As the first in their family to attend college, they developed a unique support system. Every Wednesday, they host virtual skill-sharing sessions where family members teach each other everything from traditional crafts to modern technology. Their grandmother teaches traditional weaving, while they teach digital marketing, creating a beautiful bridge between generations.",
+    "After their father's health scare, they initiated a family fitness challenge that's lasted five years and counting. What began as morning walks evolved into family marathons, hiking expeditions, and dance classes. They've created a family blog documenting their journey from couch potatoes to fitness enthusiasts, inspiring other families in their community.",
+    "Growing up in a multigenerational household, they became the family's cultural bridge. They translate not just languages but experiences, helping their grandparents navigate modern technology while teaching their younger cousins traditional customs. Their role has made them an exceptional mediator and storyteller, preserving family history through digital archives they create."
 ]
 
 ACHIEVEMENTS = [
-    "Won local photography contest",
-    "Completed a marathon",
-    "Published articles in magazines",
-    "Started successful community project",
-    "Earned advanced diving certification",
-    "Mastered three musical instruments",
-    "Created popular cooking blog",
-    "Led successful fundraising campaign",
-    "Developed popular mobile app",
-    "Exhibited artwork in galleries"
+    "Transformed a struggling local theater by launching an innovative community outreach program. They directed a series of plays featuring local stories, established youth workshops, and created a mentor system pairing experienced actors with newcomers. Within two years, the theater became a cultural hub, selling out shows and launching several successful careers in the arts.",
+    "Pioneered a revolutionary urban farming initiative that turned abandoned lots into thriving community gardens. They developed a self-sustaining system where residents learn gardening skills, share produce, and sell at local markets. The project has been replicated in five other cities and has provided fresh food access to thousands of families.",
+    "Created a groundbreaking language learning app that combines traditional teaching methods with augmented reality. Drawing from their experience teaching abroad, they developed an immersive system that helps users learn through real-world interactions. The app has reached over a million users and has been particularly successful in helping refugees adapt to new countries.",
+    "Led a volunteer disaster response team that became a model for community emergency preparedness. After experiencing a natural disaster in their hometown, they organized and trained a network of neighborhood response units. Their system has been adopted by several cities and has demonstrably improved emergency response times.",
+    "Developed an award-winning mentorship program connecting retired professionals with underprivileged students. The program has helped hundreds of students access higher education and career opportunities, while giving seniors a meaningful way to share their expertise. It's now being implemented nationwide through a network of community colleges."
 ]
 
 COSTUMES = [
@@ -146,19 +129,26 @@ COSTUMES = [
 def generate_character():
     costume_choice = random.choice(COSTUMES)
     
-    return {
+    # Get character basics
+    occupation = random.choice(OCCUPATIONS)
+    childhood = random.choice(CHILDHOOD_STORIES)
+    family = random.choice(FAMILY_RELATIONS)
+    achievement = random.choice(ACHIEVEMENTS)
+    
+    # Create coherent background based on occupation and experiences
+    character = {
         "name": random.choice(NAMES),
         "age": random.randint(18, 65),
         "height": random.choice(HEIGHTS),
         "hair_color": random.choice(HAIR_COLORS),
-        "eye_color": random.choice(EYE_COLORS),
+        "eye_color": get_eye_color(),  # Using the new eye color function
         "style_preference": random.choice(STYLE_PREFERENCES),
         "signature_items": random.choice(SIGNATURE_ITEMS),
-        "childhood_story": random.choice(CHILDHOOD_STORIES),
-        "family_relations": random.choice(FAMILY_RELATIONS),
+        "occupation": occupation,
+        "childhood_story": childhood,
+        "family_relations": family,
         "life_goals": random.choice(LIFE_GOALS),
-        "achievements": random.choice(ACHIEVEMENTS),
-        "occupation": random.choice(OCCUPATIONS),
+        "achievements": achievement,
         "communication_style": random.choice(COMMUNICATION_STYLES),
         "challenge_handling": random.choice(CHALLENGE_HANDLING),
         "hobbies": random.choice(HOBBIES),
@@ -167,6 +157,8 @@ def generate_character():
         "accessories": ", ".join(costume_choice["accessories"]),
         "alternative_costumes": ", ".join(costume_choice["alternatives"])
     }
+    
+    return character
 
 def generate_character_from_template(template):
     def get_random_option(options_str, default_list):
@@ -181,7 +173,7 @@ def generate_character_from_template(template):
         "age": random.randint(18, 65),
         "height": get_random_option(template.height_options, HEIGHTS),
         "hair_color": get_random_option(template.hair_color_options, HAIR_COLORS),
-        "eye_color": get_random_option(template.eye_color_options, EYE_COLORS),
+        "eye_color": get_eye_color(),  # Using the new eye color function
         "style_preference": get_random_option(template.style_preference_options, STYLE_PREFERENCES),
         "signature_items": get_random_option(template.signature_items_options, SIGNATURE_ITEMS),
         "childhood_story": get_random_option(template.childhood_story_templates, CHILDHOOD_STORIES),
