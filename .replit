@@ -17,15 +17,43 @@ args = "Flask Web App"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Flask Server"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
 args = "Database Migration"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
 args = "Create Example Tasks"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Flask App"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Flask Web"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Flask Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Flask Application"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Flask Debug"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Flask Debug Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Database Setup"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Example Data"
 
 [[workflows.workflow]]
 name = "Flask Web App"
@@ -40,22 +68,7 @@ task = "packager.installForAll"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python main.py"
-waitForPort = 5000
-
-[[workflows.workflow]]
-name = "Flask Server"
-author = "agent"
-
-[workflows.workflow.metadata]
-agentRequireRestartOnSave = false
-
-[[workflows.workflow.tasks]]
-task = "packager.installForAll"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "python main.py"
-waitForPort = 5000
+waitForPort = 5001
 
 [[workflows.workflow]]
 name = "Database Migration"
@@ -85,9 +98,131 @@ task = "packager.installForAll"
 task = "shell.exec"
 args = "python example_tasks.py"
 
+[[workflows.workflow]]
+name = "Flask App"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Flask Web"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 main.py"
+waitForPort = 5001
+
+[[workflows.workflow]]
+name = "Flask Server"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Flask Application"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -u main.py"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Flask Debug"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -u main.py"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Flask Debug Server"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -u main.py"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Database Setup"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -u migrations.py"
+
+[[workflows.workflow]]
+name = "Example Data"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -u example_tasks.py"
+
 [deployment]
-run = ["sh", "-c", "python main.py"]
+run = ["sh", "-c", "python3 -u main.py"]
 
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 5001
+externalPort = 3000

@@ -6,3 +6,41 @@
 .lead {
     margin-bottom: 2rem;
 }
+
+/* Image preview container */
+.preview-container {
+    max-width: 200px;
+    margin-top: 1rem;
+}
+
+/* Loading state styles */
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+/* Improve form validation feedback */
+.was-validated .form-control:invalid:focus {
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-danger-rgb), 0.25);
+}
+
+/* Improve alert spacing */
+.alert {
+    margin-bottom: 1rem;
+}
+
+/* Improve image thumbnail display */
+.img-thumbnail {
+    background-color: var(--bs-dark);
+    border-color: var(--bs-gray-700);
+}
+
+/* Improve form spacing */
+.form-label {
+    margin-bottom: 0.5rem;
+}
+
+.form-text {
+    margin-top: 0.25rem;
+    color: var(--bs-gray-500);
+}

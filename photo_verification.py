@@ -7,25 +7,46 @@ import cv2
 import numpy as np
 import mediapipe as mp
 from datetime import datetime
+import json
 
 logger = logging.getLogger(__name__)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 UPLOAD_FOLDER = 'static/uploads'
 
-# Initialize MediaPipe pose detection
-mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.5)
+# Initialize MediaPipe pose detection with error handling
+try:
+    mp_pose = mp.solutions.pose
+    pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.5)
+    logger.info("MediaPipe pose detection initialized successfully")
+except Exception as e:
+    logger.error(f"Failed to initialize MediaPipe pose detection: {str(e)}")
+    pose = None
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def ensure_upload_folder():
+    """Ensure upload folder exists and is writable"""
+    try:
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+        # Test write permissions
+        test_file = os.path.join(UPLOAD_FOLDER, '.test')
+        with open(test_file, 'w') as f:
+            f.write('test')
+        os.remove(test_file)
+        return True
+    except Exception as e:
+        logger.error(f"Upload folder setup failed: {str(e)}")
+        return False
+
 def enhance_image(image_path):
-    """Enhance image quality and handle lighting conditions."""
+    """Enhance image quality and handle lighting conditions with improved error handling"""
     try:
         # Read image
         img = cv2.imread(image_path)
         if img is None:
+            logger.error(f"Failed to read image: {image_path}")
             return None
 
         # Convert to LAB color space
@@ -42,18 +63,28 @@ def enhance_image(image_path):
 
         # Save enhanced image
         enhanced_path = f"{image_path.rsplit('.', 1)[0]}_enhanced.{image_path.rsplit('.', 1)[1]}"
-        cv2.imwrite(enhanced_path, enhanced_bgr)
+        success = cv2.imwrite(enhanced_path, enhanced_bgr)
+        
+        if not success:
+            logger.error(f"Failed to save enhanced image: {enhanced_path}")
+            return None
+            
         return enhanced_path
     except Exception as e:
         logger.error(f"Error enhancing image: {str(e)}")
         return None
 
 def detect_pose(image_path):
-    """Detect human poses in the image."""
+    """Detect human poses in the image with improved initialization checks"""
+    if pose is None:
+        logger.error("Pose detection is not initialized")
+        return None
+        
     try:
         # Read image
         image = cv2.imread(image_path)
         if image is None:
+            logger.error(f"Failed to read image for pose detection: {image_path}")
             return None
 
         # Convert to RGB
@@ -79,35 +110,38 @@ def detect_pose(image_path):
         return None
 
 def verify_pose(pose_data, required_pose):
-    """Verify if the detected pose matches the required pose."""
+    """Verify if the detected pose matches the required pose with improved validation"""
     if not pose_data:
+        logger.warning("No pose data provided for verification")
         return False, 0.0
 
     try:
         # Define pose verification logic based on required_pose
         if required_pose == "hands_up":
             # Check if hands are above head
-            left_wrist = pose_data["landmark_15"]  # Left wrist
-            right_wrist = pose_data["landmark_16"]  # Right wrist
-            nose = pose_data["landmark_0"]  # Nose
+            left_wrist = pose_data.get("landmark_15")  # Left wrist
+            right_wrist = pose_data.get("landmark_16")  # Right wrist
+            nose = pose_data.get("landmark_0")  # Nose
             
-            if left_wrist['y'] < nose['y'] and right_wrist['y'] < nose['y']:
-                confidence = min(left_wrist['visibility'], right_wrist['visibility'])
-                return True, confidence
-                
+            if all([left_wrist, right_wrist, nose]):
+                if left_wrist['y'] < nose['y'] and right_wrist['y'] < nose['y']:
+                    confidence = min(left_wrist['visibility'], right_wrist['visibility'])
+                    return True, confidence
+                    
         elif required_pose == "t_pose":
             # Check if arms are horizontal
-            left_shoulder = pose_data["landmark_11"]
-            right_shoulder = pose_data["landmark_12"]
-            left_wrist = pose_data["landmark_15"]
-            right_wrist = pose_data["landmark_16"]
+            left_shoulder = pose_data.get("landmark_11")
+            right_shoulder = pose_data.get("landmark_12")
+            left_wrist = pose_data.get("landmark_15")
+            right_wrist = pose_data.get("landmark_16")
             
-            shoulder_height = (left_shoulder['y'] + right_shoulder['y']) / 2
-            wrist_height_diff = abs(left_wrist['y'] - right_wrist['y'])
-            
-            if wrist_height_diff < 0.1 and abs(left_wrist['y'] - shoulder_height) < 0.1:
-                confidence = min(left_wrist['visibility'], right_wrist['visibility'])
-                return True, confidence
+            if all([left_shoulder, right_shoulder, left_wrist, right_wrist]):
+                shoulder_height = (left_shoulder['y'] + right_shoulder['y']) / 2
+                wrist_height_diff = abs(left_wrist['y'] - right_wrist['y'])
+                
+                if wrist_height_diff < 0.1 and abs(left_wrist['y'] - shoulder_height) < 0.1:
+                    confidence = min(left_wrist['visibility'], right_wrist['visibility'])
+                    return True, confidence
 
         return False, 0.0
     except Exception as e:
@@ -115,21 +149,31 @@ def verify_pose(pose_data, required_pose):
         return False, 0.0
 
 def save_photo(photo_file):
-    """Save the uploaded photo and return the file path."""
-    if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)
+    """Save the uploaded photo with improved error handling"""
+    if not ensure_upload_folder():
+        raise RuntimeError("Failed to setup upload folder")
         
-    filename = secure_filename(photo_file.filename)
-    unique_filename = f"{os.urandom(8).hex()}_{filename}"
-    filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
-    photo_file.save(filepath)
-    return filepath
+    try:
+        filename = secure_filename(photo_file.filename)
+        unique_filename = f"{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{os.urandom(4).hex()}_{filename}"
+        filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
+        photo_file.save(filepath)
+        
+        # Verify the file was saved
+        if not os.path.exists(filepath):
+            raise RuntimeError(f"Failed to save file: {filepath}")
+            
+        return filepath
+    except Exception as e:
+        logger.error(f"Error saving photo: {str(e)}")
+        raise
 
 def verify_photo_content(photo_path, required_objects, min_confidence=0.7, required_pose=None, required_location=None):
-    """
-    Verify if the photo contains required objects, pose, and location.
-    required_objects can be a single string or a list of strings.
-    """
+    """Verify photo content with improved error handling and validation"""
+    if not os.path.exists(photo_path):
+        logger.error(f"Photo file not found: {photo_path}")
+        return False, 0.0
+
     try:
         # Convert single object to list
         if isinstance(required_objects, str):
@@ -210,14 +254,22 @@ def verify_photo_content(photo_path, required_objects, min_confidence=0.7, requi
         return False, 0.0
 
 def cleanup_old_photos(days_old=7):
-    """Remove photos older than specified days to manage storage."""
+    """Remove photos older than specified days with improved error handling"""
+    if not os.path.exists(UPLOAD_FOLDER):
+        logger.warning(f"Upload folder does not exist: {UPLOAD_FOLDER}")
+        return
+        
     try:
         current_time = datetime.now()
         for filename in os.listdir(UPLOAD_FOLDER):
             filepath = os.path.join(UPLOAD_FOLDER, filename)
-            file_modified = datetime.fromtimestamp(os.path.getmtime(filepath))
-            if (current_time - file_modified).days > days_old:
-                os.remove(filepath)
-                logger.info(f"Removed old photo: {filename}")
+            try:
+                file_modified = datetime.fromtimestamp(os.path.getmtime(filepath))
+                if (current_time - file_modified).days > days_old:
+                    os.remove(filepath)
+                    logger.info(f"Removed old photo: {filename}")
+            except OSError as e:
+                logger.error(f"Error processing file {filename}: {str(e)}")
+                continue
     except Exception as e:
         logger.error(f"Error cleaning up old photos: {str(e)}")

@@ -19,4 +19,9 @@ dependencies = [
     "opencv-python>=4.10.0.84",
     "opencv-python-headless",
     "werkzeug>=3.0.6",
+    "requests",
+    "flask-session>=0.8.0",
+    "sqlalchemy",
+    "xds-protos",
+    "psutil>=6.1.0",
 ]
