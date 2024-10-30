@@ -15,7 +15,7 @@ from models import Character, Scenario, CharacterTemplate, Achievement, Scenario
 
 # Configure logging
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     stream=sys.stdout
 )
@@ -47,7 +47,7 @@ def verify_directories():
             return False
             
         # Verify uploads directory
-        upload_dir = app.config.get("UPLOAD_FOLDER", "static/uploads")
+        upload_dir = os.path.join(os.path.dirname(__file__), 'static', 'uploads')
         os.makedirs(upload_dir, exist_ok=True)
         
         logger.info("All directories verified")
@@ -56,51 +56,44 @@ def verify_directories():
         logger.error(f"Directory verification failed: {str(e)}")
         return False
 
-def wait_for_port_release(port, timeout=30):
-    """Wait for a port to be released"""
-    start_time = time.time()
-    while time.time() - start_time < timeout:
-        try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.bind(('0.0.0.0', port))
-                s.close()
-                logger.info(f"Port {port} is now available")
-                return True
-        except socket.error:
-            logger.debug(f"Port {port} still in use, waiting...")
-            time.sleep(1)
-    return False
-
-def kill_process_on_port(port):
-    """Find and kill any process using the specified port"""
-    for proc in psutil.process_iter(['pid', 'name', 'connections']):
-        try:
-            for conn in proc.connections():
-                if conn.laddr.port == port:
-                    os.kill(proc.pid, signal.SIGTERM)
-                    logger.info(f"Terminated process {proc.pid} using port {port}")
-                    return True
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
-            continue
-    return False
+def kill_processes_on_port(port):
+    """Kill all processes using the specified port"""
+    try:
+        for proc in psutil.process_iter(['pid', 'name']):
+            try:
+                conns = proc.connections()  # Use net_connections() in future versions
+                for conn in conns:
+                    if hasattr(conn, 'laddr') and conn.laddr.port == port:
+                        os.kill(proc.pid, signal.SIGTERM)
+                        logger.info(f"Terminated process {proc.pid} using port {port}")
+                        time.sleep(1)  # Give process time to release resources
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
+        return True
+    except Exception as e:
+        logger.error(f"Error killing processes on port {port}: {str(e)}")
+        return False
 
 def ensure_port_available(port, max_attempts=3):
     """Ensure the specified port is available"""
     for attempt in range(max_attempts):
         try:
+            # Try to kill any processes using the port
+            kill_processes_on_port(port)
+            
+            # Try to bind to the port
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                 s.bind(('0.0.0.0', port))
                 s.close()
                 logger.info(f"Port {port} is available")
                 return True
-        except socket.error:
-            logger.warning(f"Port {port} is in use (attempt {attempt + 1}/{max_attempts})")
-            if kill_process_on_port(port):
-                if wait_for_port_release(port):
-                    continue
+        except socket.error as e:
+            logger.warning(f"Port {port} is in use (attempt {attempt + 1}/{max_attempts}): {str(e)}")
             if attempt == max_attempts - 1:
                 logger.error(f"Failed to secure port {port} after {max_attempts} attempts")
                 return False
+            time.sleep(2)  # Wait before retrying
     return False
 
 # Import routes after app initialization
@@ -124,17 +117,13 @@ if __name__ == "__main__":
             logger.error("Could not secure port 5000")
             sys.exit(1)
 
-        # Add delay to ensure port is fully released
-        time.sleep(2)
-
         # Start Flask application
         logger.info("Starting Flask application on port 5000")
         app.run(
             host='0.0.0.0',
             port=5000,
-            debug=True,
-            use_reloader=False,
-            threaded=True
+            debug=False,  # Set to False to avoid duplicate process issues
+            use_reloader=False
         )
     except Exception as e:
         logger.error(f"Failed to start application: {str(e)}")

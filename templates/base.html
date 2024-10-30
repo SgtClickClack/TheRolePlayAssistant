@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Role Play Assistant</title>
-    <!-- Use Replit-themed Bootstrap CSS -->
     <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Ensure static file path is correct -->
     <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
-    <!-- Add error tracking for static file loading -->
     <script>
         window.addEventListener('error', function(e) {
             if (e.target.tagName === 'LINK' || e.target.tagName === 'SCRIPT') {
@@ -19,6 +16,7 @@
     </script>
 </head>
 <body>
+    <!-- Loading overlay -->
     <div id="loading-overlay" class="position-fixed top-0 start-0 w-100 h-100 d-none" 
          style="background: rgba(0,0,0,0.5); z-index: 9999;">
         <div class="position-absolute top-50 start-50 translate-middle text-center">
@@ -29,6 +27,7 @@
         </div>
     </div>
 
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('index') }}">The Role Play Assistant</a>
@@ -49,17 +48,25 @@
                 <ul class="navbar-nav">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+                        <a class="nav-link" href="{{ url_for('profile') }}">
+                            <i class="bi bi-person-circle"></i> {{ current_user.username }}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        <a class="nav-link" href="{{ url_for('login') }}">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                        <a class="nav-link" href="{{ url_for('register') }}">
+                            <i class="bi bi-person-plus"></i> Register
+                        </a>
                     </li>
                     {% endif %}
                 </ul>
@@ -67,11 +74,26 @@
         </div>
     </nav>
 
+    <!-- Main content -->
     <div class="container mt-4">
+        <!-- Flash messages with improved styling -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show" role="alert">
+                    {% set alert_class = {
+                        'error': 'danger',
+                        'success': 'success',
+                        'info': 'info',
+                        'warning': 'warning'
+                    }.get(category, 'info') %}
+                    {% set icon_class = {
+                        'error': 'bi-exclamation-triangle',
+                        'success': 'bi-check-circle',
+                        'info': 'bi-info-circle',
+                        'warning': 'bi-exclamation-circle'
+                    }.get(category, 'bi-info-circle') %}
+                    <div class="alert alert-{{ alert_class }} alert-dismissible fade show" role="alert">
+                        <i class="bi {{ icon_class }} me-2"></i>
                         {{ message }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -79,9 +101,22 @@
             {% endif %}
         {% endwith %}
         
+        <!-- Debug information for development -->
+        {% if config.DEBUG and error_id %}
+        <div class="alert alert-secondary">
+            <small>
+                <strong>Debug Info:</strong> Error ID: {{ error_id }}
+                {% if config.DEBUG and error_path %}
+                <br>Requested Path: {{ error_path }}
+                {% endif %}
+            </small>
+        </div>
+        {% endif %}
+        
         {% block content %}{% endblock %}
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block scripts %}{% endblock %}

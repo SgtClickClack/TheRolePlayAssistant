@@ -18,51 +18,71 @@ logger = logging.getLogger(__name__)
 class Base(DeclarativeBase):
     pass
 
+# Initialize extensions
 db = SQLAlchemy(model_class=Base)
 login_manager = LoginManager()
 csrf = CSRFProtect()
 
-app = Flask(__name__)
-app.secret_key = os.environ.get("FLASK_SECRET_KEY") or os.urandom(24)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-    "pool_recycle": 300,
-    "pool_pre_ping": True,
-}
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["UPLOAD_FOLDER"] = "static/uploads"
-app.config["SESSION_TYPE"] = "filesystem"
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config["EXPLAIN_TEMPLATE_LOADING"] = True
-app.config["DEBUG"] = True
-app.config["WTF_CSRF_ENABLED"] = True
-app.config["WTF_CSRF_SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY") or os.urandom(24)
-app.jinja_env.auto_reload = True
+def create_app():
+    app = Flask(__name__)
+    app.secret_key = os.environ.get("FLASK_SECRET_KEY") or os.urandom(24)
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_recycle": 300,
+        "pool_pre_ping": True,
+    }
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["UPLOAD_FOLDER"] = "static/uploads"
+    app.config["SESSION_TYPE"] = "filesystem"
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
+    app.config["EXPLAIN_TEMPLATE_LOADING"] = True
+    app.config["DEBUG"] = True
+    app.config["WTF_CSRF_ENABLED"] = True
+    app.config["WTF_CSRF_SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY") or os.urandom(24)
+    app.jinja_env.auto_reload = True
 
-# Initialize extensions
-Session(app)
-csrf.init_app(app)
-db.init_app(app)
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+    # Initialize extensions
+    Session(app)
+    csrf.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = 'login'
+
+    # Initialize directories
+    try:
+        os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+        logger.info("Upload directory checked/created")
+    except Exception as e:
+        logger.error(f"Failed to create upload directory: {str(e)}")
+        raise
+
+    return app
+
+app = create_app()
 
 @login_manager.user_loader
 def load_user(user_id):
     from models import User
     return User.query.get(int(user_id))
 
-# Initialize database and verify directories
+# Initialize database first
 with app.app_context():
-    import models
     try:
-        os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
-        logger.info("Upload directory checked/created")
-        
         # Test database connection
         with db.engine.connect() as conn:
             conn.execute(text("SELECT 1"))
             conn.commit()
             logger.info("Database connection successful")
+
+        # Import models
+        import models
+        logger.info("Models imported successfully")
+
+        # Import and register routes after app and database initialization
+        from routes import register_routes
+        register_routes(app)
+        logger.info("Routes registered successfully")
+
     except Exception as e:
         logger.error(f"Failed to initialize application: {str(e)}")
         raise

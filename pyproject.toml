@@ -25,4 +25,6 @@ dependencies = [
     "xds-protos",
     "psutil>=6.1.0",
     "flask-wtf>=1.2.2",
+    "python-dotenv",
+    "jinja2",
 ]
