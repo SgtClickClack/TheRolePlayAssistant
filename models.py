@@ -9,6 +9,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     gender = db.Column(db.String(10), nullable=True)  # Options: 'male', 'female', 'other'
+    spiciness_level = db.Column(db.Integer, default=1)  # 1: Family-friendly, 2: Mild, 3: Spicy
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     characters = db.relationship('Character', backref='user', lazy=True)
     templates = db.relationship('CharacterTemplate', backref='user', lazy=True)

@@ -3,6 +3,7 @@ import openai
 import logging
 from typing import Dict, Any
 from transformers import pipeline
+from flask_login import current_user
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -50,6 +51,63 @@ def format_section(text: str) -> str:
     """Format text sections with proper line breaks and spacing"""
     return text.strip().replace('\n', ' ').replace('  ', ' ')
 
+def get_spiciness_prompt(level: int) -> str:
+    """Get the appropriate content style prompt based on spiciness level"""
+    if level == 1:
+        return (
+            "You are a creative character developer focusing on family-friendly content. "
+            "Keep all content suitable for all ages, avoiding any mature themes or references."
+        )
+    elif level == 2:
+        return (
+            "You are a creative character developer focusing on light romantic content. "
+            "Include mild flirting and romantic themes, but keep it tasteful and appropriate. "
+            "Avoid explicit content or mature themes."
+        )
+    else:  # level == 3
+        return (
+            "You are a creative character developer focusing on mature romantic content. "
+            "Include romantic and spicy themes while maintaining good taste. "
+            "Keep the content suggestive rather than explicit, focusing on tension and chemistry."
+        )
+
+def enhance_with_openai(prompt: str, spiciness_level: int) -> str:
+    """Generate enhanced content using OpenAI GPT with spiciness control"""
+    client = get_openai_client()
+    if not client:
+        return None
+        
+    try:
+        system_prompt = get_spiciness_prompt(spiciness_level)
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=1000,
+            temperature=0.7
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        logger.error(f"Error with OpenAI generation: {str(e)}")
+        return None
+
+def enhance_with_huggingface(prompt: str) -> str:
+    """Generate enhanced content using Hugging Face models."""
+    generator = get_hf_generator()
+    if not generator:
+        return None
+        
+    try:
+        response = generator(prompt,
+                           max_length=1000,
+                           num_return_sequences=1)
+        return response[0]['generated_text']
+    except Exception as e:
+        logger.error(f"Error with Hugging Face generation: {str(e)}")
+        return None
+
 def generate_fallback_content(character: Dict[str, Any]) -> Dict[str, Any]:
     """Generate fallback content when both AI enhancements fail."""
     name = character['name']
@@ -82,42 +140,6 @@ def generate_fallback_content(character: Dict[str, Any]) -> Dict[str, Any]:
     
     return character
 
-def enhance_with_huggingface(prompt: str) -> str:
-    """Generate enhanced content using Hugging Face models."""
-    generator = get_hf_generator()
-    if not generator:
-        return None
-        
-    try:
-        response = generator(prompt,
-                           max_length=1000,
-                           num_return_sequences=1)
-        return response[0]['generated_text']
-    except Exception as e:
-        logger.error(f"Error with Hugging Face generation: {str(e)}")
-        return None
-
-def enhance_with_openai(prompt: str) -> str:
-    """Generate enhanced content using OpenAI GPT."""
-    client = get_openai_client()
-    if not client:
-        return None
-        
-    try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a creative character developer focusing on family-friendly content."},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=1000,
-            temperature=0.7
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        logger.error(f"Error with OpenAI generation: {str(e)}")
-        return None
-
 def parse_ai_response(content: str) -> Dict[str, str]:
     """Parse AI-generated content into structured sections."""
     sections = content.split('\n\n')
@@ -139,11 +161,14 @@ def parse_ai_response(content: str) -> Dict[str, str]:
 def enhance_character_description(character: Dict[str, Any]) -> Dict[str, Any]:
     """
     Enhance character descriptions using AI models.
-    First tries Hugging Face, then falls back to OpenAI GPT,
-    and finally uses template-based generation if both fail.
+    First tries OpenAI for controlled content generation,
+    then falls back to Hugging Face for family-friendly content if needed.
     """
+    # Get user's spiciness preference, default to family-friendly
+    spiciness_level = getattr(current_user, 'spiciness_level', 1) if current_user.is_authenticated else 1
+    
     prompt = f"""
-    Please enhance and expand these character details in a creative, family-friendly way:
+    Please enhance and expand these character details in a creative way according to the specified content style:
     
     Name: {character['name']}
     Age: {character['age']}
@@ -157,32 +182,32 @@ def enhance_character_description(character: Dict[str, Any]) -> Dict[str, Any]:
     - Quirks: {character['quirks']}
     
     Please provide:
-    1. A detailed childhood story (family-friendly)
+    1. A detailed childhood story
     2. Description of family relationships and background
     3. Current life goals and aspirations
     4. Notable achievements and experiences
     
-    Keep everything appropriate for all ages and focus on positive, uplifting content.
     Format each section with clear headers and proper spacing.
     """
     
-    # Try Hugging Face first
-    logger.info("Attempting to enhance character with Hugging Face")
-    if enhanced_content := enhance_with_huggingface(prompt):
-        sections = parse_ai_response(enhanced_content)
-        if len(sections) >= 4:  # All required sections present
-            character.update(sections)
-            logger.info("Successfully enhanced character with Hugging Face")
-            return character
-    
-    # Fall back to OpenAI if Hugging Face fails
-    logger.info("Falling back to OpenAI for character enhancement")
-    if enhanced_content := enhance_with_openai(prompt):
+    # Try OpenAI first with spiciness control
+    logger.info(f"Attempting to enhance character with OpenAI (spiciness level: {spiciness_level})")
+    if enhanced_content := enhance_with_openai(prompt, spiciness_level):
         sections = parse_ai_response(enhanced_content)
         if len(sections) >= 4:  # All required sections present
             character.update(sections)
             logger.info("Successfully enhanced character with OpenAI")
             return character
+    
+    # Fall back to Hugging Face (family-friendly only) if OpenAI fails
+    if spiciness_level == 1:
+        logger.info("Falling back to Hugging Face for family-friendly content")
+        if enhanced_content := enhance_with_huggingface(prompt):
+            sections = parse_ai_response(enhanced_content)
+            if len(sections) >= 4:  # All required sections present
+                character.update(sections)
+                logger.info("Successfully enhanced character with Hugging Face")
+                return character
     
     # Fall back to template generation if both AI methods fail
     logger.info("Using fallback content generation")

@@ -7,7 +7,6 @@ import uuid
 from datetime import datetime
 import logging
 
-# Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -153,13 +152,22 @@ def profile():
 def update_profile():
     try:
         gender = request.form.get('gender')
+        spiciness_level = request.form.get('spiciness_level', type=int)
+        
         if gender not in ['male', 'female', 'other']:
             logger.warning(f"Invalid gender selection for user {current_user.id}: {gender}")
             flash('Invalid gender selection', 'error')
             return redirect(url_for('profile'))
+            
+        if spiciness_level not in [1, 2, 3]:
+            logger.warning(f"Invalid spiciness level for user {current_user.id}: {spiciness_level}")
+            flash('Invalid spiciness level selection', 'error')
+            return redirect(url_for('profile'))
         
         current_user.gender = gender
+        current_user.spiciness_level = spiciness_level
         db.session.commit()
+        
         logger.info(f"Profile updated successfully for user {current_user.id}")
         flash('Profile updated successfully', 'success')
         return redirect(url_for('profile'))
