@@ -90,6 +90,19 @@ FAMILY_RELATIONS = [
     "Growing up in a multigenerational household, they became the family's cultural bridge. They translate not just languages but experiences, helping their grandparents navigate modern technology while teaching their younger cousins traditional customs. Their role has made them an exceptional mediator and storyteller, preserving family history through digital archives they create."
 ]
 
+LIFE_GOALS = [
+    "Start their own business helping others",
+    "Travel to every continent",
+    "Write a book about their experiences",
+    "Create a community education program",
+    "Build a sustainable eco-friendly home",
+    "Start a mentorship program",
+    "Open an art gallery featuring local artists",
+    "Develop innovative teaching methods",
+    "Create a wildlife sanctuary",
+    "Establish a cultural exchange program"
+]
+
 ACHIEVEMENTS = [
     "Transformed a struggling local theater by launching an innovative community outreach program. They directed a series of plays featuring local stories, established youth workshops, and created a mentor system pairing experienced actors with newcomers. Within two years, the theater became a cultural hub, selling out shows and launching several successful careers in the arts.",
     "Pioneered a revolutionary urban farming initiative that turned abandoned lots into thriving community gardens. They developed a self-sustaining system where residents learn gardening skills, share produce, and sell at local markets. The project has been replicated in five other cities and has provided fresh food access to thousands of families.",
