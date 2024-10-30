@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="card mb-4">
+<div class="card">
     <div class="card-header">
         <h2>Your Character</h2>
     </div>
@@ -26,10 +26,10 @@
 
                 <div class="mb-4">
                     <h4>Background</h4>
-                    <p><strong>Childhood Story:</strong> {{ character.childhood_story }}</p>
-                    <p><strong>Family:</strong> {{ character.family_relations }}</p>
-                    <p><strong>Life Goals:</strong> {{ character.life_goals }}</p>
-                    <p><strong>Achievements:</strong> {{ character.achievements }}</p>
+                    <p><strong>Childhood Story:</strong><br>{{ character.childhood_story }}</p>
+                    <p><strong>Family:</strong><br>{{ character.family_relations }}</p>
+                    <p><strong>Life Goals:</strong><br>{{ character.life_goals }}</p>
+                    <p><strong>Achievements:</strong><br>{{ character.achievements }}</p>
                 </div>
             </div>
 
@@ -50,19 +50,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        <h2>Current Scenario</h2>
-    </div>
-    <div class="card-body">
-        <h3>{{ scenario.title }}</h3>
-        <p>{{ scenario.description }}</p>
-        <p><strong>Setting:</strong> {{ scenario.setting }}</p>
-        <p><strong>Challenge:</strong> {{ scenario.challenge }}</p>
-        <p><strong>Goal:</strong> {{ scenario.goal }}</p>
     </div>
 </div>
 {% endblock %}

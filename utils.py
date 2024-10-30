@@ -45,7 +45,12 @@ trait_history = TraitHistory()
 NAMES = ["Alex", "Sam", "Jordan", "Taylor", "Casey", "Morgan", "Riley", "Quinn", "Robin", "Jamie", 
          "Charlie", "Avery", "Parker", "Drew", "Sydney"]
 
-HEIGHTS = ["petite", "average height", "tall"]
+HEIGHTS = [
+    "5'0\" to 5'3\"",
+    "5'4\" to 5'7\"",
+    "5'8\" to 5'11\"",
+    "6'0\" and above"
+]
 
 HAIR_COLORS = ["brown", "black", "blonde", "red", "auburn", "dark brown", 
                "light brown", "honey blonde", "platinum blonde"]
@@ -126,25 +131,25 @@ COSTUMES = [
 
 SCENARIOS = [
     {
-        "title": "Community Garden Project",
-        "description": "Help transform an empty lot into a thriving community garden!",
-        "setting": "Urban Neighborhood",
-        "challenge": "Organize volunteers and plan garden layout",
-        "goal": "Create a sustainable green space"
+        "title": "Romantic Cooking Challenge",
+        "description": "Create a gourmet meal together!",
+        "setting": "Cozy Kitchen",
+        "challenge": "Cook a three-course meal",
+        "goal": "Prepare a romantic dinner"
     },
     {
-        "title": "Local Food Festival",
-        "description": "Organize and participate in the city's biggest food celebration!",
-        "setting": "City Center",
-        "challenge": "Coordinate with local restaurants and vendors",
-        "goal": "Create unforgettable culinary experiences"
+        "title": "Sunset Photography Adventure",
+        "description": "Capture beautiful moments together!",
+        "setting": "Scenic Outdoor Location",
+        "challenge": "Find and photograph perfect sunset spots",
+        "goal": "Create lasting memories"
     },
     {
-        "title": "Tech Startup Challenge",
-        "description": "Build a team and create an innovative solution for local businesses!",
-        "setting": "Modern Co-working Space",
-        "challenge": "Develop and pitch a business idea",
-        "goal": "Launch a successful startup"
+        "title": "Art Gallery Mystery",
+        "description": "Solve the mystery of the missing masterpiece!",
+        "setting": "Local Art Gallery",
+        "challenge": "Follow clues and solve puzzles",
+        "goal": "Find the hidden artwork"
     }
 ]
 
@@ -168,16 +173,16 @@ def generate_character():
         "quirks": trait_history.get_unused_option(QUIRKS, "quirks")
     }
     
-    # Enhance character with GPT
-    enhanced_character = enhance_character_description(character)
-    
     # Add costume details
     costume_choice = random.choice(COSTUMES)
-    enhanced_character.update({
+    character.update({
         "costume": costume_choice["main"],
         "accessories": ", ".join(costume_choice["accessories"]),
         "alternative_costumes": ", ".join(costume_choice["alternatives"])
     })
+    
+    # Enhance character with GPT
+    enhanced_character = enhance_character_description(character)
     
     # Check if character is too similar to recent ones
     max_attempts = 5
@@ -212,11 +217,8 @@ def generate_character_from_template(template):
         "quirks": get_random_option(template.quirks_options, QUIRKS)
     }
     
-    # Enhance character with GPT
-    enhanced_character = enhance_character_description(character)
-    
     # Add costume details
-    enhanced_character.update({
+    character.update({
         "costume": get_random_option(template.costume_options, [c["main"] for c in COSTUMES]),
         "accessories": get_random_option(template.accessories_options, 
                                       [', '.join(c["accessories"]) for c in COSTUMES]),
@@ -224,4 +226,6 @@ def generate_character_from_template(template):
                                                 [', '.join(c["alternatives"]) for c in COSTUMES])
     })
     
+    # Enhance character with GPT
+    enhanced_character = enhance_character_description(character)
     return enhanced_character
