@@ -12,7 +12,7 @@ def index():
     return render_template('index.html', templates=templates)
 
 @app.route('/generate_character', methods=['POST'])
-def generate_new_character():
+def generate_character():
     template_id = request.form.get('template_id')
     if template_id:
         template = CharacterTemplate.query.get_or_404(template_id)

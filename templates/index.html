@@ -16,7 +16,7 @@
         <div class="mb-3 p-3 border rounded">
             <h4>{{ template.name }}</h4>
             <p>{{ template.description }}</p>
-            <form action="{{ url_for('generate_new_character') }}" method="post" class="d-inline">
+            <form action="{{ url_for('generate_character') }}" method="post" class="d-inline">
                 <input type="hidden" name="template_id" value="{{ template.id }}">
                 <button type="submit" class="btn btn-primary">Generate from Template</button>
             </form>
@@ -28,7 +28,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form action="{{ url_for('generate_new_character') }}" method="post">
+        <form action="{{ url_for('generate_character') }}" method="post">
             <button type="submit" class="btn btn-primary btn-lg w-100">Generate Random Character</button>
         </form>
     </div>
