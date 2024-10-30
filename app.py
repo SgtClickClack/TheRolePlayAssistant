@@ -28,11 +28,19 @@ def verify_database():
         db.session.execute(text('SELECT 1'))
         logger.info("Database connection successful")
         
-        # Get all table names
-        db.session.execute(text('SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\''))
-        logger.info("Database schema verification successful")
+        # Check if tables exist by querying the information schema
+        result = db.session.execute(text(
+            "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'user')"
+        ))
+        tables_exist = result.scalar()
         
+        if not tables_exist:
+            logger.info("Tables do not exist. Creating database schema...")
+            return False
+        
+        logger.info("Database schema verification successful")
         return True
+        
     except Exception as e:
         logger.error(f"Database verification failed: {str(e)}")
         return False
@@ -48,9 +56,11 @@ def load_user(user_id):
 
 with app.app_context():
     import models
-    if verify_database():
-        db.drop_all()  # Drop all existing tables
-        db.create_all()  # Create tables with the new schema
-        logger.info("Database tables created successfully")
-    else:
-        logger.error("Failed to verify database connection")
+    try:
+        if not verify_database():
+            db.create_all()  # Only create tables if they don't exist
+            logger.info("Database tables created successfully")
+        else:
+            logger.info("Using existing database tables")
+    except Exception as e:
+        logger.error(f"Failed to initialize database: {str(e)}")
