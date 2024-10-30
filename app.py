@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from flask_login import LoginManager
 import logging
+from sqlalchemy import text
 
 logger = logging.getLogger(__name__)
 
@@ -24,12 +25,12 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
 def verify_database():
     try:
         # Test database connection
-        db.session.execute('SELECT 1')
+        db.session.execute(text('SELECT 1'))
         logger.info("Database connection successful")
         
         # Get all table names
-        table_names = db.session.execute('SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\'').fetchall()
-        logger.info(f"Existing tables: {[table[0] for table in table_names]}")
+        db.session.execute(text('SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\''))
+        logger.info("Database schema verification successful")
         
         return True
     except Exception as e:
