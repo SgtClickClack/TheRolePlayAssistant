@@ -30,6 +30,39 @@ class Character(db.Model):
     alternative_costumes = db.Column(db.Text)
     
     session_id = db.Column(db.String(100))
+    template_id = db.Column(db.Integer, db.ForeignKey('character_template.id'), nullable=True)
+
+class CharacterTemplate(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text)
+    # Appearance templates
+    height_options = db.Column(db.Text)  # Comma-separated options
+    hair_color_options = db.Column(db.Text)
+    eye_color_options = db.Column(db.Text)
+    style_preference_options = db.Column(db.Text)
+    signature_items_options = db.Column(db.Text)
+    
+    # Background templates
+    childhood_story_templates = db.Column(db.Text)
+    family_relations_templates = db.Column(db.Text)
+    life_goals_templates = db.Column(db.Text)
+    achievements_templates = db.Column(db.Text)
+    
+    # Personality templates
+    occupation_options = db.Column(db.Text)
+    communication_style_options = db.Column(db.Text)
+    challenge_handling_options = db.Column(db.Text)
+    hobbies_options = db.Column(db.Text)
+    quirks_options = db.Column(db.Text)
+    
+    # Costume templates
+    costume_options = db.Column(db.Text)
+    accessories_options = db.Column(db.Text)
+    alternative_costumes_options = db.Column(db.Text)
+    
+    session_id = db.Column(db.String(100))
+    characters = db.relationship('Character', backref='template', lazy=True)
 
 class Scenario(db.Model):
     id = db.Column(db.Integer, primary_key=True)

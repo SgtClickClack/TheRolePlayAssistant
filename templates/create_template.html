@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Create Character Template</h2>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('create_template') }}">
+            <div class="mb-3">
+                <label for="name" class="form-label">Template Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Template Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+
+            <h4 class="mt-4">Appearance Options</h4>
+            <div class="mb-3">
+                <label for="height_options" class="form-label">Height Options (comma-separated)</label>
+                <input type="text" class="form-control" id="height_options" name="height_options" 
+                       placeholder="short, average height, tall">
+            </div>
+            <div class="mb-3">
+                <label for="hair_color_options" class="form-label">Hair Color Options</label>
+                <input type="text" class="form-control" id="hair_color_options" name="hair_color_options"
+                       placeholder="brown, black, blonde">
+            </div>
+            <div class="mb-3">
+                <label for="eye_color_options" class="form-label">Eye Color Options</label>
+                <input type="text" class="form-control" id="eye_color_options" name="eye_color_options"
+                       placeholder="blue, brown, green">
+            </div>
+
+            <h4 class="mt-4">Personality Options</h4>
+            <div class="mb-3">
+                <label for="occupation_options" class="form-label">Occupation Options</label>
+                <input type="text" class="form-control" id="occupation_options" name="occupation_options"
+                       placeholder="Explorer, Scientist, Artist">
+            </div>
+            <div class="mb-3">
+                <label for="hobbies_options" class="form-label">Hobbies Options</label>
+                <input type="text" class="form-control" id="hobbies_options" name="hobbies_options"
+                       placeholder="collecting rocks, drawing, writing">
+            </div>
+
+            <h4 class="mt-4">Costume Options</h4>
+            <div class="mb-3">
+                <label for="costume_options" class="form-label">Costume Options</label>
+                <textarea class="form-control" id="costume_options" name="costume_options" rows="3"
+                          placeholder="Explorer's outfit, Scientist lab coat, Artist's smock"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="accessories_options" class="form-label">Accessories Options</label>
+                <textarea class="form-control" id="accessories_options" name="accessories_options" rows="3"
+                          placeholder="compass, magnifying glass, paint brushes"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Template</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

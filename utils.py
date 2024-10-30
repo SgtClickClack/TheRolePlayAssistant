@@ -119,6 +119,38 @@ def generate_character():
         "alternative_costumes": ", ".join(costume_choice["alternatives"])
     }
 
+def generate_character_from_template(template):
+    """Generate a character based on a template's options"""
+    def get_random_option(options_str, default_list):
+        if options_str and options_str.strip():
+            options = [opt.strip() for opt in options_str.split(',')]
+            return random.choice(options) if options else random.choice(default_list)
+        return random.choice(default_list)
+
+    return {
+        "name": random.choice(NAMES),
+        "age": random.randint(8, 14),
+        "height": get_random_option(template.height_options, HEIGHTS),
+        "hair_color": get_random_option(template.hair_color_options, HAIR_COLORS),
+        "eye_color": get_random_option(template.eye_color_options, EYE_COLORS),
+        "style_preference": get_random_option(template.style_preference_options, STYLE_PREFERENCES),
+        "signature_items": get_random_option(template.signature_items_options, SIGNATURE_ITEMS),
+        "childhood_story": get_random_option(template.childhood_story_templates, CHILDHOOD_STORIES),
+        "family_relations": get_random_option(template.family_relations_templates, FAMILY_RELATIONS),
+        "life_goals": get_random_option(template.life_goals_templates, LIFE_GOALS),
+        "achievements": get_random_option(template.achievements_templates, ACHIEVEMENTS),
+        "occupation": get_random_option(template.occupation_options, OCCUPATIONS),
+        "communication_style": get_random_option(template.communication_style_options, COMMUNICATION_STYLES),
+        "challenge_handling": get_random_option(template.challenge_handling_options, CHALLENGE_HANDLING),
+        "hobbies": get_random_option(template.hobbies_options, HOBBIES),
+        "quirks": get_random_option(template.quirks_options, QUIRKS),
+        "costume": get_random_option(template.costume_options, [c["main"] for c in COSTUMES]),
+        "accessories": get_random_option(template.accessories_options, 
+                                      [', '.join(c["accessories"]) for c in COSTUMES]),
+        "alternative_costumes": get_random_option(template.alternative_costumes_options,
+                                                [', '.join(c["alternatives"]) for c in COSTUMES])
+    }
+
 SCENARIOS = [
     {
         "title": "The Lost Library",
