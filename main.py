@@ -88,13 +88,25 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET'])
 @login_required
 def profile():
     return render_template('auth/profile.html')
 
+@app.route('/update_profile', methods=['POST'])
+@login_required
+def update_profile():
+    gender = request.form.get('gender')
+    if gender not in ['male', 'female', 'other']:
+        flash('Invalid gender selection', 'error')
+        return redirect(url_for('profile'))
+    
+    current_user.gender = gender
+    db.session.commit()
+    flash('Profile updated successfully', 'success')
+    return redirect(url_for('profile'))
+
 def init_achievements(user_id):
-    # Create achievements for user if they don't exist
     for achievement_data in ACHIEVEMENTS:
         achievement = Achievement.query.filter_by(
             user_id=user_id,
@@ -195,7 +207,6 @@ def view_scenario():
     characters = Character.query.filter_by(user_id=current_user.id).all()
     scenario = get_random_scenario()
     
-    # Create scenario if it doesn't exist
     db_scenario = Scenario.query.filter_by(
         title=scenario['title'],
         description=scenario['description']
@@ -208,18 +219,16 @@ def view_scenario():
             setting=scenario['setting'],
             challenge=scenario['challenge'],
             goal=scenario['goal'],
-            points=100  # Default points for completing scenario
+            points=100
         )
         db.session.add(db_scenario)
         db.session.commit()
     
-    # Get completion status
     completion = ScenarioCompletion.query.filter_by(
         user_id=current_user.id,
         scenario_id=db_scenario.id
     ).first()
     
-    # Get achievements and total points
     achievements = Achievement.query.filter_by(user_id=current_user.id).all()
     total_points = db.session.query(db.func.sum(ScenarioCompletion.points_earned))\
         .filter_by(user_id=current_user.id).scalar() or 0
@@ -237,7 +246,6 @@ def view_scenario():
 def complete_scenario(scenario_id):
     scenario = Scenario.query.get_or_404(scenario_id)
     
-    # Check if already completed
     existing_completion = ScenarioCompletion.query.filter_by(
         user_id=current_user.id,
         scenario_id=scenario_id
@@ -247,7 +255,6 @@ def complete_scenario(scenario_id):
         flash('Scenario already completed!', 'warning')
         return redirect(url_for('view_scenario'))
     
-    # Record completion
     completion = ScenarioCompletion(
         user_id=current_user.id,
         scenario_id=scenario_id,
@@ -255,7 +262,6 @@ def complete_scenario(scenario_id):
     )
     db.session.add(completion)
     
-    # Update achievements
     total_completions = ScenarioCompletion.query.filter_by(
         user_id=current_user.id
     ).count() + 1
@@ -264,7 +270,6 @@ def complete_scenario(scenario_id):
         .filter_by(user_id=current_user.id).scalar() or 0
     total_points += scenario.points
     
-    # Check and unlock achievements
     achievements = Achievement.query.filter_by(
         user_id=current_user.id,
         unlocked_at=None

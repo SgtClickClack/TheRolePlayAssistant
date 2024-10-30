@@ -8,6 +8,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
+    gender = db.Column(db.String(10), nullable=True)  # Options: 'male', 'female', 'other'
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     characters = db.relationship('Character', backref='user', lazy=True)
     templates = db.relationship('CharacterTemplate', backref='user', lazy=True)
