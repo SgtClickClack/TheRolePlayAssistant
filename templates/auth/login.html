@@ -8,7 +8,8 @@
                 <h2>Login</h2>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ url_for('login') }}" class="needs-validation" novalidate>
+                <form method="POST" action="{{ url_for('login') }}" id="loginForm" class="needs-validation" novalidate>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email" required>
@@ -19,7 +20,14 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                         <div class="invalid-feedback">Please provide your password.</div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="loginButton" data-loading-text="Logging in...">
+                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        <span class="button-text">Login</span>
+                    </button>
                 </form>
                 <hr>
                 <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
@@ -27,4 +35,42 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('loginForm');
+    const button = document.getElementById('loginButton');
+    const spinner = button.querySelector('.spinner-border');
+    const buttonText = button.querySelector('.button-text');
+    
+    form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+        } else {
+            // Disable button and show loading state
+            button.disabled = true;
+            spinner.classList.remove('d-none');
+            buttonText.textContent = button.dataset.loadingText;
+        }
+    });
+
+    // Reset button state if there was a validation error
+    const inputs = form.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            if (button.disabled) {
+                button.disabled = false;
+                spinner.classList.add('d-none');
+                buttonText.textContent = 'Login';
+            }
+            // Remove validation classes when user starts typing
+            form.classList.remove('was-validated');
+        });
+    });
+});
+</script>
 {% endblock %}

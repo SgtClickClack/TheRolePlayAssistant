@@ -6,6 +6,7 @@ from flask_login import LoginManager
 import logging
 from sqlalchemy import text
 from flask_session import Session
+from flask_wtf.csrf import CSRFProtect
 
 # Configure logging
 logging.basicConfig(
@@ -19,9 +20,10 @@ class Base(DeclarativeBase):
 
 db = SQLAlchemy(model_class=Base)
 login_manager = LoginManager()
+csrf = CSRFProtect()
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("FLASK_SECRET_KEY") or "role-play-assistant-key"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY") or os.urandom(24)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_recycle": 300,
@@ -31,25 +33,15 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["UPLOAD_FOLDER"] = "static/uploads"
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config["EXPLAIN_TEMPLATE_LOADING"] = True  # Enable template loading debug
-app.config["DEBUG"] = True  # Enable debug mode
+app.config["EXPLAIN_TEMPLATE_LOADING"] = True
+app.config["DEBUG"] = True
+app.config["WTF_CSRF_ENABLED"] = True
+app.config["WTF_CSRF_SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY") or os.urandom(24)
 app.jinja_env.auto_reload = True
 
-# Initialize Flask-Session
+# Initialize extensions
 Session(app)
-
-def verify_database():
-    try:
-        # Test database connection
-        with db.engine.connect() as conn:
-            conn.execute(text("SELECT 1"))
-            conn.commit()
-        logger.info("Database connection successful")
-        return True
-    except Exception as e:
-        logger.error(f"Database verification failed: {str(e)}")
-        return False
-
+csrf.init_app(app)
 db.init_app(app)
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -63,15 +55,14 @@ def load_user(user_id):
 with app.app_context():
     import models
     try:
-        # Ensure upload directory exists
         os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
         logger.info("Upload directory checked/created")
         
-        if not verify_database():
-            db.create_all()
-            logger.info("Database tables created successfully")
-        else:
-            logger.info("Using existing database tables")
+        # Test database connection
+        with db.engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+            conn.commit()
+            logger.info("Database connection successful")
     except Exception as e:
-        logger.error(f"Failed to initialize database: {str(e)}")
+        logger.error(f"Failed to initialize application: {str(e)}")
         raise
