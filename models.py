@@ -1,5 +1,22 @@
 from app import db
 from datetime import datetime
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(256), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    characters = db.relationship('Character', backref='user', lazy=True)
+    templates = db.relationship('CharacterTemplate', backref='user', lazy=True)
+    
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+        
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,6 +49,7 @@ class Character(db.Model):
     
     session_id = db.Column(db.String(100))
     template_id = db.Column(db.Integer, db.ForeignKey('character_template.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
 class CharacterTemplate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -63,6 +81,7 @@ class CharacterTemplate(db.Model):
     alternative_costumes_options = db.Column(db.Text)
     
     session_id = db.Column(db.String(100))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     characters = db.relationship('Character', backref='template', lazy=True)
 
 class Scenario(db.Model):
@@ -83,6 +102,7 @@ class Achievement(db.Model):
     scenarios_required = db.Column(db.Integer, default=0)
     session_id = db.Column(db.String(100))
     unlocked_at = db.Column(db.DateTime, default=None)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
 class ScenarioCompletion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -91,6 +111,7 @@ class ScenarioCompletion(db.Model):
     completed_at = db.Column(db.DateTime, default=datetime.utcnow)
     points_earned = db.Column(db.Integer, default=0)
     character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     
     scenario = db.relationship('Scenario', backref='completions')
     character = db.relationship('Character', backref='completed_scenarios')

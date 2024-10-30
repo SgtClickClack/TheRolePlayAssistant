@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Profile</h2>
+            </div>
+            <div class="card-body">
+                <h3>{{ current_user.username }}</h3>
+                <p class="text-muted">{{ current_user.email }}</p>
+                <p>Member since: {{ current_user.created_at.strftime('%Y-%m-%d') }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Your Characters</h2>
+            </div>
+            <div class="card-body">
+                {% if current_user.characters %}
+                    {% for character in current_user.characters %}
+                    <div class="mb-3 p-3 border rounded">
+                        <h4>{{ character.name }}</h4>
+                        <p><strong>Occupation:</strong> {{ character.occupation }}</p>
+                        <a href="{{ url_for('view_character', char_id=character.id) }}" 
+                           class="btn btn-primary">View Character</a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No characters created yet.</p>
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Create a Character</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Your Templates</h2>
+            </div>
+            <div class="card-body">
+                {% if current_user.templates %}
+                    {% for template in current_user.templates %}
+                    <div class="mb-3 p-3 border rounded">
+                        <h4>{{ template.name }}</h4>
+                        <p>{{ template.description }}</p>
+                        <form action="{{ url_for('create_new_character') }}" method="post" class="d-inline">
+                            <input type="hidden" name="template_id" value="{{ template.id }}">
+                            <button type="submit" class="btn btn-primary">Generate from Template</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No templates created yet.</p>
+                    <a href="{{ url_for('create_template') }}" class="btn btn-primary">Create a Template</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
