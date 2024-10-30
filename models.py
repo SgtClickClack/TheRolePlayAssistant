@@ -94,6 +94,7 @@ class Scenario(db.Model):
     challenge = db.Column(db.String(200))
     goal = db.Column(db.String(200))
     points = db.Column(db.Integer, default=100)  # Points awarded for completing scenario
+    tasks = db.relationship('ScavengerHuntTask', backref='scenario', lazy=True)
 
 class Achievement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -117,3 +118,23 @@ class ScenarioCompletion(db.Model):
     
     scenario = db.relationship('Scenario', backref='completions')
     character = db.relationship('Character', backref='completed_scenarios')
+
+class ScavengerHuntTask(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    scenario_id = db.Column(db.Integer, db.ForeignKey('scenario.id'), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    required_object = db.Column(db.String(100), nullable=False)  # Object to find/photograph
+    object_confidence = db.Column(db.Float, default=0.7)  # Minimum confidence score for object detection
+    points = db.Column(db.Integer, default=50)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    submissions = db.relationship('TaskSubmission', backref='task', lazy=True)
+
+class TaskSubmission(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    task_id = db.Column(db.Integer, db.ForeignKey('scavenger_hunt_task.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    photo_path = db.Column(db.String(255), nullable=False)  # Path to stored photo
+    confidence_score = db.Column(db.Float)  # AI confidence score
+    is_verified = db.Column(db.Boolean, default=False)
+    submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
+    verified_at = db.Column(db.DateTime)

@@ -23,6 +23,10 @@ args = "Flask Server"
 task = "workflow.run"
 args = "Database Migration"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Create Example Tasks"
+
 [[workflows.workflow]]
 name = "Flask Web App"
 author = "agent"
@@ -66,6 +70,20 @@ task = "packager.installForAll"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python migrations.py"
+
+[[workflows.workflow]]
+name = "Create Example Tasks"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python example_tasks.py"
 
 [deployment]
 run = ["sh", "-c", "python main.py"]

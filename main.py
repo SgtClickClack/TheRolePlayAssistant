@@ -1,11 +1,13 @@
 from flask import render_template, request, session, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db
-from models import Character, Scenario, CharacterTemplate, Achievement, ScenarioCompletion, User
+from models import Character, Scenario, CharacterTemplate, Achievement, ScenarioCompletion, User, ScavengerHuntTask, TaskSubmission
 from utils import generate_character as create_character_data, get_random_scenario, generate_character_from_template
+from photo_verification import verify_photo_content, save_photo, allowed_file
 import uuid
 from datetime import datetime
 import logging
+import os
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -388,6 +390,98 @@ def complete_scenario(scenario_id):
         db.session.rollback()
         flash("An error occurred while completing the scenario.", "error")
         return redirect(url_for('view_scenario'))
+
+@app.route('/scavenger_hunt/<int:scenario_id>')
+@login_required
+def scavenger_hunt(scenario_id):
+    try:
+        scenario = Scenario.query.get_or_404(scenario_id)
+        tasks = ScavengerHuntTask.query.filter_by(scenario_id=scenario_id).all()
+        
+        # Get submissions for each task
+        for task in tasks:
+            task.submissions = TaskSubmission.query.filter_by(
+                task_id=task.id,
+                user_id=current_user.id
+            ).all()
+            
+        return render_template('scavenger_hunt.html', 
+                             scenario=scenario, 
+                             tasks=tasks)
+    except Exception as e:
+        logger.error(f"Error loading scavenger hunt: {str(e)}")
+        flash("An error occurred while loading the scavenger hunt.", "error")
+        return redirect(url_for('index'))
+
+@app.route('/submit_task/<int:task_id>', methods=['POST'])
+@login_required
+def submit_task(task_id):
+    try:
+        task = ScavengerHuntTask.query.get_or_404(task_id)
+        
+        if 'photo' not in request.files:
+            flash('No photo uploaded', 'error')
+            return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
+            
+        photo = request.files['photo']
+        if photo.filename == '':
+            flash('No selected photo', 'error')
+            return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
+            
+        if not allowed_file(photo.filename):
+            flash('Invalid file type. Please upload a JPG or PNG image.', 'error')
+            return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
+            
+        # Save the photo
+        photo_path = save_photo(photo)
+        
+        # Verify the photo content
+        is_verified, confidence_score = verify_photo_content(
+            photo_path, 
+            task.required_object,
+            task.object_confidence
+        )
+        
+        # Create submission record
+        submission = TaskSubmission(
+            task_id=task.id,
+            user_id=current_user.id,
+            photo_path=photo_path,
+            confidence_score=confidence_score,
+            is_verified=is_verified,
+            verified_at=datetime.utcnow() if is_verified else None
+        )
+        db.session.add(submission)
+        
+        # Update achievements if verified
+        if is_verified:
+            flash(f'Task completed successfully! Confidence score: {confidence_score:.1%}', 'success')
+            # Add points to scenario completion
+            completion = ScenarioCompletion.query.filter_by(
+                user_id=current_user.id,
+                scenario_id=task.scenario_id
+            ).first()
+            
+            if completion:
+                completion.points_earned += task.points
+            else:
+                completion = ScenarioCompletion(
+                    user_id=current_user.id,
+                    scenario_id=task.scenario_id,
+                    points_earned=task.points
+                )
+                db.session.add(completion)
+        else:
+            flash('The photo does not seem to contain the required object. Please try again.', 'error')
+            
+        db.session.commit()
+        return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
+        
+    except Exception as e:
+        logger.error(f"Error submitting task: {str(e)}")
+        db.session.rollback()
+        flash("An error occurred while submitting your photo.", "error")
+        return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

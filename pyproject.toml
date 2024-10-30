@@ -12,4 +12,6 @@ dependencies = [
     "openai>=1.52.2",
     "torch>=2.5.1",
     "transformers>=4.46.1",
+    "google-cloud-vision>=3.8.0",
+    "pillow>=11.0.0",
 ]
