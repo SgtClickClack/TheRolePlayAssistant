@@ -1,193 +1,145 @@
 import random
 
-NAMES = ["Alex", "Sam", "Jordan", "Taylor", "Casey", "Morgan", "Riley", "Quinn", "Robin", "Jamie"]
-HEIGHTS = ["short", "average height", "tall", "very tall"]
-HAIR_COLORS = ["brown", "black", "blonde", "red", "auburn", "silver", "midnight blue", "emerald green", 
-               "starlight silver", "magical rainbow", "crystal white", "ethereal purple"]
-EYE_COLORS = ["blue", "brown", "green", "hazel", "gray", "violet", "golden", "silver",
-              "celestial blue", "mystic purple", "starlight gold", "crystal clear"]
+NAMES = ["Alex", "Sam", "Jordan", "Taylor", "Casey", "Morgan", "Riley", "Quinn", "Robin", "Jamie", 
+         "Charlie", "Avery", "Parker", "Drew", "Sydney"]
+
+HEIGHTS = ["petite", "average height", "tall"]
+
+HAIR_COLORS = ["brown", "black", "blonde", "red", "auburn", "gray", "dark brown", 
+               "light brown", "honey blonde", "platinum blonde"]
+
+EYE_COLORS = ["blue", "brown", "green", "hazel", "gray", "amber"]
+
 STYLE_PREFERENCES = [
-    "casual and comfortable", "sporty and athletic", "neat and classic", "creative and colorful", 
-    "mystical and flowing", "royal and elegant", "nature-inspired", "magical academy uniform",
-    "ethereal and dreamy", "celestial inspired", "enchanted forest style", "time traveler chic",
-    "tech-enhanced robes", "virtual reality gear", "holographic accessories"
+    "casual and comfortable", "sporty and athletic", "professional and polished", 
+    "artistic and eclectic", "vintage inspired", "minimalist", "bohemian", 
+    "streetwear", "preppy", "business casual"
 ]
+
 SIGNATURE_ITEMS = [
-    "magic wand", "enchanted pendant", "mystical tome", "crystal compass", "friendship bracelet",
-    "dragon scale charm", "fairy dust pouch", "phoenix feather quill",
-    "time-turner necklace", "rune-inscribed bracelet", "starlight crystal", "dimensional key",
-    "holographic display", "smart crystal", "tech-enhanced goggles"
+    "vintage camera", "leather messenger bag", "colorful scarf", "classic watch",
+    "sketchbook and pencils", "sports water bottle", "wireless headphones",
+    "hiking boots", "leather jacket", "favorite sneakers", "gardening gloves",
+    "chef's apron", "laptop bag", "reusable coffee cup"
 ]
 
 OCCUPATIONS = [
-    # Original Occupations
-    "Young Explorer", "Junior Scientist", "Art Student", "Music Scholar", 
-    "Cooking Apprentice", "Nature Guide", "Space Cadet", "Animal Friend",
-    "Apprentice Wizard", "Dragon Keeper", "Potion Maker", "Beast Tamer",
-    "Forest Guardian", "Magic Librarian", "Royal Squire", "Fairy Garden Tender",
-    "Junior Alchemist", "Monster Scholar", "Magical Artificer", "Crystal Healer",
-    "Mystical Musician", "Dream Walker", "Star Whisperer", "Junior Enchanter",
-    # Adventure-themed Occupations
-    "Treasure Hunter", "Mystery Solver", "Storm Chaser", "Deep Sea Explorer",
-    "Mountain Climber", "Sky Navigator", "Cave Explorer", "Lost City Finder",
-    # Modern Fantasy Elements
-    "Tech Wizard", "Digital Dreamweaver", "Robot Whisperer", "Virtual Reality Guide",
-    "Hologram Artist", "Cyber Mage", "Digital Beast Tamer", "AI Whisperer"
+    "Teacher", "Chef", "Photographer", "Artist", "Engineer", "Doctor", "Writer",
+    "Architect", "Musician", "Personal Trainer", "Software Developer", "Nurse",
+    "Journalist", "Interior Designer", "Environmental Scientist", "Film Director",
+    "Dance Instructor", "Graphic Designer", "Veterinarian", "Travel Guide"
 ]
 
 COMMUNICATION_STYLES = [
-    "friendly and outgoing", "thoughtful and gentle", "enthusiastic and energetic",
-    "calm and patient", "cheerful and encouraging", "mystically wise",
-    "dramatically theatrical", "mysteriously cryptic",
-    "speaks in riddles", "communicates with magical gestures", 
-    "telepathically empathetic", "timelessly eloquent",
-    "tells endless dad jokes", "speaks in fun rhymes", "makes up silly songs on the spot"
+    "friendly and outgoing", "thoughtful and analytical", "enthusiastic and energetic",
+    "calm and patient", "direct and confident", "creative and expressive",
+    "empathetic and understanding", "professional and articulate"
 ]
 
 CHALLENGE_HANDLING = [
     "breaks big problems into smaller steps",
-    "asks friends for help when needed",
-    "stays positive and keeps trying",
-    "makes a plan before starting",
-    "uses creativity to find solutions",
-    "consults ancient tomes of wisdom",
-    "seeks guidance from magical mentors",
-    "meditates to find inner strength",
-    "channels elemental energy",
-    "consults with magical creatures",
-    "reads the ancient runes",
-    "uses prophetic visions"
+    "researches thoroughly before starting",
+    "seeks advice from mentors",
+    "creates detailed action plans",
+    "stays positive under pressure",
+    "learns from past experiences",
+    "collaborates with others",
+    "adapts quickly to changes",
+    "focuses on solutions not problems",
+    "takes calculated risks"
 ]
 
 HOBBIES = [
-    "collecting magical crystals",
-    "practicing simple spells",
-    "tending magical plants",
-    "studying mystical creatures",
-    "brewing simple potions",
-    "writing enchanted stories",
-    "crafting magical items",
-    "star chart mapping",
-    "magical creature care",
-    "enchanted art creation",
-    "time stream surfing",
-    "dimensional portal sketching",
-    "rune stone collecting",
-    "prophetic dream journaling",
-    "programming magical computers",
-    "designing virtual realms",
-    "holographic art creation",
-    "robot companion training",
-    "digital spell crafting"
+    "hiking", "cooking", "painting", "playing guitar", "gardening",
+    "photography", "yoga", "rock climbing", "writing poetry",
+    "woodworking", "pottery", "surfing", "bird watching",
+    "learning languages", "cycling", "camping", "dancing",
+    "collecting vinyl records", "volunteering", "DIY home projects"
 ]
 
 QUIRKS = [
-    "always carries a notebook for ideas",
-    "gives names to all plants",
-    "tells jokes when nervous",
-    "hums while thinking",
-    "collects interesting facts",
-    "speaks to magical creatures",
-    "glows slightly when excited",
-    "floats when daydreaming",
-    "makes sparkles when sneezing",
-    "changes hair color with mood",
-    "leaves magical footprints",
-    "creates small illusions when happy",
-    "understands ancient runes instinctively",
-    "has prophetic dreams about small things",
-    "controls minor elements when focused",
-    "always tells dad jokes",
-    "can do amazing card tricks",
-    "makes up silly songs",
-    "expert pillow fort builder",
-    "professional bubble blower",
-    "creates rainbow trails while running",
-    "juggles magical orbs when thinking"
+    "always has a camera ready", "loves telling dad jokes", "hums while working",
+    "collects interesting rocks", "names their plants", "always carries a book",
+    "writes notes on coffee cups", "doodles during meetings",
+    "remembers random facts", "loves trying new recipes",
+    "speaks in movie quotes", "takes daily sunset photos",
+    "organizes everything by color", "makes up songs about daily tasks",
+    "always carries snacks"
 ]
 
 CHILDHOOD_STORIES = [
-    "Once organized a neighborhood cleanup day that turned into a weekly tradition",
-    "Taught themselves to juggle using oranges from the family garden",
-    "Built an amazing treehouse with help from their grandparents",
-    "Started a reading club at school that's still going strong",
-    "Rescued and cared for a lost kitten that became the family pet",
-    "Raised by a family of kind-hearted magical creatures in an enchanted forest",
-    "Graduated top of their class from a prestigious mystical academy",
-    "Born during a rare celestial event that occurs once every century",
-    "Discovered a mysterious portal to another realm in their backyard",
-    "Learned to speak with magical creatures at a young age",
-    "First showed signs of magical ability during a full moon festival",
-    "Found a hidden treasure map in their grandmother's attic",
-    "Built their first robot from recycled parts",
-    "Created a virtual reality world for their school project",
-    "Tamed their first digital dragon in the cyber realm"
+    "Started a successful recycling program at school",
+    "Won first place in the local art competition",
+    "Organized a neighborhood cleanup day",
+    "Founded a school photography club",
+    "Built an award-winning science fair project",
+    "Started a mini garden in the backyard",
+    "Created a community book exchange",
+    "Taught themselves to code at age 12",
+    "Raised money for animal shelter through bake sales",
+    "Led their school's environmental initiative"
 ]
 
 FAMILY_RELATIONS = [
-    "Loves helping younger siblings with homework",
-    "Bakes cookies every Sunday with grandma",
-    "Goes camping with parents every summer",
-    "Learns traditional songs from their aunts and uncles",
-    "Shares a special hobby with their cousin",
-    "Raised by wise forest creatures",
-    "Mentored by ancient magical beings",
-    "Connected to a lineage of time travelers",
-    "Part of a family of dream keepers",
-    "Descended from legendary crystal guardians"
+    "Weekly cooking sessions with grandparents",
+    "Mountain biking with siblings every weekend",
+    "Family game nights every Friday",
+    "Gardening with parents",
+    "Teaching tech skills to elderly relatives",
+    "Annual family camping trips",
+    "Morning jogs with cousins",
+    "DIY projects with dad",
+    "Cooking experiments with mom",
+    "Photography walks with uncle"
 ]
 
 LIFE_GOALS = [
-    "Dreams of becoming a teacher to help others learn",
-    "Wants to invent something that helps the environment",
-    "Hopes to write and illustrate children's books",
-    "Wishes to travel and make friends around the world",
-    "Aims to start a community garden",
-    "Aspires to master ancient magical arts",
-    "Dreams of becoming a legendary creature guardian",
-    "Hopes to discover new realms through portal magic",
-    "Wishes to decode all ancient runes",
-    "Plans to establish a sanctuary for magical creatures"
+    "Open a restaurant", "Publish a book", "Travel to every continent",
+    "Start an eco-friendly business", "Run a marathon",
+    "Learn three new languages", "Build a sustainable home",
+    "Start a community art center", "Become a master chef",
+    "Create a successful YouTube channel", "Open a photography studio",
+    "Design sustainable fashion", "Start a coding bootcamp"
 ]
 
 ACHIEVEMENTS = [
-    "Won first prize in the science fair",
-    "Organized a successful charity bake sale",
-    "Learned to play three musical instruments",
-    "Created a recycling program at school",
-    "Taught their dog five amazing tricks",
-    "Successfully tamed their first dragon",
-    "Created their first stable portal",
-    "Mastered the basics of elemental magic",
-    "Decoded an ancient runic message",
-    "Established communication with magical creatures"
+    "Won local photography contest",
+    "Completed a marathon",
+    "Published articles in magazines",
+    "Started successful community project",
+    "Earned advanced diving certification",
+    "Mastered three musical instruments",
+    "Created popular cooking blog",
+    "Led successful fundraising campaign",
+    "Developed popular mobile app",
+    "Exhibited artwork in galleries"
 ]
 
 COSTUMES = [
     {
-        "main": "Enchanted Robes with glowing patterns",
-        "accessories": ["crystal wand", "starlight pendant", "runic sash"],
-        "alternatives": ["Celestial Mage outfit", "Dream Weaver robes", "Portal Master attire"]
+        "main": "Professional Business Attire",
+        "accessories": ["leather briefcase", "smart watch", "classic tie"],
+        "alternatives": ["Business Casual", "Conference Wear", "Meeting Attire"]
     },
     {
-        "main": "Tech-Enhanced Explorer Gear",
-        "accessories": ["holographic map", "digital compass", "smart goggles"],
-        "alternatives": ["Virtual Mage suit", "Cyber Knight armor", "Digital Scout uniform"]
+        "main": "Creative Studio Outfit",
+        "accessories": ["canvas apron", "art supplies bag", "comfortable shoes"],
+        "alternatives": ["Gallery Opening Attire", "Workshop Wear", "Paint Session Outfit"]
     },
     {
-        "main": "Storm Chaser's Weather-proof Attire",
-        "accessories": ["wind compass", "lightning rod staff", "cloud walking boots"],
-        "alternatives": ["Sky Captain outfit", "Weather Mage robes", "Thunder Knight gear"]
+        "main": "Outdoor Adventure Gear",
+        "accessories": ["hiking backpack", "water bottle", "trail map"],
+        "alternatives": ["Climbing Gear", "Camping Outfit", "Trail Running Attire"]
     },
     {
-        "main": "Deep Sea Explorer's Magical Diving Suit",
-        "accessories": ["bubble helm", "coral compass", "tide stone"],
-        "alternatives": ["Ocean Sage robes", "Reef Knight armor", "Wave Rider gear"]
+        "main": "Chef's Professional Uniform",
+        "accessories": ["professional knives", "recipe notebook", "timing watch"],
+        "alternatives": ["Casual Cooking Wear", "Food Presentation Outfit", "Kitchen Training Gear"]
     },
     {
-        "main": "Virtual Reality Adventurer's Suit",
-        "accessories": ["digital wand", "pixel pendant", "data crystal"],
-        "alternatives": ["Cyber Mage robes", "Digital Knight armor", "Tech Wizard gear"]
+        "main": "Modern Tech Professional",
+        "accessories": ["laptop bag", "wireless earbuds", "smart devices"],
+        "alternatives": ["Remote Work Casual", "Tech Conference Wear", "Coding Session Outfit"]
     }
 ]
 
@@ -196,7 +148,7 @@ def generate_character():
     
     return {
         "name": random.choice(NAMES),
-        "age": random.randint(8, 14),
+        "age": random.randint(18, 65),
         "height": random.choice(HEIGHTS),
         "hair_color": random.choice(HAIR_COLORS),
         "eye_color": random.choice(EYE_COLORS),
@@ -226,7 +178,7 @@ def generate_character_from_template(template):
     costume_choice = random.choice(COSTUMES)
     return {
         "name": random.choice(NAMES),
-        "age": random.randint(8, 14),
+        "age": random.randint(18, 65),
         "height": get_random_option(template.height_options, HEIGHTS),
         "hair_color": get_random_option(template.hair_color_options, HAIR_COLORS),
         "eye_color": get_random_option(template.eye_color_options, EYE_COLORS),
@@ -250,25 +202,25 @@ def generate_character_from_template(template):
 
 SCENARIOS = [
     {
-        "title": "The Lost Library",
-        "description": "A magical library has appeared in town! Help find missing books and solve riddles.",
-        "setting": "Ancient Library",
-        "challenge": "Solve puzzles and find books",
-        "goal": "Restore the library's magic"
+        "title": "Community Garden Project",
+        "description": "Help transform an empty lot into a thriving community garden!",
+        "setting": "Urban Neighborhood",
+        "challenge": "Organize volunteers and plan garden layout",
+        "goal": "Create a sustainable green space"
     },
     {
-        "title": "Space Adventure",
-        "description": "Join a mission to explore a newly discovered planet!",
-        "setting": "Outer Space",
-        "challenge": "Navigate through asteroid fields",
-        "goal": "Make first contact with friendly aliens"
+        "title": "Local Food Festival",
+        "description": "Organize and participate in the city's biggest food celebration!",
+        "setting": "City Center",
+        "challenge": "Coordinate with local restaurants and vendors",
+        "goal": "Create unforgettable culinary experiences"
     },
     {
-        "title": "Digital Realm Quest",
-        "description": "A virtual world needs your help to restore its corrupted data!",
-        "setting": "Cyber Kingdom",
-        "challenge": "Debug magical programs and restore digital balance",
-        "goal": "Save the virtual realm from chaos"
+        "title": "Tech Startup Challenge",
+        "description": "Build a team and create an innovative solution for local businesses!",
+        "setting": "Modern Co-working Space",
+        "challenge": "Develop and pitch a business idea",
+        "goal": "Launch a successful startup"
     }
 ]
 
