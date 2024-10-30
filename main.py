@@ -42,13 +42,27 @@ def create_template():
             session_id=session['session_id'],
             name=request.form['name'],
             description=request.form.get('description', ''),
+            # Appearance options
             height_options=request.form.get('height_options', ''),
             hair_color_options=request.form.get('hair_color_options', ''),
             eye_color_options=request.form.get('eye_color_options', ''),
+            style_preference_options=request.form.get('style_preference_options', ''),
+            signature_items_options=request.form.get('signature_items_options', ''),
+            # Background options
+            childhood_story_templates=request.form.get('childhood_story_templates', ''),
+            family_relations_templates=request.form.get('family_relations_templates', ''),
+            life_goals_templates=request.form.get('life_goals_templates', ''),
+            achievements_templates=request.form.get('achievements_templates', ''),
+            # Personality options
             occupation_options=request.form.get('occupation_options', ''),
+            communication_style_options=request.form.get('communication_style_options', ''),
+            challenge_handling_options=request.form.get('challenge_handling_options', ''),
             hobbies_options=request.form.get('hobbies_options', ''),
+            quirks_options=request.form.get('quirks_options', ''),
+            # Costume options
             costume_options=request.form.get('costume_options', ''),
-            accessories_options=request.form.get('accessories_options', '')
+            accessories_options=request.form.get('accessories_options', ''),
+            alternative_costumes_options=request.form.get('alternative_costumes_options', '')
         )
         db.session.add(template)
         db.session.commit()

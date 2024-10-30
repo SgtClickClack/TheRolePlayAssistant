@@ -6,14 +6,18 @@
         <h2>Create Character Template</h2>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ url_for('create_template') }}">
+        <form method="POST" action="{{ url_for('create_template') }}" id="templateForm" class="needs-validation" novalidate>
             <div class="mb-3">
-                <label for="name" class="form-label">Template Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <label for="name" class="form-label">Template Name*</label>
+                <input type="text" class="form-control" id="name" name="name" required
+                       minlength="3" maxlength="100">
+                <div class="invalid-feedback">Please provide a template name (3-100 characters)</div>
             </div>
+            
             <div class="mb-3">
-                <label for="description" class="form-label">Template Description</label>
-                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                <label for="description" class="form-label">Template Description*</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                <div class="invalid-feedback">Please provide a template description</div>
             </div>
 
             <h4 class="mt-4">Appearance Options</h4>
@@ -25,40 +29,93 @@
             <div class="mb-3">
                 <label for="hair_color_options" class="form-label">Hair Color Options</label>
                 <input type="text" class="form-control" id="hair_color_options" name="hair_color_options"
-                       placeholder="brown, black, blonde">
+                       placeholder="brown, silver, midnight blue">
             </div>
             <div class="mb-3">
                 <label for="eye_color_options" class="form-label">Eye Color Options</label>
                 <input type="text" class="form-control" id="eye_color_options" name="eye_color_options"
-                       placeholder="blue, brown, green">
+                       placeholder="blue, violet, golden">
+            </div>
+            <div class="mb-3">
+                <label for="style_preference_options" class="form-label">Style Preferences</label>
+                <input type="text" class="form-control" id="style_preference_options" name="style_preference_options"
+                       placeholder="mystical and flowing, royal and elegant">
+            </div>
+            <div class="mb-3">
+                <label for="signature_items_options" class="form-label">Signature Items</label>
+                <input type="text" class="form-control" id="signature_items_options" name="signature_items_options"
+                       placeholder="magic wand, enchanted pendant">
+            </div>
+
+            <h4 class="mt-4">Background Options</h4>
+            <div class="mb-3">
+                <label for="childhood_story_templates" class="form-label">Childhood Stories</label>
+                <textarea class="form-control" id="childhood_story_templates" name="childhood_story_templates" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="family_relations_templates" class="form-label">Family Relations</label>
+                <textarea class="form-control" id="family_relations_templates" name="family_relations_templates" rows="3"></textarea>
             </div>
 
             <h4 class="mt-4">Personality Options</h4>
             <div class="mb-3">
-                <label for="occupation_options" class="form-label">Occupation Options</label>
-                <input type="text" class="form-control" id="occupation_options" name="occupation_options"
-                       placeholder="Explorer, Scientist, Artist">
+                <label for="occupation_options" class="form-label">Occupation Options*</label>
+                <textarea class="form-control" id="occupation_options" name="occupation_options" rows="3" required
+                       placeholder="Apprentice Wizard, Dragon Keeper, Potion Maker"></textarea>
+                <div class="invalid-feedback">Please provide at least one occupation option</div>
+            </div>
+            <div class="mb-3">
+                <label for="communication_style_options" class="form-label">Communication Styles</label>
+                <input type="text" class="form-control" id="communication_style_options" name="communication_style_options"
+                       placeholder="mystically wise, dramatically theatrical">
             </div>
             <div class="mb-3">
                 <label for="hobbies_options" class="form-label">Hobbies Options</label>
-                <input type="text" class="form-control" id="hobbies_options" name="hobbies_options"
-                       placeholder="collecting rocks, drawing, writing">
+                <textarea class="form-control" id="hobbies_options" name="hobbies_options" rows="2"
+                       placeholder="collecting magical crystals, brewing simple potions"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="quirks_options" class="form-label">Quirks</label>
+                <textarea class="form-control" id="quirks_options" name="quirks_options" rows="2"
+                       placeholder="glows slightly when excited, changes hair color with mood"></textarea>
             </div>
 
             <h4 class="mt-4">Costume Options</h4>
             <div class="mb-3">
-                <label for="costume_options" class="form-label">Costume Options</label>
-                <textarea class="form-control" id="costume_options" name="costume_options" rows="3"
-                          placeholder="Explorer's outfit, Scientist lab coat, Artist's smock"></textarea>
+                <label for="costume_options" class="form-label">Costume Options*</label>
+                <textarea class="form-control" id="costume_options" name="costume_options" rows="3" required
+                       placeholder="Apprentice Wizard Robes, Dragon Keeper's armor"></textarea>
+                <div class="invalid-feedback">Please provide at least one costume option</div>
             </div>
             <div class="mb-3">
                 <label for="accessories_options" class="form-label">Accessories Options</label>
-                <textarea class="form-control" id="accessories_options" name="accessories_options" rows="3"
-                          placeholder="compass, magnifying glass, paint brushes"></textarea>
+                <textarea class="form-control" id="accessories_options" name="accessories_options" rows="2"
+                       placeholder="training wand, enchanted satchel"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="alternative_costumes_options" class="form-label">Alternative Costumes</label>
+                <textarea class="form-control" id="alternative_costumes_options" name="alternative_costumes_options" rows="2"
+                       placeholder="Battle Mage armor, Potion Master outfit"></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Create Template</button>
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('templateForm');
+    
+    form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+    });
+});
+</script>
 {% endblock %}

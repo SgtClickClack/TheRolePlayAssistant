@@ -2,19 +2,26 @@ import random
 
 NAMES = ["Alex", "Sam", "Jordan", "Taylor", "Casey", "Morgan", "Riley", "Quinn", "Robin", "Jamie"]
 HEIGHTS = ["short", "average height", "tall", "very tall"]
-HAIR_COLORS = ["brown", "black", "blonde", "red", "auburn"]
-EYE_COLORS = ["blue", "brown", "green", "hazel", "gray"]
-STYLE_PREFERENCES = ["casual and comfortable", "sporty and athletic", "neat and classic", "creative and colorful"]
-SIGNATURE_ITEMS = ["lucky charm bracelet", "favorite backpack", "special hat", "colorful glasses", "friendship necklace"]
+HAIR_COLORS = ["brown", "black", "blonde", "red", "auburn", "silver", "midnight blue", "emerald green"]
+EYE_COLORS = ["blue", "brown", "green", "hazel", "gray", "violet", "golden", "silver"]
+STYLE_PREFERENCES = ["casual and comfortable", "sporty and athletic", "neat and classic", "creative and colorful", 
+                    "mystical and flowing", "royal and elegant", "nature-inspired", "magical academy uniform"]
+SIGNATURE_ITEMS = ["magic wand", "enchanted pendant", "mystical tome", "crystal compass", "friendship bracelet",
+                  "dragon scale charm", "fairy dust pouch", "phoenix feather quill"]
 
 OCCUPATIONS = [
     "Young Explorer", "Junior Scientist", "Art Student", "Music Scholar", 
-    "Cooking Apprentice", "Nature Guide", "Space Cadet", "Animal Friend"
+    "Cooking Apprentice", "Nature Guide", "Space Cadet", "Animal Friend",
+    "Apprentice Wizard", "Dragon Keeper", "Potion Maker", "Beast Tamer",
+    "Forest Guardian", "Magic Librarian", "Royal Squire", "Fairy Garden Tender",
+    "Junior Alchemist", "Monster Scholar", "Magical Artificer", "Crystal Healer",
+    "Mystical Musician", "Dream Walker", "Star Whisperer", "Junior Enchanter"
 ]
 
 COMMUNICATION_STYLES = [
     "friendly and outgoing", "thoughtful and gentle", "enthusiastic and energetic",
-    "calm and patient", "cheerful and encouraging"
+    "calm and patient", "cheerful and encouraging", "mystically wise",
+    "dramatically theatrical", "mysteriously cryptic"
 ]
 
 CHALLENGE_HANDLING = [
@@ -22,18 +29,23 @@ CHALLENGE_HANDLING = [
     "asks friends for help when needed",
     "stays positive and keeps trying",
     "makes a plan before starting",
-    "uses creativity to find solutions"
+    "uses creativity to find solutions",
+    "consults ancient tomes of wisdom",
+    "seeks guidance from magical mentors",
+    "meditates to find inner strength"
 ]
 
 HOBBIES = [
-    "collecting rocks and minerals",
-    "building with blocks",
-    "drawing comic books",
-    "learning magic tricks",
-    "growing plants",
-    "stargazing",
-    "making friendship bracelets",
-    "writing stories"
+    "collecting magical crystals",
+    "practicing simple spells",
+    "tending magical plants",
+    "studying mystical creatures",
+    "brewing simple potions",
+    "writing enchanted stories",
+    "crafting magical items",
+    "star chart mapping",
+    "magical creature care",
+    "enchanted art creation"
 ]
 
 QUIRKS = [
@@ -41,7 +53,12 @@ QUIRKS = [
     "gives names to all plants",
     "tells jokes when nervous",
     "hums while thinking",
-    "collects interesting facts"
+    "collects interesting facts",
+    "speaks to magical creatures",
+    "glows slightly when excited",
+    "floats when daydreaming",
+    "makes sparkles when sneezing",
+    "changes hair color with mood"
 ]
 
 CHILDHOOD_STORIES = [
@@ -78,19 +95,29 @@ ACHIEVEMENTS = [
 
 COSTUMES = [
     {
-        "main": "Explorer's outfit with khaki vest and cargo pants",
-        "accessories": ["compass necklace", "adventure hat", "binoculars"],
-        "alternatives": ["Safari researcher", "Mountain climber", "Ocean explorer"]
+        "main": "Apprentice Wizard Robes with starry patterns",
+        "accessories": ["training wand", "enchanted satchel", "magical familiar"],
+        "alternatives": ["Battle Mage armor", "Potion Master outfit", "Mystic Scholar robes"]
     },
     {
-        "main": "Scientist lab coat with safety goggles",
-        "accessories": ["notebook and pencil", "magnifying glass", "experiment kit"],
-        "alternatives": ["Space scientist", "Nature researcher", "Inventor"]
+        "main": "Dragon Keeper's leather armor with scales",
+        "accessories": ["flame-resistant gloves", "dragon whistle", "scale brush"],
+        "alternatives": ["Beast Master gear", "Wyrm Trainer outfit", "Dragon Scout uniform"]
     },
     {
-        "main": "Artist's smock with rainbow patterns",
-        "accessories": ["paint brush set", "beret", "colorful scarf"],
-        "alternatives": ["Street artist", "Museum curator", "Fashion designer"]
+        "main": "Forest Guardian's camouflage cloak",
+        "accessories": ["nature's compass", "herb pouch", "animal speaking charm"],
+        "alternatives": ["Dryad's dress", "Ranger's outfit", "Fairy Friend attire"]
+    },
+    {
+        "main": "Royal Academy uniform with house colors",
+        "accessories": ["enchanted quill", "magical textbooks", "house badge"],
+        "alternatives": ["Dueling robes", "Study hall attire", "Graduation ceremonial robes"]
+    },
+    {
+        "main": "Crystal Healer's flowing robes",
+        "accessories": ["healing crystals", "energy pendulum", "aura glasses"],
+        "alternatives": ["Light Weaver outfit", "Rainbow Mage robes", "Star Healer attire"]
     }
 ]
 
@@ -120,7 +147,6 @@ def generate_character():
     }
 
 def generate_character_from_template(template):
-    """Generate a character based on a template's options"""
     def get_random_option(options_str, default_list):
         if options_str and options_str.strip():
             options = [opt.strip() for opt in options_str.split(',')]
