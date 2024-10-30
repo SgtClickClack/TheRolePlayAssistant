@@ -9,12 +9,14 @@ EYE_COLORS = ["blue", "brown", "green", "hazel", "gray", "violet", "golden", "si
 STYLE_PREFERENCES = [
     "casual and comfortable", "sporty and athletic", "neat and classic", "creative and colorful", 
     "mystical and flowing", "royal and elegant", "nature-inspired", "magical academy uniform",
-    "ethereal and dreamy", "celestial inspired", "enchanted forest style", "time traveler chic"
+    "ethereal and dreamy", "celestial inspired", "enchanted forest style", "time traveler chic",
+    "tech-enhanced robes", "virtual reality gear", "holographic accessories"
 ]
 SIGNATURE_ITEMS = [
     "magic wand", "enchanted pendant", "mystical tome", "crystal compass", "friendship bracelet",
     "dragon scale charm", "fairy dust pouch", "phoenix feather quill",
-    "time-turner necklace", "rune-inscribed bracelet", "starlight crystal", "dimensional key"
+    "time-turner necklace", "rune-inscribed bracelet", "starlight crystal", "dimensional key",
+    "holographic display", "smart crystal", "tech-enhanced goggles"
 ]
 
 OCCUPATIONS = [
@@ -25,10 +27,12 @@ OCCUPATIONS = [
     "Forest Guardian", "Magic Librarian", "Royal Squire", "Fairy Garden Tender",
     "Junior Alchemist", "Monster Scholar", "Magical Artificer", "Crystal Healer",
     "Mystical Musician", "Dream Walker", "Star Whisperer", "Junior Enchanter",
-    # New Fantasy Occupations
-    "Dragon Tamer", "Spell Weaver", "Crystal Guardian", "Time Traveler",
-    "Dream Walker", "Star Whisperer", "Ancient Rune Scholar", "Mystical Beast Keeper",
-    "Celestial Navigator", "Portal Keeper", "Enchanted Artist", "Magical Zoologist"
+    # Adventure-themed Occupations
+    "Treasure Hunter", "Mystery Solver", "Storm Chaser", "Deep Sea Explorer",
+    "Mountain Climber", "Sky Navigator", "Cave Explorer", "Lost City Finder",
+    # Modern Fantasy Elements
+    "Tech Wizard", "Digital Dreamweaver", "Robot Whisperer", "Virtual Reality Guide",
+    "Hologram Artist", "Cyber Mage", "Digital Beast Tamer", "AI Whisperer"
 ]
 
 COMMUNICATION_STYLES = [
@@ -36,7 +40,8 @@ COMMUNICATION_STYLES = [
     "calm and patient", "cheerful and encouraging", "mystically wise",
     "dramatically theatrical", "mysteriously cryptic",
     "speaks in riddles", "communicates with magical gestures", 
-    "telepathically empathetic", "timelessly eloquent"
+    "telepathically empathetic", "timelessly eloquent",
+    "tells endless dad jokes", "speaks in fun rhymes", "makes up silly songs on the spot"
 ]
 
 CHALLENGE_HANDLING = [
@@ -68,7 +73,12 @@ HOBBIES = [
     "time stream surfing",
     "dimensional portal sketching",
     "rune stone collecting",
-    "prophetic dream journaling"
+    "prophetic dream journaling",
+    "programming magical computers",
+    "designing virtual realms",
+    "holographic art creation",
+    "robot companion training",
+    "digital spell crafting"
 ]
 
 QUIRKS = [
@@ -86,23 +96,32 @@ QUIRKS = [
     "creates small illusions when happy",
     "understands ancient runes instinctively",
     "has prophetic dreams about small things",
-    "controls minor elements when focused"
+    "controls minor elements when focused",
+    "always tells dad jokes",
+    "can do amazing card tricks",
+    "makes up silly songs",
+    "expert pillow fort builder",
+    "professional bubble blower",
+    "creates rainbow trails while running",
+    "juggles magical orbs when thinking"
 ]
 
 CHILDHOOD_STORIES = [
-    # Original stories
     "Once organized a neighborhood cleanup day that turned into a weekly tradition",
     "Taught themselves to juggle using oranges from the family garden",
     "Built an amazing treehouse with help from their grandparents",
     "Started a reading club at school that's still going strong",
     "Rescued and cared for a lost kitten that became the family pet",
-    # New fantasy backgrounds
     "Raised by a family of kind-hearted magical creatures in an enchanted forest",
     "Graduated top of their class from a prestigious mystical academy",
     "Born during a rare celestial event that occurs once every century",
     "Discovered a mysterious portal to another realm in their backyard",
     "Learned to speak with magical creatures at a young age",
-    "First showed signs of magical ability during a full moon festival"
+    "First showed signs of magical ability during a full moon festival",
+    "Found a hidden treasure map in their grandmother's attic",
+    "Built their first robot from recycled parts",
+    "Created a virtual reality world for their school project",
+    "Tamed their first digital dragon in the cyber realm"
 ]
 
 FAMILY_RELATIONS = [
@@ -151,24 +170,24 @@ COSTUMES = [
         "alternatives": ["Celestial Mage outfit", "Dream Weaver robes", "Portal Master attire"]
     },
     {
-        "main": "Mystical Armor with crystal accents",
-        "accessories": ["energy shield", "power crystals", "enchanted gauntlets"],
-        "alternatives": ["Battle Mage gear", "Guardian's armor", "Crystal Knight suit"]
+        "main": "Tech-Enhanced Explorer Gear",
+        "accessories": ["holographic map", "digital compass", "smart goggles"],
+        "alternatives": ["Virtual Mage suit", "Cyber Knight armor", "Digital Scout uniform"]
     },
     {
-        "main": "Nature Weaver's flowing garments",
-        "accessories": ["living vine belt", "flower crown", "leaf-woven cape"],
-        "alternatives": ["Forest Guardian attire", "Bloom Keeper robes", "Earth Mage outfit"]
+        "main": "Storm Chaser's Weather-proof Attire",
+        "accessories": ["wind compass", "lightning rod staff", "cloud walking boots"],
+        "alternatives": ["Sky Captain outfit", "Weather Mage robes", "Thunder Knight gear"]
     },
     {
-        "main": "Time Traveler's steampunk attire",
-        "accessories": ["chronometer watch", "dimensional goggles", "temporal compass"],
-        "alternatives": ["Quantum Explorer suit", "Timekeeper robes", "Dimensional Drifter gear"]
+        "main": "Deep Sea Explorer's Magical Diving Suit",
+        "accessories": ["bubble helm", "coral compass", "tide stone"],
+        "alternatives": ["Ocean Sage robes", "Reef Knight armor", "Wave Rider gear"]
     },
     {
-        "main": "Star Mage's constellation cloak",
-        "accessories": ["astral compass", "starlight staff", "moon phase medallion"],
-        "alternatives": ["Celestial Sage robes", "Nova Weaver attire", "Cosmic Oracle garments"]
+        "main": "Virtual Reality Adventurer's Suit",
+        "accessories": ["digital wand", "pixel pendant", "data crystal"],
+        "alternatives": ["Cyber Mage robes", "Digital Knight armor", "Tech Wizard gear"]
     }
 ]
 
@@ -204,6 +223,7 @@ def generate_character_from_template(template):
             return random.choice(options) if options else random.choice(default_list)
         return random.choice(default_list)
 
+    costume_choice = random.choice(COSTUMES)
     return {
         "name": random.choice(NAMES),
         "age": random.randint(8, 14),
@@ -242,6 +262,13 @@ SCENARIOS = [
         "setting": "Outer Space",
         "challenge": "Navigate through asteroid fields",
         "goal": "Make first contact with friendly aliens"
+    },
+    {
+        "title": "Digital Realm Quest",
+        "description": "A virtual world needs your help to restore its corrupted data!",
+        "setting": "Cyber Kingdom",
+        "challenge": "Debug magical programs and restore digital balance",
+        "goal": "Save the virtual realm from chaos"
     }
 ]
 
