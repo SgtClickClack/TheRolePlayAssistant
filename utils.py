@@ -1,4 +1,45 @@
 import random
+from collections import deque
+import copy
+
+class TraitHistory:
+    def __init__(self, max_history=3):
+        self.max_history = max_history
+        self.history = deque(maxlen=max_history)
+        
+    def add_character(self, character):
+        self.history.append(character)
+        
+    def is_similar(self, new_traits, threshold=0.3):
+        if not self.history:
+            return False
+            
+        for old_char in self.history:
+            similar_count = 0
+            total_traits = 0
+            
+            for key, value in new_traits.items():
+                if key in old_char and old_char[key] == value:
+                    similar_count += 1
+                total_traits += 1
+                
+            if similar_count / total_traits > threshold:
+                return True
+        return False
+
+    def get_unused_option(self, options, key):
+        if not self.history:
+            return random.choice(options)
+            
+        used_options = {char[key] for char in self.history if key in char}
+        unused_options = [opt for opt in options if opt not in used_options]
+        
+        if unused_options:
+            return random.choice(unused_options)
+        return random.choice(options)
+
+# Initialize global trait history
+trait_history = TraitHistory()
 
 NAMES = ["Alex", "Sam", "Jordan", "Taylor", "Casey", "Morgan", "Riley", "Quinn", "Robin", "Jamie", 
          "Charlie", "Avery", "Parker", "Drew", "Sydney"]
@@ -15,7 +56,7 @@ EYE_COLORS = ["blue", "brown", "green", "hazel", "amber"]
 def get_eye_color():
     if random.random() < 0.08:  # 8% chance for gray eyes
         return "gray"
-    return random.choice(EYE_COLORS)
+    return trait_history.get_unused_option(EYE_COLORS, "eye_color")
 
 STYLE_PREFERENCES = [
     "casual and comfortable", "sporty and athletic", "professional and polished", 
@@ -140,37 +181,46 @@ COSTUMES = [
 ]
 
 def generate_character():
+    # Shuffle all arrays before selection
+    def shuffle_and_get(array):
+        shuffled = copy.copy(array)
+        random.shuffle(shuffled)
+        return trait_history.get_unused_option(shuffled, array.__name__.lower())
+        
     costume_choice = random.choice(COSTUMES)
     
-    # Get character basics
-    occupation = random.choice(OCCUPATIONS)
-    childhood = random.choice(CHILDHOOD_STORIES)
-    family = random.choice(FAMILY_RELATIONS)
-    achievement = random.choice(ACHIEVEMENTS)
-    
-    # Create coherent background based on occupation and experiences
+    # Generate new character with unused traits
     character = {
-        "name": random.choice(NAMES),
+        "name": trait_history.get_unused_option(NAMES, "name"),
         "age": random.randint(18, 65),
-        "height": random.choice(HEIGHTS),
-        "hair_color": random.choice(HAIR_COLORS),
-        "eye_color": get_eye_color(),  # Using the new eye color function
-        "style_preference": random.choice(STYLE_PREFERENCES),
-        "signature_items": random.choice(SIGNATURE_ITEMS),
-        "occupation": occupation,
-        "childhood_story": childhood,
-        "family_relations": family,
-        "life_goals": random.choice(LIFE_GOALS),
-        "achievements": achievement,
-        "communication_style": random.choice(COMMUNICATION_STYLES),
-        "challenge_handling": random.choice(CHALLENGE_HANDLING),
-        "hobbies": random.choice(HOBBIES),
-        "quirks": random.choice(QUIRKS),
+        "height": trait_history.get_unused_option(HEIGHTS, "height"),
+        "hair_color": trait_history.get_unused_option(HAIR_COLORS, "hair_color"),
+        "eye_color": get_eye_color(),
+        "style_preference": trait_history.get_unused_option(STYLE_PREFERENCES, "style_preference"),
+        "signature_items": trait_history.get_unused_option(SIGNATURE_ITEMS, "signature_items"),
+        "occupation": trait_history.get_unused_option(OCCUPATIONS, "occupation"),
+        "childhood_story": trait_history.get_unused_option(CHILDHOOD_STORIES, "childhood_story"),
+        "family_relations": trait_history.get_unused_option(FAMILY_RELATIONS, "family_relations"),
+        "life_goals": trait_history.get_unused_option(LIFE_GOALS, "life_goals"),
+        "achievements": trait_history.get_unused_option(ACHIEVEMENTS, "achievements"),
+        "communication_style": trait_history.get_unused_option(COMMUNICATION_STYLES, "communication_style"),
+        "challenge_handling": trait_history.get_unused_option(CHALLENGE_HANDLING, "challenge_handling"),
+        "hobbies": trait_history.get_unused_option(HOBBIES, "hobbies"),
+        "quirks": trait_history.get_unused_option(QUIRKS, "quirks"),
         "costume": costume_choice["main"],
         "accessories": ", ".join(costume_choice["accessories"]),
         "alternative_costumes": ", ".join(costume_choice["alternatives"])
     }
     
+    # Check if character is too similar to recent ones
+    max_attempts = 5
+    attempts = 0
+    while trait_history.is_similar(character) and attempts < max_attempts:
+        character = generate_character()
+        attempts += 1
+        
+    # Add to history if unique enough or max attempts reached
+    trait_history.add_character(character)
     return character
 
 def generate_character_from_template(template):
@@ -186,7 +236,7 @@ def generate_character_from_template(template):
         "age": random.randint(18, 65),
         "height": get_random_option(template.height_options, HEIGHTS),
         "hair_color": get_random_option(template.hair_color_options, HAIR_COLORS),
-        "eye_color": get_eye_color(),  # Using the new eye color function
+        "eye_color": get_eye_color(),
         "style_preference": get_random_option(template.style_preference_options, STYLE_PREFERENCES),
         "signature_items": get_random_option(template.signature_items_options, SIGNATURE_ITEMS),
         "childhood_story": get_random_option(template.childhood_story_templates, CHILDHOOD_STORIES),
