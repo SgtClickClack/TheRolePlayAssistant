@@ -10,8 +10,6 @@ import sys
 import signal
 import psutil
 import time
-from app import app, db
-from models import Character, Scenario, CharacterTemplate, Achievement, ScenarioCompletion, User, ScavengerHuntTask, TaskSubmission
 
 # Configure logging
 logging.basicConfig(
@@ -24,6 +22,7 @@ logger = logging.getLogger(__name__)
 def verify_database():
     """Verify database connection"""
     try:
+        from app import db, app
         with app.app_context():
             db.session.execute(text('SELECT 1'))
             db.session.commit()
@@ -61,12 +60,11 @@ def kill_processes_on_port(port):
     try:
         for proc in psutil.process_iter(['pid', 'name']):
             try:
-                conns = proc.connections()  # Use net_connections() in future versions
-                for conn in conns:
+                for conn in proc.net_connections():
                     if hasattr(conn, 'laddr') and conn.laddr.port == port:
                         os.kill(proc.pid, signal.SIGTERM)
                         logger.info(f"Terminated process {proc.pid} using port {port}")
-                        time.sleep(1)  # Give process time to release resources
+                        time.sleep(1)  # Give process time to release port
             except (psutil.NoSuchProcess, psutil.AccessDenied):
                 continue
         return True
@@ -74,8 +72,8 @@ def kill_processes_on_port(port):
         logger.error(f"Error killing processes on port {port}: {str(e)}")
         return False
 
-def ensure_port_available(port, max_attempts=3):
-    """Ensure the specified port is available"""
+def ensure_port_available(port, max_attempts=5, backoff_factor=2):
+    """Ensure the specified port is available with exponential backoff"""
     for attempt in range(max_attempts):
         try:
             # Try to kill any processes using the port
@@ -84,23 +82,26 @@ def ensure_port_available(port, max_attempts=3):
             # Try to bind to the port
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
                 s.bind(('0.0.0.0', port))
                 s.close()
-                logger.info(f"Port {port} is available")
+                logger.info(f"Successfully secured port {port}")
+                time.sleep(1)  # Give the system time to fully release the port
                 return True
         except socket.error as e:
-            logger.warning(f"Port {port} is in use (attempt {attempt + 1}/{max_attempts}): {str(e)}")
+            wait_time = backoff_factor ** attempt
+            logger.warning(f"Port {port} is in use (attempt {attempt + 1}/{max_attempts}). Retrying in {wait_time}s: {str(e)}")
             if attempt == max_attempts - 1:
                 logger.error(f"Failed to secure port {port} after {max_attempts} attempts")
                 return False
-            time.sleep(2)  # Wait before retrying
+            time.sleep(wait_time)
     return False
-
-# Import routes after app initialization
-import routes
 
 if __name__ == "__main__":
     try:
+        # Import app after all utilities are defined
+        from app import app
+        
         # Configure Flask app
         app.config['EXPLAIN_TEMPLATE_LOADING'] = True
         app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -122,8 +123,9 @@ if __name__ == "__main__":
         app.run(
             host='0.0.0.0',
             port=5000,
-            debug=False,  # Set to False to avoid duplicate process issues
-            use_reloader=False
+            debug=True,  # Enable debug mode for better error handling
+            use_reloader=False,  # Disable reloader to prevent duplicate processes
+            threaded=True  # Enable threading for better request handling
         )
     except Exception as e:
         logger.error(f"Failed to start application: {str(e)}")

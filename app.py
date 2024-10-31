@@ -56,6 +56,17 @@ def create_app():
         logger.error(f"Failed to create upload directory: {str(e)}")
         raise
 
+    # Import and register routes after app initialization
+    with app.app_context():
+        # Import models first
+        from models import User
+        logger.info("Models imported successfully")
+        
+        # Then import and register routes
+        from routes import register_routes
+        register_routes(app)
+        logger.info("Routes registered successfully")
+
     return app
 
 app = create_app()
@@ -65,24 +76,16 @@ def load_user(user_id):
     from models import User
     return User.query.get(int(user_id))
 
-# Initialize database first
-with app.app_context():
-    try:
-        # Test database connection
-        with db.engine.connect() as conn:
-            conn.execute(text("SELECT 1"))
-            conn.commit()
-            logger.info("Database connection successful")
+# Initialize database
+if __name__ == '__main__':
+    with app.app_context():
+        try:
+            # Test database connection
+            with db.engine.connect() as conn:
+                conn.execute(text("SELECT 1"))
+                conn.commit()
+                logger.info("Database connection successful")
 
-        # Import models
-        import models
-        logger.info("Models imported successfully")
-
-        # Import and register routes after app and database initialization
-        from routes import register_routes
-        register_routes(app)
-        logger.info("Routes registered successfully")
-
-    except Exception as e:
-        logger.error(f"Failed to initialize application: {str(e)}")
-        raise
+        except Exception as e:
+            logger.error(f"Failed to initialize application: {str(e)}")
+            raise
