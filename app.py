@@ -10,7 +10,7 @@ from flask_wtf.csrf import CSRFProtect
 
 # Configure logging
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
@@ -24,14 +24,16 @@ login_manager = LoginManager()
 csrf = CSRFProtect()
 
 def create_app():
-    # Get the absolute path of the current directory
-    current_dir = os.path.abspath(os.path.dirname(__file__))
+    # Get absolute paths for template and static directories
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    template_dir = os.path.join(current_dir, 'templates')
+    static_dir = os.path.join(current_dir, 'static')
     
     # Create Flask app with explicit template and static folders
-    app = Flask(__name__, 
-                template_folder=os.path.join(current_dir, 'templates'),
-                static_folder=os.path.join(current_dir, 'static'),
-                static_url_path='/static')
+    app = Flask(__name__)
+    app.template_folder = template_dir
+    app.static_folder = static_dir
+    app.static_url_path = '/static'
     
     # Configure app
     app.config.update(
@@ -42,73 +44,72 @@ def create_app():
             "pool_pre_ping": True,
         },
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
-        UPLOAD_FOLDER=os.path.join(current_dir, 'static', 'uploads'),
         SESSION_TYPE="filesystem",
         TEMPLATES_AUTO_RELOAD=True,
         DEBUG=True,
         WTF_CSRF_ENABLED=True,
         WTF_CSRF_SECRET_KEY=os.environ.get("FLASK_SECRET_KEY", os.urandom(24)),
-        SEND_FILE_MAX_AGE_DEFAULT=0,  # Disable caching for development
-        MAX_CONTENT_LENGTH=16 * 1024 * 1024,  # 16MB max file size
-        APPLICATION_ROOT='/'  # Ensure root path is set
+        SEND_FILE_MAX_AGE_DEFAULT=0,
+        EXPLAIN_TEMPLATE_LOADING=True  # Enable template loading debugging
     )
-
-    # Initialize directories
-    try:
-        for dir_path in ['static', 'templates', 'static/css', 'static/js', 'static/uploads']:
-            abs_path = os.path.join(current_dir, dir_path)
-            os.makedirs(abs_path, exist_ok=True)
-            if not os.access(abs_path, os.W_OK):
-                raise RuntimeError(f"Directory not writable: {abs_path}")
-            logger.info(f"Verified directory: {abs_path}")
-
-    except Exception as e:
-        logger.error(f"Failed to initialize directories: {str(e)}")
-        raise
-
-    # Initialize extensions
+    
+    # Create required directories if they don't exist
+    required_dirs = [
+        template_dir,
+        static_dir,
+        os.path.join(static_dir, 'uploads'),
+        os.path.join(static_dir, 'css'),
+        os.path.join(static_dir, 'js'),
+        'flask_session'
+    ]
+    
+    for directory in required_dirs:
+        try:
+            os.makedirs(directory, exist_ok=True)
+            logger.info(f"Directory ensured: {directory}")
+        except Exception as e:
+            logger.error(f"Failed to create directory {directory}: {str(e)}")
+            raise RuntimeError(f"Failed to initialize application directories: {str(e)}")
+    
+    # Initialize extensions with proper order
     Session(app)
     csrf.init_app(app)
     db.init_app(app)
+    
+    # Configure login manager
     login_manager.init_app(app)
     login_manager.login_view = 'login'
-
-    # Import and register routes after app initialization
+    login_manager.session_protection = "strong"
+    
     with app.app_context():
-        # Import models first
-        from models import User
-        logger.info("Models imported successfully")
-        
-        # Import and register routes
-        from routes import register_routes
-        app = register_routes(app)
-        logger.info("Routes registered successfully")
-        
-        # Verify database connection
         try:
+            # Create database tables
+            db.create_all()
+            logger.info("Database tables created successfully")
+            
+            # Import models and routes
+            from models import User  # Required for login manager
+            from routes import register_routes
+            app = register_routes(app)
+            logger.info("Routes registered successfully")
+            
+            # Verify database connection
             db.session.execute(text('SELECT 1'))
             db.session.commit()
             logger.info("Database connection verified")
+            
+            # Log configuration
+            logger.info(f"Template folder: {app.template_folder}")
+            logger.info(f"Static folder: {app.static_folder}")
+            logger.info(f"Static URL path: {app.static_url_path}")
+            
         except Exception as e:
-            logger.error(f"Database connection failed: {str(e)}")
+            logger.error(f"Application initialization failed: {str(e)}")
             raise
-
-        # Log template and static folder locations
-        logger.info(f"Template folder: {app.template_folder}")
-        logger.info(f"Static folder: {app.static_folder}")
-        logger.info(f"Static URL path: {app.static_url_path}")
-        
-        # Verify template directory exists and is readable
-        if not os.path.exists(app.template_folder):
-            raise RuntimeError(f"Template folder not found: {app.template_folder}")
-        if not os.access(app.template_folder, os.R_OK):
-            raise RuntimeError(f"Template folder not readable: {app.template_folder}")
-
+    
     return app
 
-# Create the Flask application
-app = create_app()
-
+# User loader callback
 @login_manager.user_loader
 def load_user(user_id):
     from models import User
