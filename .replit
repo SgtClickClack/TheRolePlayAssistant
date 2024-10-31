@@ -47,6 +47,10 @@ args = "Flask Auth Server"
 task = "workflow.run"
 args = "Flask Server"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "DB Test"
+
 [[workflows.workflow]]
 name = "Flask Server"
 author = "agent"
@@ -59,7 +63,7 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "python3 -u main.py"
+args = "python3 main.py"
 waitForPort = 5000
 
 [[workflows.workflow]]
@@ -179,8 +183,22 @@ task = "shell.exec"
 args = "python3 main.py"
 waitForPort = 5000
 
+[[workflows.workflow]]
+name = "DB Test"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 db_test.py"
+
 [deployment]
-run = ["sh", "-c", "python3 -u main.py"]
+run = ["sh", "-c", "python3 main.py"]
 
 [[ports]]
 localPort = 5000

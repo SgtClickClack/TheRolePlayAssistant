@@ -1,84 +1,50 @@
-// Add any client-side interactivity if needed
+// Show/hide loading overlay
+function showLoading() {
+    document.getElementById('loading-overlay').classList.remove('d-none');
+}
+
+function hideLoading() {
+    document.getElementById('loading-overlay').classList.add('d-none');
+}
+
+// Form validation
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    });
+    'use strict';
 
-    // Handle image previews
-    const imageInputs = document.querySelectorAll('input[type="file"][accept*="image"]');
-    imageInputs.forEach(input => {
-        input.addEventListener('change', function(e) {
-            const previewId = this.dataset.preview;
-            if (previewId) {
-                const preview = document.getElementById(previewId);
-                preview.innerHTML = '';
-                
-                if (this.files && this.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.innerHTML = `<img src="${e.target.result}" class="img-thumbnail" style="max-width: 200px;">`;
-                    }
-                    reader.readAsDataURL(this.files[0]);
-                }
-            }
-        });
-    });
+    // Fetch all forms that need validation
+    const forms = document.querySelectorAll('.needs-validation');
 
-    // Handle form submissions
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
             if (!form.checkValidity()) {
-                e.preventDefault();
-                e.stopPropagation();
+                event.preventDefault();
+                event.stopPropagation();
             }
             form.classList.add('was-validated');
-            
-            // Disable submit button to prevent double submission
-            const submitBtn = form.querySelector('button[type="submit"]');
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                if (submitBtn.dataset.loadingText) {
-                    submitBtn.dataset.originalText = submitBtn.innerHTML;
-                    submitBtn.innerHTML = submitBtn.dataset.loadingText;
-                }
-            }
-        });
+        }, false);
     });
 
-    // Handle dynamic content loading
-    const dynamicContainers = document.querySelectorAll('[data-dynamic-content]');
-    dynamicContainers.forEach(container => {
-        const url = container.dataset.dynamicContent;
-        if (url) {
-            fetch(url)
-                .then(response => response.text())
-                .then(html => {
-                    container.innerHTML = html;
-                })
-                .catch(error => {
-                    console.error('Error loading dynamic content:', error);
-                    container.innerHTML = '<div class="alert alert-danger">Error loading content</div>';
-                });
+    // Add loading state to submit buttons
+    const submitButtons = document.querySelectorAll('button[type="submit"][data-loading-text]');
+    submitButtons.forEach(button => {
+        const form = button.closest('form');
+        if (form) {
+            form.addEventListener('submit', () => {
+                if (form.checkValidity()) {
+                    const spinner = button.querySelector('.spinner-border');
+                    const buttonText = button.querySelector('.button-text');
+                    if (spinner && buttonText) {
+                        button.disabled = true;
+                        spinner.classList.remove('d-none');
+                        buttonText.textContent = button.dataset.loadingText;
+                    }
+                }
+            });
         }
     });
+
+    // Initialize tooltips
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 });
-
-// Utility function to show loading state
-function showLoading(button, message = 'Loading...') {
-    if (button) {
-        button.disabled = true;
-        button.dataset.originalText = button.innerHTML;
-        button.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${message}`;
-    }
-}
-
-// Utility function to hide loading state
-function hideLoading(button) {
-    if (button && button.dataset.originalText) {
-        button.disabled = false;
-        button.innerHTML = button.dataset.originalText;
-    }
-}
