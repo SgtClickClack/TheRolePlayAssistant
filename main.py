@@ -3,7 +3,6 @@ import sys
 import time
 import signal
 import socket
-import psutil
 import logging
 import atexit
 from app import create_app
@@ -12,11 +11,7 @@ from werkzeug.serving import WSGIRequestHandler, run_simple
 # Configure logging with more detailed format
 logging.basicConfig(
     level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout),
-        logging.FileHandler('flask_debug.log')
-    ]
+    format='%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
@@ -33,27 +28,6 @@ class CustomWSGIRequestHandler(WSGIRequestHandler):
         else:
             logger.error(f"{self.address_string()} - {message % args}")
 
-def verify_port_available(port):
-    """Verify if port is available"""
-    sock = None
-    try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        sock.settimeout(1)
-        sock.bind(('0.0.0.0', port))
-        sock.listen(1)
-        logger.info(f"Port {port} is available")
-        return True
-    except socket.error as e:
-        logger.error(f"Port {port} is not available: {str(e)}")
-        return False
-    finally:
-        if sock:
-            try:
-                sock.close()
-            except:
-                pass
-
 def cleanup_resources():
     """Cleanup resources before shutdown"""
     try:
@@ -69,45 +43,64 @@ def signal_handler(signum, frame):
     cleanup_resources()
     sys.exit(0)
 
-if __name__ == "__main__":
+def run_flask_app():
+    """Run Flask application with proper Replit configuration"""
     try:
         # Register signal handlers
         signal.signal(signal.SIGTERM, signal_handler)
         signal.signal(signal.SIGINT, signal_handler)
         atexit.register(cleanup_resources)
 
-        # Get host and port
+        # Get host and port from environment or use defaults
         port = int(os.environ.get('PORT', 5000))
-        host = '0.0.0.0'
+        host = '0.0.0.0'  # Required for Replit webview
         
         logger.info(f"Starting server initialization on {host}:{port}")
         
-        # Initial cleanup and port check
+        # Initial cleanup
         cleanup_resources()
 
         # Create and configure app
         app = create_app()
-        
-        # Start server
-        if app:
-            logger.info(f"Starting Flask application on {host}:{port}")
-            try:
-                run_simple(
-                    hostname=host,
-                    port=port,
-                    application=app,
-                    use_reloader=False,
-                    use_debugger=True,
-                    threaded=True,
-                    request_handler=CustomWSGIRequestHandler
-                )
-            except Exception as e:
-                logger.error(f"Server failed to start: {str(e)}")
-                sys.exit(1)
-        else:
+        if not app:
             logger.error("Failed to create Flask application")
-            sys.exit(1)
+            return False
+
+        # Update configuration for Replit webview
+        app.config.update(
+            DEBUG=True,
+            TEMPLATES_AUTO_RELOAD=True,
+            USE_RELOADER=False,  # Disable reloader for Replit
+            SERVER_NAME=None,  # Allow all hostnames
+            APPLICATION_ROOT='/',
+            JSON_AS_ASCII=False,
+            EXPLAIN_TEMPLATE_LOADING=True,
+            MAX_CONTENT_LENGTH=16 * 1024 * 1024,  # 16MB max file size
+            SEND_FILE_MAX_AGE_DEFAULT=0
+        )
+
+        # Start server with improved configuration
+        logger.info(f"Starting Flask application on {host}:{port}")
+        try:
+            run_simple(
+                hostname=host,
+                port=port,
+                application=app,
+                use_reloader=False,
+                use_debugger=True,
+                threaded=True,
+                request_handler=CustomWSGIRequestHandler,
+                static_files={'/static': 'static'}
+            )
+            return True
+        except Exception as e:
+            logger.error(f"Server failed to start: {str(e)}")
+            return False
             
     except Exception as e:
         logger.error(f"Server initialization failed: {str(e)}")
+        return False
+
+if __name__ == "__main__":
+    if not run_flask_app():
         sys.exit(1)
