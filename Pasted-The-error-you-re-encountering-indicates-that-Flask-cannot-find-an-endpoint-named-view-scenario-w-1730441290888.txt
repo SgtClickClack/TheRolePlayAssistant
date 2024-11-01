@@ -1,0 +1,148 @@
+The error you're encountering indicates that Flask cannot find an endpoint named `'view_scenario'` when trying to build a URL using `url_for('view_scenario')`. Here's the key part of the error message:
+
+```
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'view_scenario'. Did you mean 'serve_static' instead?
+```
+
+This typically happens when:
+
+1. The endpoint `'view_scenario'` is not defined in your Flask application's routes.
+2. The endpoint is defined but under a different name.
+3. There's a typo in the `url_for` call or in the route decorator.
+
+### Understanding the Error
+
+- **Location of Error**: The error occurs in your template `base.html` on line 44:
+
+  ```html
+  <a class="nav-link" href="{{ url_for('view_scenario') }}">Scenarios</a>
+  ```
+
+- **During Error Handling**: Notably, this error happens while rendering the `500.html` error page, which extends `base.html`. This suggests that the error page itself is causing an error due to the missing endpoint.
+
+### Steps to Resolve the Error
+
+#### 1. Verify Endpoint Definition
+
+Check your Flask routes to ensure that the `'view_scenario'` endpoint is defined. In your `routes.py` or equivalent file, you should have something like:
+
+```python
+@app.route('/scenario', endpoint='view_scenario')
+def view_scenario():
+    # Your code here
+```
+
+**OR**
+
+If you're using the function name as the endpoint (default behavior), ensure the function is named `view_scenario`:
+
+```python
+@app.route('/scenario')
+def view_scenario():
+    # Your code here
+```
+
+In this case, the endpoint is automatically set to the function name, `view_scenario`.
+
+#### 2. Check for Typos
+
+Ensure there are no typos in either the route definitions or the `url_for` call:
+
+- **In `base.html`**:
+
+  ```html
+  <a class="nav-link" href="{{ url_for('view_scenario') }}">Scenarios</a>
+  ```
+
+- **In your route**:
+
+  ```python
+  @app.route('/scenario')
+  def view_scenario():
+      # Function code
+  ```
+
+#### 3. Adjust the Endpoint Name
+
+If the function or endpoint is named differently, update either the route or the template:
+
+- **Option A**: Rename the function to match the endpoint in the template.
+
+  ```python
+  @app.route('/scenario')
+  def view_scenario():
+      # Function code
+  ```
+
+- **Option B**: Change the `url_for` call in the template to match the actual endpoint.
+
+  If your function is named `serve_scenario`, update the template:
+
+  ```html
+  <a class="nav-link" href="{{ url_for('serve_scenario') }}">Scenarios</a>
+  ```
+
+#### 4. Verify Route Registration
+
+Ensure that the route is registered before the error handler and the rendering of the template:
+
+- Flask needs to know about all routes before it can build URLs for them.
+- If routes are conditionally registered or imported in a way that they might not be available at the time of template rendering, adjust the import order.
+
+#### 5. Avoid Complex Templates in Error Pages
+
+Since the error occurs while rendering the `500.html` error page, which extends `base.html`, consider simplifying the error templates to avoid further exceptions during error handling:
+
+- **Create a Minimal `500.html` Template**:
+
+  ```html
+  <!doctype html>
+  <title>Server Error</title>
+  <h1>500 - Internal Server Error</h1>
+  <p>Sorry, an unexpected error occurred.</p>
+  ```
+
+- **Avoid Extending `base.html` in Error Templates**:
+
+  Error pages should be as simple as possible to prevent additional errors during their rendering.
+
+#### 6. Check for Circular Errors
+
+It's possible that the original error that led to the `500.html` being rendered is related to the missing endpoint. By fixing the missing endpoint, you might resolve both the original error and the error in the error handler.
+
+### Example Correction
+
+Assuming the function is actually named `serve_scenario`, you can:
+
+- **Update the Template**:
+
+  ```html
+  <a class="nav-link" href="{{ url_for('serve_scenario') }}">Scenarios</a>
+  ```
+
+- **Or Update the Route**:
+
+  ```python
+  @app.route('/scenario')
+  def view_scenario():
+      # Function code
+  ```
+
+### Additional Debugging Steps
+
+- **List All Routes**: You can print out all the registered routes to verify which endpoints are available:
+
+  ```python
+  for rule in app.url_map.iter_rules():
+      print(f"Endpoint: {rule.endpoint}, URL: {rule}")
+  ```
+
+- **Check the Endpoint Names**: Ensure that the endpoint names match what you are using in `url_for`.
+
+### Conclusion
+
+The error indicates a mismatch between the endpoint name used in your template and the actual endpoints defined in your Flask app. By ensuring that the endpoint `'view_scenario'` exists and matches the name used in `url_for`, you should be able to resolve the `BuildError`.
+
+If you continue to experience issues, consider simplifying your error templates and double-checking all route definitions for consistency.
+
+**Feel free to share your route definitions or any additional code snippets if you need further assistance!**
