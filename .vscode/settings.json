@@ -1,0 +1,5 @@
+{
+    "python.workspaceSymbols.enabled": true,
+    "python.workspaceSymbols.rebuildOnStart": true,
+    "python.pythonPath": ".venv\\Scripts\\python.exe"
+} 
