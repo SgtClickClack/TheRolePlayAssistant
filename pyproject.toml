@@ -27,4 +27,5 @@ dependencies = [
     "flask-wtf>=1.2.2",
     "python-dotenv",
     "jinja2",
+    "gevent>=24.10.3",
 ]

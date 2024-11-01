@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from flask_login import LoginManager
@@ -7,6 +7,7 @@ import logging
 from sqlalchemy import text
 from flask_session import Session
 from flask_wtf.csrf import CSRFProtect
+import socket
 
 # Configure logging
 logging.basicConfig(
@@ -25,15 +26,21 @@ csrf = CSRFProtect()
 
 def create_app():
     # Get absolute paths for template and static directories
-    current_dir = os.path.dirname(os.path.abspath(__file__))
+    current_dir = os.path.abspath(os.path.dirname(__file__))
     template_dir = os.path.join(current_dir, 'templates')
     static_dir = os.path.join(current_dir, 'static')
     
+    # Verify directories exist before creating app
+    for directory in [template_dir, static_dir]:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+            logger.info(f"Created directory: {directory}")
+    
     # Create Flask app with explicit template and static folders
-    app = Flask(__name__)
-    app.template_folder = template_dir
-    app.static_folder = static_dir
-    app.static_url_path = '/static'
+    app = Flask(__name__, 
+                template_folder=template_dir,
+                static_folder=static_dir,
+                static_url_path='/static')
     
     # Configure app
     app.config.update(
@@ -45,15 +52,15 @@ def create_app():
         },
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         SESSION_TYPE="filesystem",
-        TEMPLATES_AUTO_RELOAD=True,
+        TEMPLATES_AUTO_RELOAD=False,  # Disable template auto-reload
         DEBUG=True,
         WTF_CSRF_ENABLED=True,
         WTF_CSRF_SECRET_KEY=os.environ.get("FLASK_SECRET_KEY", os.urandom(24)),
         SEND_FILE_MAX_AGE_DEFAULT=0,
-        EXPLAIN_TEMPLATE_LOADING=True  # Enable template loading debugging
+        EXPLAIN_TEMPLATE_LOADING=True
     )
     
-    # Create required directories if they don't exist
+    # Create required directories
     required_dirs = [
         template_dir,
         static_dir,
@@ -71,15 +78,12 @@ def create_app():
             logger.error(f"Failed to create directory {directory}: {str(e)}")
             raise RuntimeError(f"Failed to initialize application directories: {str(e)}")
     
-    # Initialize extensions with proper order
+    # Initialize extensions
     Session(app)
     csrf.init_app(app)
     db.init_app(app)
-    
-    # Configure login manager
     login_manager.init_app(app)
     login_manager.login_view = 'login'
-    login_manager.session_protection = "strong"
     
     with app.app_context():
         try:
@@ -87,8 +91,7 @@ def create_app():
             db.create_all()
             logger.info("Database tables created successfully")
             
-            # Import models and routes
-            from models import User  # Required for login manager
+            # Import and register routes
             from routes import register_routes
             app = register_routes(app)
             logger.info("Routes registered successfully")
@@ -106,6 +109,16 @@ def create_app():
         except Exception as e:
             logger.error(f"Application initialization failed: {str(e)}")
             raise
+    
+    # Add error handlers
+    @app.errorhandler(404)
+    def not_found_error(error):
+        return render_template('404.html'), 404
+
+    @app.errorhandler(500)
+    def internal_error(error):
+        db.session.rollback()
+        return render_template('500.html'), 500
     
     return app
 
