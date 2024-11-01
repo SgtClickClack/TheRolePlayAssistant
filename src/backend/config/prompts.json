@@ -1,0 +1,40 @@
+{
+    "intro": {
+        "template": "You find yourself in {setting}. {initial_situation}",
+        "variables": {
+            "setting": [
+                "a mysterious forest shrouded in mist",
+                "an ancient temple with glowing runes",
+                "a futuristic city with floating buildings",
+                "a medieval tavern filled with strange patrons",
+                "a desert oasis under twin moons"
+            ],
+            "initial_situation": [
+                "The air crackles with magical energy.",
+                "Something about this place feels different from anything you've experienced.",
+                "Your instincts tell you that adventure awaits.",
+                "An unusual silence hangs in the air.",
+                "A sense of destiny fills your thoughts."
+            ]
+        }
+    },
+    "conflict": {
+        "template": "Suddenly, {event} occurs. You must {action}.",
+        "variables": {
+            "event": [
+                "a burst of ethereal light",
+                "a mysterious figure emerges from the shadows",
+                "an ancient mechanism springs to life",
+                "a portal tears open in the fabric of reality",
+                "a cryptic message appears before you"
+            ],
+            "action": [
+                "decide how to respond to this unexpected development",
+                "choose between fight or flight",
+                "determine who can be trusted",
+                "solve this mystery before time runs out",
+                "find a way to protect what matters most"
+            ]
+        }
+    }
+} 

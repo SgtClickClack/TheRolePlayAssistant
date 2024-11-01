@@ -1,0 +1,22 @@
+{
+    "base_url": "https://api.openai.com/v1",
+    "rate_limit": 60,
+    "endpoints": {
+        "completion": "/completions",
+        "chat": "/chat/completions",
+        "embeddings": "/embeddings"
+    },
+    "models": {
+        "default": "gpt-3.5-turbo",
+        "advanced": "gpt-4",
+        "embedding": "text-embedding-ada-002"
+    },
+    "retry_settings": {
+        "max_retries": 3,
+        "retry_delay": 1
+    },
+    "timeout_settings": {
+        "connect_timeout": 10,
+        "read_timeout": 30
+    }
+} 
