@@ -2,15 +2,14 @@ import os
 import uuid
 import logging
 from datetime import datetime
-import jinja2
 from flask import (
     render_template, request, redirect, url_for, flash, 
     current_app, get_flashed_messages, session
 )
 from flask_login import login_user, logout_user, login_required, current_user
-from models import db, User, Character, CharacterTemplate, Scenario, Achievement, ScenarioCompletion, ScavengerHuntTask, TaskSubmission
+from models import db, User, Character, CharacterTemplate, Scenario, Achievement, ScenarioCompletion
 from utils import generate_character, generate_character_from_template
-from photo_verification import save_photo, verify_photo_content
+from story_generator import generate_story_scene
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -62,40 +61,38 @@ def register_routes(app):
     try:
         logger.info("Starting route registration")
         
-        # Push application context
-        with app.app_context():
-            # Define routes with their handlers
-            routes = [
-                ('/', 'index', index, ['GET']),
-                ('/register', 'register', register, ['GET', 'POST']),
-                ('/login', 'login', login, ['GET', 'POST']),
-                ('/logout', 'logout', logout, ['GET']),
-                ('/profile', 'profile', profile, ['GET']),
-                ('/update_profile', 'update_profile', update_profile, ['POST']),
-                ('/create_character', 'create_new_character', create_new_character, ['GET', 'POST']),
-                ('/character/<int:char_id>', 'view_character', view_character, ['GET']),
-                ('/create_template', 'create_template', create_template, ['GET', 'POST']),
-                ('/view_scenario', 'view_scenario', view_scenario, ['GET']),
-                ('/scavenger_hunt/<int:scenario_id>', 'scavenger_hunt', scavenger_hunt, ['GET']),
-                ('/submit_task/<int:task_id>', 'submit_task', submit_task, ['POST'])
-            ]
-            
-            # Register routes with error handling
-            for path, endpoint, handler, methods in routes:
-                try:
-                    app.add_url_rule(path, endpoint, handler, methods=methods)
-                    logger.info(f"Registered route: {endpoint} ({path})")
-                except Exception as e:
-                    logger.error(f"Failed to register route {endpoint}: {str(e)}")
-                    raise RuntimeError(f"Route registration failed for {endpoint}: {str(e)}")
-            
-            # Register error handlers
-            app.errorhandler(404)(lambda e: render_template_safe('404.html'))
-            app.errorhandler(500)(lambda e: render_template_safe('500.html'))
-            
-            logger.info("Route registration completed successfully")
-            return app
-            
+        # Define routes with their handlers
+        routes = [
+            ('/', 'index', index, ['GET']),
+            ('/register', 'register', register, ['GET', 'POST']),
+            ('/login', 'login', login, ['GET', 'POST']),
+            ('/logout', 'logout', logout, ['GET']),
+            ('/profile', 'profile', profile, ['GET']),
+            ('/update_profile', 'update_profile', update_profile, ['POST']),
+            ('/create_character', 'create_new_character', create_new_character, ['GET', 'POST']),
+            ('/character/<int:char_id>', 'view_character', view_character, ['GET']),
+            ('/create_template', 'create_template', create_template, ['GET', 'POST']),
+            ('/view_scenario', 'view_scenario', view_scenario, ['GET']),
+            ('/generate_story/<int:char_id>/<int:scenario_id>', 'generate_story', generate_story, ['GET']),
+            ('/view_story/<int:char_id>/<int:scenario_id>', 'view_story', view_story, ['GET'])
+        ]
+        
+        # Register routes with error handling
+        for path, endpoint, handler, methods in routes:
+            try:
+                app.add_url_rule(path, endpoint, handler, methods=methods)
+                logger.info(f"Registered route: {endpoint} ({path})")
+            except Exception as e:
+                logger.error(f"Failed to register route {endpoint}: {str(e)}")
+                raise RuntimeError(f"Route registration failed for {endpoint}: {str(e)}")
+        
+        # Register error handlers
+        app.errorhandler(404)(lambda e: render_template_safe('404.html'))
+        app.errorhandler(500)(lambda e: render_template_safe('500.html'))
+        
+        logger.info("Route registration completed successfully")
+        return app
+        
     except Exception as e:
         logger.error(f"Route registration failed: {str(e)}")
         raise RuntimeError(f"Failed to register routes: {str(e)}")
@@ -263,61 +260,42 @@ def view_scenario():
         return redirect(url_for('index'))
 
 @login_required
-def scavenger_hunt(scenario_id):
-    """Handle scavenger hunt"""
+def generate_story(char_id, scenario_id):
+    """Handle story generation"""
     try:
+        character = Character.query.get_or_404(char_id)
         scenario = Scenario.query.get_or_404(scenario_id)
-        tasks = ScavengerHuntTask.query.filter_by(scenario_id=scenario_id).all()
-        return render_template_safe('scavenger_hunt.html', 
-                                scenario=scenario,
-                                tasks=tasks)
+        
+        # Generate story scene
+        story_scene = generate_story_scene(character, scenario)
+        
+        # Store in session for later use
+        session['current_story'] = story_scene
+        
+        return redirect(url_for('view_story', char_id=char_id, scenario_id=scenario_id))
     except Exception as e:
-        logger.error(f"Error loading scavenger hunt: {str(e)}")
-        flash('Failed to load scavenger hunt.', 'error')
+        logger.error(f"Story generation error: {str(e)}")
+        flash('Failed to generate story.', 'error')
         return redirect(url_for('view_scenario'))
 
 @login_required
-def submit_task(task_id):
-    """Handle task submission"""
+def view_story(char_id, scenario_id):
+    """Handle story view"""
     try:
-        task = ScavengerHuntTask.query.get_or_404(task_id)
-        if 'photo' not in request.files:
-            flash('No photo uploaded', 'error')
-            return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
-
-        photo = request.files['photo']
-        if not photo.filename:
-            flash('No photo selected', 'error')
-            return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
-
-        photo_path = save_photo(photo)
-        is_verified, confidence = verify_photo_content(
-            photo_path,
-            task.required_objects,
-            task.object_confidence,
-            task.required_pose,
-            task.required_location
-        )
-
-        submission = TaskSubmission(
-            task_id=task.id,
-            user_id=current_user.id,
-            photo_path=photo_path,
-            confidence_score=confidence,
-            is_verified=is_verified
-        )
-        db.session.add(submission)
-        db.session.commit()
-
-        if is_verified:
-            flash('Task completed successfully!', 'success')
-        else:
-            flash('Photo verification failed. Please try again.', 'warning')
-
-        return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
-
+        character = Character.query.get_or_404(char_id)
+        scenario = Scenario.query.get_or_404(scenario_id)
+        
+        # Get story from session or generate new one
+        story_scene = session.get('current_story')
+        if not story_scene:
+            story_scene = generate_story_scene(character, scenario)
+            session['current_story'] = story_scene
+            
+        return render_template_safe('story.html',
+                                character=character,
+                                scenario=scenario,
+                                story=story_scene)
     except Exception as e:
-        db.session.rollback()
-        logger.error(f"Task submission error: {str(e)}")
-        flash('Failed to submit task.', 'error')
+        logger.error(f"Error viewing story: {str(e)}")
+        flash('Failed to load story.', 'error')
         return redirect(url_for('view_scenario'))

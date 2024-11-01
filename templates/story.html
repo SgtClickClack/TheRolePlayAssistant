@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>{{ scenario.title }}</h2>
+    </div>
+    <div class="card-body">
+        <div class="mb-4">
+            <h3>Scene</h3>
+            <p class="lead">{{ story.introduction }}</p>
+        </div>
+
+        <div class="mb-4">
+            <h3>Challenge</h3>
+            <p>{{ story.challenge }}</p>
+        </div>
+
+        <div class="mb-4">
+            <h3>Your Choices</h3>
+            {% for choice in story.choices %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4>Option {{ loop.index }}</h4>
+                    <p>{{ choice }}</p>
+                    {% if choice in story.consequences %}
+                    <div class="mt-2">
+                        <strong>Possible Outcome:</strong>
+                        <p class="text-muted">{{ story.consequences[choice] }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-4">
+            <a href="{{ url_for('generate_story', char_id=character.id, scenario_id=scenario.id) }}" 
+               class="btn btn-primary">
+                <i class="bi bi-arrow-clockwise"></i> Generate New Scene
+            </a>
+            <a href="{{ url_for('view_scenario') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Scenarios
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
