@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "node src/api/server.js",
+    "dev": "nodemon src/api/server.js",
+    "test": "jest",
+    "build": "webpack --config webpack.prod.js",
+    "deploy": "bash scripts/deploy.sh"
+  }
+} 
