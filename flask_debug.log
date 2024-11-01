@@ -470,3 +470,663 @@
 2024-11-01 04:39:16,151 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
 2024-11-01 04:39:16,151 - routes - DEBUG - [routes.py:63] - Response status: 304
 2024-11-01 04:39:16,152 - __main__ - INFO - [main.py:101] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 04:57:59,200 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 04:57:59,200 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 04:57:59,200 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 04:57:59,200 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 04:57:59,200 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 04:57:59,200 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 04:58:00,707 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 04:58:03,498 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 04:58:03,502 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 04:58:03,503 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 04:58:03,503 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 04:58:03,545 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 04:58:03,546 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 04:58:03,851 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 04:58:03,854 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 04:58:03,854 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 04:58:04,000 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 04:58:04,000 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'PUT', 'DELETE', 'PATCH', 'POST'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 04:58:04,000 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 04:58:04,001 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 04:58:04,001 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 04:58:04,225 - __main__ - INFO - [example_tasks.py:45] - Example tasks created successfully!
+2024-11-01 05:01:05,639 - __main__ - INFO - [main.py:144] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:01:05,639 - __main__ - INFO - [main.py:82] - Attempting to secure port 5000 (attempt 1/3)
+2024-11-01 05:01:05,639 - __main__ - INFO - [main.py:25] - Attempting to kill processes on port 5000
+2024-11-01 05:01:05,640 - __main__ - ERROR - [main.py:55] - Error killing processes on port 5000: invalid attr name 'connections'
+2024-11-01 05:01:05,640 - __main__ - WARNING - [main.py:86] - Failed to kill processes on port 5000
+2024-11-01 05:01:05,640 - __main__ - INFO - [main.py:82] - Attempting to secure port 5000 (attempt 2/3)
+2024-11-01 05:01:05,640 - __main__ - INFO - [main.py:25] - Attempting to kill processes on port 5000
+2024-11-01 05:01:05,640 - __main__ - ERROR - [main.py:55] - Error killing processes on port 5000: invalid attr name 'connections'
+2024-11-01 05:01:05,640 - __main__ - WARNING - [main.py:86] - Failed to kill processes on port 5000
+2024-11-01 05:01:05,640 - __main__ - INFO - [main.py:82] - Attempting to secure port 5000 (attempt 3/3)
+2024-11-01 05:01:05,640 - __main__ - INFO - [main.py:25] - Attempting to kill processes on port 5000
+2024-11-01 05:01:05,640 - __main__ - ERROR - [main.py:55] - Error killing processes on port 5000: invalid attr name 'connections'
+2024-11-01 05:01:05,641 - __main__ - WARNING - [main.py:86] - Failed to kill processes on port 5000
+2024-11-01 05:01:05,641 - __main__ - ERROR - [main.py:97] - Failed to secure port 5000 after 3 attempts
+2024-11-01 05:01:05,641 - __main__ - ERROR - [main.py:148] - Could not secure port 5000
+2024-11-01 05:01:46,138 - __main__ - INFO - [main.py:141] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:01:46,138 - __main__ - INFO - [main.py:144] - Creating Flask application
+2024-11-01 05:01:46,139 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:01:46,139 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:01:46,139 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:01:46,140 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:01:46,140 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:01:46,140 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:01:47,224 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:01:49,985 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:01:49,990 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:01:49,990 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:01:49,991 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:01:50,033 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:01:50,034 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:01:50,336 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:01:50,341 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:01:50,341 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:01:50,503 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:01:50,503 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'PUT', 'POST', 'PATCH', 'DELETE'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:01:50,503 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:01:50,503 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:01:50,503 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:01:50,504 - __main__ - INFO - [main.py:157] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:01:50,509 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:01:50,509 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:01:52,046 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:01:52,316 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:01:52,323 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:01:52,331 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:01:52,372 - __main__ - INFO - [main.py:111] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:01:53,383 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:01:53,386 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:01:53,387 - __main__ - INFO - [main.py:111] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:01:53,443 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:01:53,444 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:01:53,445 - __main__ - INFO - [main.py:111] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 05:02:29,917 - __main__ - INFO - [main.py:141] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:02:29,917 - __main__ - INFO - [main.py:144] - Creating Flask application
+2024-11-01 05:02:29,918 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:02:29,918 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:02:29,919 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:02:29,919 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:02:29,919 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:02:29,919 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:02:30,928 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:02:33,699 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:02:33,703 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:02:33,704 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:02:33,704 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:02:33,753 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:02:33,754 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:02:34,090 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:02:34,093 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:02:34,093 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:02:34,244 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:02:34,245 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'PATCH', 'DELETE', 'PUT', 'POST'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:02:34,245 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:02:34,245 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:02:34,245 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:02:34,245 - __main__ - INFO - [main.py:157] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:02:34,251 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:02:34,251 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:02:34,907 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:02:35,131 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:02:35,137 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:02:35,144 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:02:35,182 - __main__ - INFO - [main.py:111] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:02:35,467 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:02:35,468 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:02:35,474 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:02:35,475 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:02:35,476 - __main__ - INFO - [main.py:111] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:02:35,477 - __main__ - INFO - [main.py:111] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 05:03:39,842 - __main__ - INFO - [main.py:131] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:03:39,842 - __main__ - INFO - [main.py:75] - Attempting to secure port 5000 (attempt 1/5)
+2024-11-01 05:03:39,854 - __main__ - INFO - [main.py:78] - Port 5000 is available
+2024-11-01 05:03:39,854 - __main__ - INFO - [main.py:139] - Creating Flask application
+2024-11-01 05:03:39,855 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:03:39,855 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:03:39,855 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:03:39,855 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:03:39,855 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:03:39,856 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:03:40,906 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:03:43,711 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:03:43,715 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:03:43,716 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:03:43,716 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:03:43,757 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:03:43,758 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:03:44,061 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:03:44,200 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:03:44,201 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:03:44,355 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:03:44,355 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'PATCH', 'PUT', 'DELETE', 'POST'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:03:44,356 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:03:44,356 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:03:44,356 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:03:44,356 - __main__ - INFO - [main.py:152] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:03:44,362 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:03:44,362 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:03:45,065 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:03:45,292 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:03:45,299 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:03:45,306 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:03:45,345 - __main__ - INFO - [main.py:101] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:03:45,638 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:03:45,639 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:03:45,642 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:03:45,645 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:03:45,645 - __main__ - INFO - [main.py:101] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:03:45,646 - __main__ - INFO - [main.py:101] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 05:04:55,109 - __main__ - INFO - [main.py:151] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:04:55,109 - __main__ - INFO - [main.py:81] - Attempting to secure port 5000 (attempt 1/5)
+2024-11-01 05:04:55,110 - __main__ - INFO - [main.py:85] - Port 5000 is already available
+2024-11-01 05:04:55,110 - __main__ - INFO - [main.py:159] - Creating Flask application
+2024-11-01 05:04:55,111 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:04:55,111 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:04:55,111 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:04:55,111 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:04:55,112 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:04:55,112 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:04:56,177 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:04:58,915 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:04:58,920 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:04:58,921 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:04:58,922 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:04:58,964 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:04:58,965 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:04:59,269 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:04:59,272 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:04:59,273 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:04:59,427 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:04:59,427 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'PUT', 'POST', 'DELETE', 'PATCH'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:04:59,427 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:04:59,427 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:04:59,427 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:04:59,428 - __main__ - INFO - [main.py:172] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:04:59,434 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:04:59,434 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:05:00,139 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:05:00,366 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:05:00,372 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:05:00,379 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:05:00,418 - __main__ - INFO - [main.py:110] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:05:00,742 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:05:00,746 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:05:00,746 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:05:00,747 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:05:00,749 - __main__ - INFO - [main.py:110] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:05:00,749 - __main__ - INFO - [main.py:110] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 05:06:10,528 - __main__ - INFO - [main.py:174] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:06:10,529 - __main__ - INFO - [main.py:101] - Attempting to secure port 5000 (attempt 1/5)
+2024-11-01 05:06:10,529 - __main__ - INFO - [main.py:31] - Attempting to kill processes on port 5000
+2024-11-01 05:06:10,553 - __main__ - INFO - [main.py:86] - Successfully verified port 5000 availability
+2024-11-01 05:06:10,553 - __main__ - INFO - [main.py:108] - Successfully secured port 5000
+2024-11-01 05:06:10,553 - __main__ - INFO - [main.py:182] - Creating Flask application
+2024-11-01 05:06:10,554 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:06:10,554 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:06:10,554 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:06:10,554 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:06:10,555 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:06:10,555 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:06:11,587 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:06:14,394 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:06:14,398 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:06:14,399 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:06:14,400 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:06:14,441 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:06:14,442 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:06:14,744 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:06:14,748 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:06:14,748 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:06:14,902 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:06:14,903 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'PUT', 'PATCH', 'POST', 'DELETE'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:06:14,903 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:06:14,903 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:06:14,903 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:06:14,903 - __main__ - INFO - [main.py:195] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:06:14,908 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:06:14,908 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:06:15,578 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:06:15,806 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:06:15,813 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:06:15,821 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:06:15,861 - __main__ - INFO - [main.py:130] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:06:16,148 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:06:16,152 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:06:16,153 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:06:16,154 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:06:16,154 - __main__ - INFO - [main.py:130] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:06:16,156 - __main__ - INFO - [main.py:130] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 05:07:34,919 - __main__ - INFO - [main.py:157] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:07:34,920 - __main__ - INFO - [main.py:85] - Attempting to secure port 5000 (attempt 1/3)
+2024-11-01 05:07:34,920 - __main__ - INFO - [main.py:70] - Successfully verified port 5000 availability
+2024-11-01 05:07:34,920 - __main__ - INFO - [main.py:89] - Port 5000 is already available
+2024-11-01 05:07:34,920 - __main__ - INFO - [main.py:165] - Creating Flask application
+2024-11-01 05:07:34,922 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:07:34,922 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:07:34,922 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:07:34,922 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:07:34,922 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:07:34,922 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:07:35,991 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:07:38,859 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:07:38,863 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:07:38,863 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:07:38,864 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:07:38,904 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:07:38,905 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:07:39,209 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:07:39,214 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:07:39,214 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:07:39,375 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:07:39,376 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'DELETE', 'PUT', 'POST', 'PATCH'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:07:39,376 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:07:39,376 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:07:39,377 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:07:39,377 - __main__ - INFO - [main.py:178] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:07:39,382 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:07:39,383 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:07:40,199 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:07:40,437 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:07:40,445 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:07:40,452 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:07:40,493 - __main__ - INFO - [main.py:120] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:07:40,878 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:07:40,882 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:07:40,883 - __main__ - INFO - [main.py:120] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:07:41,036 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:07:41,036 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:07:41,037 - __main__ - INFO - [main.py:120] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 05:08:44,882 - __main__ - INFO - [main.py:150] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:08:44,882 - __main__ - INFO - [main.py:83] - Attempting to secure port 5000 (attempt 1/5)
+2024-11-01 05:08:44,882 - __main__ - INFO - [main.py:31] - Attempting to kill processes on port 5000
+2024-11-01 05:08:44,905 - __main__ - INFO - [main.py:68] - Successfully verified port 5000 availability
+2024-11-01 05:08:44,906 - __main__ - INFO - [main.py:90] - Successfully secured port 5000
+2024-11-01 05:08:44,906 - __main__ - INFO - [main.py:158] - Creating Flask application
+2024-11-01 05:08:44,907 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:08:44,907 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:08:44,907 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:08:44,907 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:08:44,907 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:08:44,907 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:08:45,979 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:08:48,770 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:08:48,775 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:08:48,776 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:08:48,776 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:08:48,817 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:08:48,818 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:08:49,115 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:08:49,121 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:08:49,121 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:08:49,278 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:08:49,278 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'PUT', 'POST', 'DELETE', 'PATCH'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:08:49,278 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:08:49,279 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:08:49,279 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:08:49,279 - __main__ - INFO - [main.py:172] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:08:49,284 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:08:49,284 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:08:49,956 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:08:50,184 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:08:50,191 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:08:50,198 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:08:50,238 - __main__ - INFO - [main.py:112] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:08:50,533 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:08:50,536 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:08:50,537 - __main__ - INFO - [main.py:112] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:08:50,760 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:08:50,761 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:08:50,762 - __main__ - INFO - [main.py:112] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 05:10:04,944 - __main__ - INFO - [main.py:172] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:10:04,944 - __main__ - INFO - [main.py:102] - Attempting to secure port 5000 (attempt 1/5)
+2024-11-01 05:10:04,944 - __main__ - INFO - [main.py:49] - Attempting to kill processes on port 5000
+2024-11-01 05:10:04,965 - __main__ - INFO - [main.py:87] - Successfully verified port 5000 availability
+2024-11-01 05:10:04,965 - __main__ - INFO - [main.py:110] - Port 5000 is now available
+2024-11-01 05:10:04,965 - __main__ - INFO - [main.py:180] - Creating Flask application
+2024-11-01 05:10:04,966 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:10:04,966 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:10:04,966 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:10:04,966 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:10:04,967 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:10:04,967 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:10:06,061 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:10:08,883 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:10:08,888 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:10:08,889 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:10:08,889 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:10:08,930 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:10:08,932 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:10:09,227 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:10:09,230 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:10:09,231 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:10:09,391 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:10:09,391 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'PUT', 'POST', 'PATCH', 'DELETE'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:10:09,391 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:10:09,391 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:10:09,391 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:10:09,392 - __main__ - INFO - [main.py:194] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:10:09,398 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:10:09,398 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:10:10,109 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:10:10,342 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:10:10,348 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:10:10,355 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:10:10,396 - __main__ - INFO - [main.py:134] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:10:10,929 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:10:10,932 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:10:10,933 - __main__ - INFO - [main.py:134] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:10:11,161 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:10:11,161 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:10:11,162 - __main__ - INFO - [main.py:134] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 05:11:25,708 - __main__ - INFO - [main.py:141] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:11:25,708 - __main__ - INFO - [main.py:85] - Attempting to secure port 5000 (attempt 1/3)
+2024-11-01 05:11:25,708 - __main__ - INFO - [main.py:31] - Attempting to kill processes on port 5000
+2024-11-01 05:11:25,710 - __main__ - INFO - [main.py:92] - Successfully secured port 5000
+2024-11-01 05:11:25,711 - __main__ - INFO - [main.py:149] - Creating Flask application
+2024-11-01 05:11:25,712 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:11:25,712 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:11:25,712 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:11:25,712 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:11:25,712 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:11:25,712 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:11:26,733 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:11:29,504 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:11:29,508 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:11:29,509 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:11:29,509 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:11:29,553 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:11:29,555 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:11:29,855 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:11:29,859 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:11:29,859 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:11:30,012 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:11:30,012 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'POST', 'PUT', 'PATCH', 'DELETE'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:11:30,013 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:11:30,013 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:11:30,013 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:11:30,013 - __main__ - INFO - [main.py:162] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:11:30,019 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:11:30,020 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:11:30,770 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:11:30,998 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:11:31,006 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:11:31,013 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:11:31,052 - __main__ - INFO - [main.py:108] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:11:31,974 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:11:31,978 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:11:31,979 - __main__ - INFO - [main.py:108] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:11:32,093 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:11:32,094 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:11:32,094 - __main__ - INFO - [main.py:108] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 05:12:50,553 - __main__ - INFO - [main.py:150] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:12:50,554 - __main__ - INFO - [main.py:93] - Attempting to secure port 5000 (attempt 1/3)
+2024-11-01 05:12:50,554 - __main__ - INFO - [main.py:41] - Attempting to kill processes on port 5000
+2024-11-01 05:12:50,575 - __main__ - INFO - [main.py:101] - Port 5000 is now available
+2024-11-01 05:12:50,575 - __main__ - INFO - [main.py:158] - Creating Flask application
+2024-11-01 05:12:50,577 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:12:50,577 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:12:50,577 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:12:50,577 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:12:50,577 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:12:50,577 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:12:51,687 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:12:54,495 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:12:54,499 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:12:54,501 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:12:54,501 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:12:54,543 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:12:54,544 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:12:54,844 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:12:54,848 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:12:54,848 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:12:55,007 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:12:55,007 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'POST', 'DELETE', 'PATCH', 'PUT'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:12:55,008 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:12:55,008 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:12:55,008 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:12:55,008 - __main__ - INFO - [main.py:171] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:12:55,014 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:12:55,014 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:12:55,769 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:12:56,008 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:12:56,014 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:12:56,022 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:12:56,063 - __main__ - INFO - [main.py:117] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:12:56,414 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:12:56,417 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:12:56,418 - __main__ - INFO - [main.py:117] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:12:56,419 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:12:56,420 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:12:56,420 - __main__ - INFO - [main.py:117] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2024-11-01 05:14:55,096 - __main__ - INFO - [main.py:158] - Starting server initialization on 0.0.0.0:5000
+2024-11-01 05:14:55,096 - __main__ - INFO - [main.py:102] - Attempting to secure port 5000 (attempt 1/5)
+2024-11-01 05:14:55,096 - __main__ - INFO - [main.py:46] - Attempting to kill processes on port 5000
+2024-11-01 05:14:55,118 - __main__ - INFO - [main.py:83] - Successfully verified port 5000 availability
+2024-11-01 05:14:55,118 - __main__ - INFO - [main.py:109] - Successfully secured port 5000
+2024-11-01 05:14:55,118 - __main__ - INFO - [main.py:166] - Creating Flask application
+2024-11-01 05:14:55,119 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/templates
+2024-11-01 05:14:55,119 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static
+2024-11-01 05:14:55,120 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/uploads
+2024-11-01 05:14:55,120 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/css
+2024-11-01 05:14:55,120 - app - INFO - [app.py:84] - Directory ensured: /home/runner/workspace/static/js
+2024-11-01 05:14:55,120 - app - INFO - [app.py:84] - Directory ensured: flask_session
+2024-11-01 05:14:56,106 - app - INFO - [app.py:105] - Database tables created successfully
+2024-11-01 05:14:58,897 - matplotlib - DEBUG - [__init__.py:341] - matplotlib data path: /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/matplotlib/mpl-data
+2024-11-01 05:14:58,902 - matplotlib - DEBUG - [__init__.py:341] - CONFIGDIR=/home/runner/workspace/.config/matplotlib
+2024-11-01 05:14:58,903 - matplotlib - DEBUG - [__init__.py:1509] - interactive is False
+2024-11-01 05:14:58,903 - matplotlib - DEBUG - [__init__.py:1510] - platform is linux
+2024-11-01 05:14:58,944 - matplotlib - DEBUG - [__init__.py:341] - CACHEDIR=/home/runner/workspace/.cache/matplotlib
+2024-11-01 05:14:58,946 - matplotlib.font_manager - DEBUG - [font_manager.py:1580] - Using fontManager instance from /home/runner/workspace/.cache/matplotlib/fontlist-v390.json
+2024-11-01 05:14:59,241 - photo_verification - INFO - [photo_verification.py:21] - MediaPipe pose detection initialized successfully
+2024-11-01 05:14:59,246 - routes - INFO - [routes.py:258] - All routes registered successfully
+2024-11-01 05:14:59,247 - app - INFO - [app.py:110] - Routes registered successfully
+2024-11-01 05:14:59,394 - app - INFO - [app.py:115] - Database connection verified
+2024-11-01 05:14:59,395 - app - DEBUG - [app.py:118] - App config: <Config {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': 0, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': True, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': True, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'postgresql://neondb_owner:w2dX1IjWDpKs@ep-rapid-frog-a5v83kra.us-east-2.aws.neon.tech/neondb?sslmode=require', 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_recycle': 300, 'pool_pre_ping': True}, 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SESSION_TYPE': 'filesystem', 'WTF_CSRF_ENABLED': True, 'WTF_CSRF_SECRET_KEY': 'ba20563ddb7d63dfe7aa4accd837f9a6', 'JSON_AS_ASCII': False, 'USE_RELOADER': False, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'WTF_CSRF_CHECK_DEFAULT': True, 'WTF_CSRF_METHODS': {'POST', 'PUT', 'PATCH', 'DELETE'}, 'WTF_CSRF_FIELD_NAME': 'csrf_token', 'WTF_CSRF_HEADERS': ['X-CSRFToken', 'X-CSRF-Token'], 'WTF_CSRF_TIME_LIMIT': 3600, 'WTF_CSRF_SSL_STRICT': True}>
+2024-11-01 05:14:59,395 - app - INFO - [app.py:119] - Template folder: /home/runner/workspace/templates
+2024-11-01 05:14:59,395 - app - INFO - [app.py:120] - Static folder: /home/runner/workspace/static
+2024-11-01 05:14:59,395 - app - INFO - [app.py:121] - Static URL path: /static
+2024-11-01 05:14:59,395 - __main__ - INFO - [main.py:180] - Starting Flask application on 0.0.0.0:5000
+2024-11-01 05:14:59,400 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.69:5000
+2024-11-01 05:14:59,400 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2024-11-01 05:15:00,039 - routes - DEBUG - [routes.py:58] - Incoming request: GET /scavenger_hunt/1
+2024-11-01 05:15:00,258 - app - INFO - [debughelpers.py:178] - Locating template 'scavenger_hunt.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/scavenger_hunt.html')
+2024-11-01 05:15:00,264 - app - INFO - [debughelpers.py:178] - Locating template 'base.html':
+    1: trying loader of application 'app'
+       class: jinja2.loaders.FileSystemLoader
+       encoding: 'utf-8'
+       followlinks: False
+       searchpath:
+         - /home/runner/workspace/templates
+       -> found ('/home/runner/workspace/templates/base.html')
+2024-11-01 05:15:00,271 - routes - DEBUG - [routes.py:63] - Response status: 200
+2024-11-01 05:15:00,309 - __main__ - INFO - [main.py:125] - 172.31.196.69 - "GET /scavenger_hunt/1 HTTP/1.1" 200 -
+2024-11-01 05:15:00,837 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/css/custom.css
+2024-11-01 05:15:00,840 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:15:00,841 - __main__ - INFO - [main.py:125] - 172.31.196.69 - "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2024-11-01 05:15:01,071 - routes - DEBUG - [routes.py:58] - Incoming request: GET /static/js/main.js
+2024-11-01 05:15:01,071 - routes - DEBUG - [routes.py:63] - Response status: 304
+2024-11-01 05:15:01,072 - __main__ - INFO - [main.py:125] - 172.31.196.69 - "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
