@@ -1,0 +1,26 @@
+/* Custom styles - kept minimal to work with bootstrap dark theme */
+.achievement-card {
+    transition: all 0.3s ease;
+}
+
+.achievement-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading overlay customization */
+#loading-overlay {
+    backdrop-filter: blur(2px);
+}
+
+/* Image preview customization */
+.img-thumbnail {
+    max-height: 300px;
+    width: auto;
+}
+
+/* Form validation feedback customization */
+.was-validated .form-control:invalid:focus,
+.was-validated .form-control:valid:focus {
+    box-shadow: none;
+}

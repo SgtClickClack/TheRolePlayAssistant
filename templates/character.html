@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Your Character</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="mb-3">{{ character.name }}</h3>
+                <div class="mb-4">
+                    <h4>Basic Information</h4>
+                    <p><strong>Age:</strong> {{ character.age }}</p>
+                    <p><strong>Occupation:</strong> {{ character.occupation }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <h4>Appearance</h4>
+                    <p><strong>Height:</strong> {{ character.height }}</p>
+                    <p><strong>Hair:</strong> {{ character.hair_color }}</p>
+                    <p><strong>Eyes:</strong> {{ character.eye_color }}</p>
+                    <p><strong>Style:</strong> {{ character.style_preference }}</p>
+                    <p><strong>Signature Item:</strong> {{ character.signature_items }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <h4>Background</h4>
+                    <p><strong>Childhood Story:</strong><br>{{ character.childhood_story }}</p>
+                    <p><strong>Family:</strong><br>{{ character.family_relations }}</p>
+                    <p><strong>Life Goals:</strong><br>{{ character.life_goals }}</p>
+                    <p><strong>Achievements:</strong><br>{{ character.achievements }}</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <h4>Personality</h4>
+                    <p><strong>Communication Style:</strong> {{ character.communication_style }}</p>
+                    <p><strong>Handling Challenges:</strong> {{ character.challenge_handling }}</p>
+                    <p><strong>Hobbies:</strong> {{ character.hobbies }}</p>
+                    <p><strong>Quirks:</strong> {{ character.quirks }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <h4>Costume Details</h4>
+                    <p><strong>Current Outfit:</strong> {{ character.costume }}</p>
+                    <p><strong>Accessories:</strong> {{ character.accessories }}</p>
+                    <p><strong>Alternative Looks:</strong> {{ character.alternative_costumes }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

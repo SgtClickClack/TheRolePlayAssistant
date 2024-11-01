@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Profile</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('update_profile') }}" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <h3>{{ current_user.username }}</h3>
+                        <p class="text-muted">{{ current_user.email }}</p>
+                        <p>Member since: {{ current_user.created_at.strftime('%Y-%m-%d') }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Gender</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-male" value="male"
+                                   {% if current_user.gender == 'male' %}checked{% endif %}>
+                            <label class="form-check-label" for="gender-male">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-female" value="female"
+                                   {% if current_user.gender == 'female' %}checked{% endif %}>
+                            <label class="form-check-label" for="gender-female">Female</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-other" value="other"
+                                   {% if current_user.gender == 'other' %}checked{% endif %}>
+                            <label class="form-check-label" for="gender-other">Other</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Content Spiciness Level</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="spiciness_level" id="spiciness-1" value="1"
+                                   {% if current_user.spiciness_level == 1 %}checked{% endif %}>
+                            <label class="form-check-label" for="spiciness-1">
+                                <i class="bi bi-heart"></i> Family-Friendly
+                                <small class="d-block text-muted">Clean content suitable for all ages</small>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="spiciness_level" id="spiciness-2" value="2"
+                                   {% if current_user.spiciness_level == 2 %}checked{% endif %}>
+                            <label class="form-check-label" for="spiciness-2">
+                                <i class="bi bi-hearts"></i> Mild
+                                <small class="d-block text-muted">Light romantic themes and flirting</small>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="spiciness_level" id="spiciness-3" value="3"
+                                   {% if current_user.spiciness_level == 3 %}checked{% endif %}>
+                            <label class="form-check-label" for="spiciness-3">
+                                <i class="bi bi-heart-fill"></i> Spicy
+                                <small class="d-block text-muted">More mature themes and romantic content</small>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Your Characters</h2>
+            </div>
+            <div class="card-body">
+                {% if current_user.characters %}
+                    {% for character in current_user.characters %}
+                    <div class="mb-3 p-3 border rounded">
+                        <h4>{{ character.name }}</h4>
+                        <p><strong>Occupation:</strong> {{ character.occupation }}</p>
+                        <a href="{{ url_for('view_character', char_id=character.id) }}" 
+                           class="btn btn-primary">View Character</a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No characters created yet.</p>
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Create a Character</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Your Templates</h2>
+            </div>
+            <div class="card-body">
+                {% if current_user.templates %}
+                    {% for template in current_user.templates %}
+                    <div class="mb-3 p-3 border rounded">
+                        <h4>{{ template.name }}</h4>
+                        <p>{{ template.description }}</p>
+                        <form action="{{ url_for('create_new_character') }}" method="post" class="d-inline">
+                            <input type="hidden" name="template_id" value="{{ template.id }}">
+                            <button type="submit" class="btn btn-primary">Generate from Template</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No templates created yet.</p>
+                    <a href="{{ url_for('create_template') }}" class="btn btn-primary">Create a Template</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

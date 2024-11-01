@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Create Character Template</h2>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('create_template') }}" id="templateForm" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="name" class="form-label">Template Name*</label>
+                <input type="text" class="form-control" id="name" name="name" required
+                       minlength="3" maxlength="100">
+                <div class="invalid-feedback">Please provide a template name (3-100 characters)</div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="description" class="form-label">Template Description*</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                <div class="invalid-feedback">Please provide a template description</div>
+            </div>
+
+            <h4 class="mt-4">Appearance Options</h4>
+            <div class="mb-3">
+                <label for="height_options" class="form-label">Height Options (comma-separated)</label>
+                <input type="text" class="form-control" id="height_options" name="height_options" 
+                       placeholder="tall, average height, petite">
+            </div>
+            <div class="mb-3">
+                <label for="hair_color_options" class="form-label">Hair Color Options</label>
+                <input type="text" class="form-control" id="hair_color_options" name="hair_color_options"
+                       placeholder="brown, blonde, black">
+            </div>
+            <div class="mb-3">
+                <label for="eye_color_options" class="form-label">Eye Color Options</label>
+                <input type="text" class="form-control" id="eye_color_options" name="eye_color_options"
+                       placeholder="blue, brown, green">
+            </div>
+            <div class="mb-3">
+                <label for="style_preference_options" class="form-label">Style Preferences</label>
+                <input type="text" class="form-control" id="style_preference_options" name="style_preference_options"
+                       placeholder="casual and sporty, modern and sleek, vintage inspired">
+            </div>
+            <div class="mb-3">
+                <label for="signature_items_options" class="form-label">Signature Items</label>
+                <input type="text" class="form-control" id="signature_items_options" name="signature_items_options"
+                       placeholder="camera and travel journal, art supplies, sports equipment">
+            </div>
+
+            <h4 class="mt-4">Background Options</h4>
+            <div class="mb-3">
+                <label for="childhood_story_templates" class="form-label">Childhood Stories</label>
+                <textarea class="form-control" id="childhood_story_templates" name="childhood_story_templates" rows="3"
+                        placeholder="Started a neighborhood recycling program, Won the science fair with an innovative project, Founded a school photography club"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="family_relations_templates" class="form-label">Family Relations</label>
+                <textarea class="form-control" id="family_relations_templates" name="family_relations_templates" rows="3"
+                        placeholder="Enjoys weekly cooking sessions with grandparents, Teaches younger siblings about technology, Goes hiking with parents every weekend"></textarea>
+            </div>
+
+            <h4 class="mt-4">Personality Options</h4>
+            <div class="mb-3">
+                <label for="occupation_options" class="form-label">Occupation Options*</label>
+                <textarea class="form-control" id="occupation_options" name="occupation_options" rows="3" required
+                       placeholder="Detective, Explorer, Scientist, Artist, Adventure Guide, Nature Photographer, Tech Innovator, Game Designer"></textarea>
+                <div class="invalid-feedback">Please provide at least one occupation option</div>
+            </div>
+            <div class="mb-3">
+                <label for="communication_style_options" class="form-label">Communication Styles</label>
+                <input type="text" class="form-control" id="communication_style_options" name="communication_style_options"
+                       placeholder="friendly and enthusiastic, thoughtful and analytical, creative and expressive">
+            </div>
+            <div class="mb-3">
+                <label for="hobbies_options" class="form-label">Hobbies Options</label>
+                <textarea class="form-control" id="hobbies_options" name="hobbies_options" rows="2"
+                       placeholder="photography, rock climbing, coding, painting, playing musical instruments"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="quirks_options" class="form-label">Quirks</label>
+                <textarea class="form-control" id="quirks_options" name="quirks_options" rows="2"
+                       placeholder="takes photos of every sunset, collects interesting rocks, always carries a notebook, does magic tricks"></textarea>
+            </div>
+
+            <h4 class="mt-4">Costume Options</h4>
+            <div class="mb-3">
+                <label for="costume_options" class="form-label">Costume Options*</label>
+                <textarea class="form-control" id="costume_options" name="costume_options" rows="3" required
+                       placeholder="Explorer's gear with hiking boots, Lab coat and safety goggles, Artist's apron with paint splatters"></textarea>
+                <div class="invalid-feedback">Please provide at least one costume option</div>
+            </div>
+            <div class="mb-3">
+                <label for="accessories_options" class="form-label">Accessories Options</label>
+                <textarea class="form-control" id="accessories_options" name="accessories_options" rows="2"
+                       placeholder="backpack with camping gear, scientific instruments, art supplies kit"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="alternative_costumes_options" class="form-label">Alternative Costumes</label>
+                <textarea class="form-control" id="alternative_costumes_options" name="alternative_costumes_options" rows="2"
+                       placeholder="Casual outdoor wear, Professional lab uniform, Creative workshop outfit"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Template</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('templateForm');
+    
+    form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+    });
+});
+</script>
+{% endblock %}

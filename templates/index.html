@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h1 class="mb-4">Welcome to The Role Play Assistant!</h1>
+    <p class="lead">Create your character and start an amazing adventure!</p>
+</div>
+
+{% if templates %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h2>Character Templates</h2>
+    </div>
+    <div class="card-body">
+        {% for template in templates %}
+        <div class="mb-3 p-3 border rounded">
+            <h4>{{ template.name }}</h4>
+            <p>{{ template.description }}</p>
+            <form action="{{ url_for('create_new_character') }}" method="post" class="d-inline">
+                <input type="hidden" name="template_id" value="{{ template.id }}">
+                <button type="submit" class="btn btn-primary">Generate from Template</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-6">
+        <form action="{{ url_for('create_new_character') }}" method="post">
+            <button type="submit" class="btn btn-primary btn-lg w-100">Generate Random Character</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <a href="{{ url_for('create_template') }}" class="btn btn-secondary btn-lg w-100">Create New Template</a>
+    </div>
+</div>
+{% endblock %}

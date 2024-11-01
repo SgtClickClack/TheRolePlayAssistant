@@ -1,0 +1,162 @@
+# Replit Setup Checklist
+
+## 1. Project Structure
+project/
+├── .replit
+├── poetry.lock
+├── pyproject.toml
+├── requirements.txt
+├── src/
+│   ├── __init__.py
+│   ├── app.py
+│   ├── ai_generator.py
+│   └── config.py
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── main.js
+└── templates/
+    ├── base.html
+    └── index.html
+
+## 2. Essential Files
+
+# config.py
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+class Config:
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-key-for-demo')
+    DEBUG = True
+    TEMPLATES_AUTO_RELOAD = True
+
+# app.py
+from flask import Flask, render_template
+from config import Config
+import logging
+
+# Configure basic logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = Flask(__name__)
+app.config.from_object(Config)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.errorhandler(500)
+def handle_500(error):
+    logger.error(f"Server error: {error}")
+    return render_template('error.html'), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
+
+# templates/base.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Character Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% block content %}{% endblock %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+
+## 3. Dependencies
+# pyproject.toml
+[tool.poetry]
+name = "ai-character-generator"
+version = "0.1.0"
+description = "Demo AI Character Generator"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^2.0.1"
+python-dotenv = "^0.19.0"
+openai = "^1.0.0"
+transformers = "^4.30.0"
+flask-login = "^0.6.2"
+
+## 4. Replit Configuration
+# .replit
+entrypoint = "src/app.py"
+run = "python src/app.py"
+
+[nix]
+channel = "stable-23_05"
+
+[deployment]
+run = ["sh", "-c", "python src/app.py"]
+deploymentTarget = "cloudrun"
+
+[languages]
+python = 3.10
+
+## 5. Pre-Demo Checklist
+- [ ] Test all environment variables in Replit Secrets
+- [ ] Verify OpenAI API key works
+- [ ] Test basic route functionality
+- [ ] Clear all debug/test print statements
+- [ ] Set reasonable API timeouts
+- [ ] Prepare fallback content if API calls fail
+- [ ] Test error handlers
+- [ ] Clear browser cache before demo
+
+## 6. Demo Failsafes
+# Add to app.py
+@app.route('/generate', methods=['POST'])
+def generate():
+    try:
+        # Your normal generation code
+        pass
+    except Exception as e:
+        logger.error(f"Generation failed: {e}")
+        # Return a pre-prepared fallback character
+        return jsonify({
+            "success": True,
+            "character": get_fallback_character()
+        })
+
+def get_fallback_character():
+    return {
+        "name": "Alex Rivers",
+        "occupation": "Software Developer",
+        "hobbies": "Reading, Hiking",
+        # Add more fallback data...
+    }
+
+## 7. Quick Debug Tips
+- Add `print("Debug:", variable)` statements strategically
+- Use `app.logger.info()` for tracking flow
+- Keep Network tab open in browser DevTools
+- Watch Replit console for errors
+- Have backup demo content ready
+
+## 8. Environment Variables Needed
+OPENAI_API_KEY=your_key_here
+SECRET_KEY=your_secret_key
+HUGGINGFACE_API_KEY=your_key_here
+FLASK_ENV=development
+
+## 9. Minimal Requirements
+# requirements.txt
+flask==2.0.1
+python-dotenv==0.19.0
+openai==1.0.0
+transformers==4.30.0
+flask-login==0.6.2
+
+Remember to:
+1. Keep the demo focused on core functionality
+2. Have fallback content ready for every feature
+3. Test the exact demo flow multiple times
+4. Clear all caches before the demo
+5. Have a backup plan for API failures
