@@ -1,0 +1,15 @@
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\bin\Debug\net8.0\TheRolePlayAssistant.exe
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\bin\Debug\net8.0\TheRolePlayAssistant.deps.json
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\bin\Debug\net8.0\TheRolePlayAssistant.runtimeconfig.json
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\bin\Debug\net8.0\TheRolePlayAssistant.dll
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\bin\Debug\net8.0\TheRolePlayAssistant.pdb
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\obj\Debug\net8.0\TheRolePlayAssistant.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\obj\Debug\net8.0\TheRolePlayAssistant.AssemblyInfoInputs.cache
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\obj\Debug\net8.0\TheRolePlayAssistant.AssemblyInfo.cs
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\obj\Debug\net8.0\TheRolePlayAssistant.csproj.CoreCompileInputs.cache
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\obj\Debug\net8.0\TheRolePlayAssistant.sourcelink.json
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\obj\Debug\net8.0\TheRolePlayAssistant.dll
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\obj\Debug\net8.0\refint\TheRolePlayAssistant.dll
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\obj\Debug\net8.0\TheRolePlayAssistant.pdb
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\obj\Debug\net8.0\TheRolePlayAssistant.genruntimeconfig.cache
+C:\Users\JR\Documents\DojoPool\Dojo_Pool\TheRolePlayAssistant\src\TheRolePlayAssistant\obj\Debug\net8.0\ref\TheRolePlayAssistant.dll
