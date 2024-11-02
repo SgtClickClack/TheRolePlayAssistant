@@ -1,15 +1,18 @@
-from app import db
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import SQLAlchemy
+
+# Initialize SQLAlchemy without app context
+db = SQLAlchemy()
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
-    gender = db.Column(db.String(10), nullable=True)  # Options: 'male', 'female', 'other'
-    spiciness_level = db.Column(db.Integer, default=1)  # 1: Family-friendly, 2: Mild, 3: Spicy
+    gender = db.Column(db.String(10), nullable=True)
+    spiciness_level = db.Column(db.Integer, default=1)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     characters = db.relationship('Character', backref='user', lazy=True)
     templates = db.relationship('CharacterTemplate', backref='user', lazy=True)

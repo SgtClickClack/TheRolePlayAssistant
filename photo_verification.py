@@ -8,26 +8,49 @@ import numpy as np
 import mediapipe as mp
 from datetime import datetime
 import json
+import atexit
+import shutil
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 UPLOAD_FOLDER = 'static/uploads'
+MAX_IMAGE_SIZE = 10 * 1024 * 1024  # 10MB
 
 # Initialize MediaPipe pose detection with error handling
 try:
     mp_pose = mp.solutions.pose
-    pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.5)
+    pose = mp_pose.Pose(
+        static_image_mode=True,
+        model_complexity=1,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5
+    )
     logger.info("MediaPipe pose detection initialized successfully")
 except Exception as e:
     logger.error(f"Failed to initialize MediaPipe pose detection: {str(e)}")
     pose = None
 
+def cleanup_resources():
+    """Cleanup MediaPipe resources"""
+    try:
+        if pose:
+            pose.close()
+        logger.info("MediaPipe resources cleaned up")
+    except Exception as e:
+        logger.error(f"Error cleaning up MediaPipe resources: {str(e)}")
+
+# Register cleanup
+atexit.register(cleanup_resources)
+
 def allowed_file(filename):
+    """Check if file extension is allowed"""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def ensure_upload_folder():
-    """Ensure upload folder exists and is writable"""
+    """Ensure upload folder exists and is writable with improved error handling"""
     try:
         os.makedirs(UPLOAD_FOLDER, exist_ok=True)
         # Test write permissions
@@ -41,7 +64,7 @@ def ensure_upload_folder():
         return False
 
 def enhance_image(image_path):
-    """Enhance image quality and handle lighting conditions with improved error handling"""
+    """Enhance image quality with improved error handling"""
     try:
         # Read image
         img = cv2.imread(image_path)

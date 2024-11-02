@@ -3,49 +3,78 @@ import sys
 import time
 import signal
 import socket
+import psutil
 import logging
 import atexit
-from app import create_app, db
-from werkzeug.serving import WSGIRequestHandler, run_simple
-from sqlalchemy import text
+from app import create_app
+from werkzeug.serving import run_simple
 
 # Configure logging with more detailed format
 logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s'
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler('flask_debug.log')
+    ]
 )
 logger = logging.getLogger(__name__)
 
-class CustomWSGIRequestHandler(WSGIRequestHandler):
-    """Enhanced request handler with better logging"""
-    protocol_version = "HTTP/1.1"
-    
-    def log(self, type, message, *args):
-        """Enhanced logging for requests"""
-        if type == 'info':
-            logger.info(f"{self.address_string()} - {message % args}")
-        elif type == 'warning':
-            logger.warning(f"{self.address_string()} - {message % args}")
-        else:
-            logger.error(f"{self.address_string()} - {message % args}")
+def kill_processes_on_port(port):
+    """Kill processes using the specified port with improved error handling"""
+    try:
+        logger.info(f"Attempting to kill processes on port {port}")
+        killed = False
+        
+        # First try to find and kill any Python processes
+        for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+            try:
+                if 'python' in proc.name().lower():
+                    process = psutil.Process(proc.pid)
+                    try:
+                        # Check if process is using the port
+                        for conn in process.connections(kind='inet'):
+                            if hasattr(conn, 'laddr') and conn.laddr.port == port:
+                                logger.info(f"Found process {proc.pid} using port {port}")
+                                process.terminate()
+                                try:
+                                    process.wait(timeout=1)
+                                    killed = True
+                                    logger.info(f"Successfully terminated process {proc.pid}")
+                                except psutil.TimeoutExpired:
+                                    logger.warning(f"Process {proc.pid} did not terminate gracefully, forcing kill")
+                                    process.kill()
+                                    process.wait(timeout=1)
+                                    killed = True
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        continue
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
 
-def verify_port_availability(port, retries=5):
-    """Verify if port is available with improved retry mechanism"""
-    logger.info(f"Verifying port {port} availability")
-    for attempt in range(retries):
+        if killed:
+            logger.info("Waiting for port to be fully released")
+            time.sleep(0.5)  # Reduced wait time
+        return True
+    except Exception as e:
+        logger.error(f"Error killing processes: {str(e)}")
+        return False
+
+def verify_port_availability(port, max_attempts=3):
+    """Verify if port is available with improved error handling"""
+    for attempt in range(max_attempts):
         sock = None
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            sock.settimeout(1)
+            sock.settimeout(0.5)
             sock.bind(('0.0.0.0', port))
             sock.listen(1)
-            logger.info(f"Port {port} is available (attempt {attempt + 1})")
+            logger.info(f"Port {port} is available")
             return True
         except socket.error as e:
-            logger.warning(f"Port {port} verification attempt {attempt + 1} failed: {str(e)}")
-            if attempt < retries - 1:
-                time.sleep(1)
+            logger.warning(f"Port {port} verification failed (attempt {attempt + 1}): {str(e)}")
+            if attempt < max_attempts - 1:
+                time.sleep(0.5)
         finally:
             if sock:
                 try:
@@ -53,63 +82,41 @@ def verify_port_availability(port, retries=5):
                 except:
                     pass
     
-    logger.error(f"Port {port} verification failed after {retries} attempts")
+    logger.error(f"Port {port} is not available after {max_attempts} attempts")
     return False
 
-def verify_server_running(port, max_attempts=30):
+def verify_server_running(port, timeout=15):
     """Verify if server is actually running and responding"""
     logger.info(f"Verifying server on port {port}")
     start_time = time.time()
     
-    for attempt in range(max_attempts):
+    while time.time() - start_time < timeout:
         try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(1)
-            result = sock.connect_ex(('127.0.0.1', port))
-            sock.close()
-            if result == 0:
-                logger.info(f"Server verified running on port {port}")
-                return True
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                sock.settimeout(0.5)
+                result = sock.connect_ex(('127.0.0.1', port))
+                
+                if result == 0:
+                    # Try HTTP connection
+                    sock.send(b"GET / HTTP/1.0\r\n\r\n")
+                    response = sock.recv(1024)
+                    if response:
+                        logger.info(f"Server verified running on port {port}")
+                        return True
         except Exception as e:
-            logger.debug(f"Server verification attempt {attempt + 1} failed: {str(e)}")
+            logger.debug(f"Server verification attempt failed: {str(e)}")
         
-        time.sleep(1)
-        if time.time() - start_time > 30:  # 30 seconds total timeout
-            logger.error("Server verification timed out")
-            return False
+        time.sleep(0.2)
     
-    logger.error("Server verification failed")
-    return False
-
-def verify_database_connection(app, retries=5):
-    """Verify database connection with retries"""
-    for attempt in range(retries):
-        try:
-            with app.app_context():
-                db.session.execute(text('SELECT 1'))
-                db.session.commit()
-                logger.info("Database connection verified successfully")
-                return True
-        except Exception as e:
-            logger.warning(f"Database connection attempt {attempt + 1} failed: {str(e)}")
-            if attempt < retries - 1:
-                time.sleep(1)
-    
-    logger.error(f"Database connection failed after {retries} attempts")
+    logger.error("Server verification timed out")
     return False
 
 def cleanup_resources():
     """Cleanup resources before shutdown"""
     logger.info("Cleaning up resources...")
     try:
-        # Close database connections
-        try:
-            db.session.remove()
-            db.engine.dispose()
-        except:
-            pass
-        
-        # Flush output buffers
+        port = int(os.environ.get('PORT', 5000))
+        kill_processes_on_port(port)
         sys.stdout.flush()
         sys.stderr.flush()
     except Exception as e:
@@ -117,20 +124,18 @@ def cleanup_resources():
 
 def signal_handler(signum, frame):
     """Handle shutdown signals gracefully"""
-    logger.info(f"Received signal {signum}, initiating graceful shutdown")
+    logger.info(f"Received signal {signum}, shutting down gracefully")
     cleanup_resources()
     sys.exit(0)
 
-def run_flask_app():
-    """Run Flask application with robust initialization and error handling"""
+if __name__ == "__main__":
     try:
         # Register signal handlers
         signal.signal(signal.SIGTERM, signal_handler)
         signal.signal(signal.SIGINT, signal_handler)
         atexit.register(cleanup_resources)
-        
-        # Always use port 5000 for Replit
-        port = 5000
+
+        port = int(os.environ.get('PORT', 5000))
         host = '0.0.0.0'
         
         logger.info(f"Starting server initialization on {host}:{port}")
@@ -139,36 +144,17 @@ def run_flask_app():
         cleanup_resources()
         
         # Verify port availability
-        if not verify_port_availability(port, retries=5):
-            logger.error(f"Port {port} is not available")
-            return False
-        
+        if not verify_port_availability(port):
+            logger.error("Could not secure required port")
+            sys.exit(1)
+            
         # Create Flask app
-        logger.info("Creating Flask application")
         app = create_app()
         if not app:
             logger.error("Failed to create Flask application")
-            return False
+            sys.exit(1)
         
-        # Verify database connection
-        if not verify_database_connection(app, retries=5):
-            logger.error("Failed to verify database connection")
-            return False
-        
-        # Configure for Replit environment
-        app.config.update(
-            DEBUG=True,
-            TEMPLATES_AUTO_RELOAD=True,
-            USE_RELOADER=False,
-            SERVER_NAME=None,
-            APPLICATION_ROOT='/',
-            JSON_AS_ASCII=False,
-            EXPLAIN_TEMPLATE_LOADING=True,
-            MAX_CONTENT_LENGTH=16 * 1024 * 1024,  # 16MB max file size
-            SEND_FILE_MAX_AGE_DEFAULT=0
-        )
-        
-        # Start server with improved configuration
+        # Start server
         logger.info(f"Starting Flask application on {host}:{port}")
         try:
             run_simple(
@@ -178,24 +164,18 @@ def run_flask_app():
                 use_reloader=False,
                 use_debugger=True,
                 threaded=True,
-                request_handler=CustomWSGIRequestHandler,
-                static_files={'/static': 'static'}  # Enable static file serving
+                use_evalex=False  # Disable werkzeug debugger
             )
-            
-            # Verify server is running
-            if not verify_server_running(port):
-                logger.error("Server failed to start properly")
-                return False
-            
-            return True
         except Exception as e:
-            logger.error(f"Server failed to start: {str(e)}")
-            return False
+            logger.error(f"Failed to start server: {str(e)}")
+            sys.exit(1)
+            
+        # Verify server is running
+        if not verify_server_running(port):
+            logger.error("Server failed to start properly")
+            sys.exit(1)
             
     except Exception as e:
         logger.error(f"Server initialization failed: {str(e)}")
-        return False
-
-if __name__ == "__main__":
-    if not run_flask_app():
+        cleanup_resources()
         sys.exit(1)

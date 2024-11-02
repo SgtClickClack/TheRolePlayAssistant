@@ -10,9 +10,13 @@ from flask import (
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.exceptions import HTTPException
 from sqlalchemy.exc import SQLAlchemyError
-from models import db, User, Character, CharacterTemplate, Scenario, Achievement, ScenarioCompletion
+from models import (
+    db, User, Character, CharacterTemplate, Scenario, Achievement, 
+    ScenarioCompletion, ScavengerHuntTask, TaskSubmission
+)
 from utils import generate_character, generate_character_from_template
 from story_generator import generate_story_scene
+from photo_verification import save_photo, verify_photo_content, cleanup_old_photos
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -43,7 +47,6 @@ def verify_template_exists(template_path: str) -> bool:
 def render_template_safe(template_name: str, **context) -> str:
     """Safe template rendering with enhanced error handling and logging"""
     try:
-        # Add common context variables
         base_context = {
             'get_flashed_messages': get_flashed_messages,
             'url_for': url_for,
@@ -71,7 +74,6 @@ def register_routes(app):
     try:
         logger.info("Starting route registration")
         
-        # Define routes with their handlers
         routes = [
             ('/', 'index', index, ['GET']),
             ('/register', 'register', register, ['GET', 'POST']),
@@ -84,10 +86,11 @@ def register_routes(app):
             ('/create_template', 'create_template', create_template, ['GET', 'POST']),
             ('/view_scenario', 'view_scenario', view_scenario, ['GET']),
             ('/generate_story/<int:char_id>/<int:scenario_id>', 'generate_story', generate_story, ['GET']),
-            ('/view_story/<int:char_id>/<int:scenario_id>', 'view_story', view_story, ['GET'])
+            ('/view_story/<int:char_id>/<int:scenario_id>', 'view_story', view_story, ['GET']),
+            ('/scavenger_hunt/<int:scenario_id>', 'scavenger_hunt', scavenger_hunt, ['GET']),
+            ('/submit_task/<int:task_id>', 'submit_task', submit_task, ['POST'])
         ]
         
-        # Register routes with error handling
         for path, endpoint, handler, methods in routes:
             try:
                 app.add_url_rule(path, endpoint, handler, methods=methods)
@@ -96,7 +99,6 @@ def register_routes(app):
                 logger.error(f"Failed to register route {endpoint}: {str(e)}")
                 raise RuntimeError(f"Route registration failed for {endpoint}")
         
-        # Register error handlers
         @app.errorhandler(404)
         def not_found_error(e):
             return render_template_safe('404.html'), 404
@@ -136,17 +138,14 @@ def register():
             email = request.form.get('email', '').strip()
             password = request.form.get('password', '')
             
-            # Input validation
             if not all([username, email, password]):
                 flash('All fields are required', 'error')
                 return redirect(url_for('register'))
             
-            # Check username length
             if len(username) < 3 or len(username) > 80:
                 flash('Username must be between 3 and 80 characters', 'error')
                 return redirect(url_for('register'))
             
-            # Check existing user
             if User.query.filter_by(username=username).first():
                 flash('Username already exists', 'error')
                 return redirect(url_for('register'))
@@ -155,7 +154,6 @@ def register():
                 flash('Email already registered', 'error')
                 return redirect(url_for('register'))
                 
-            # Create user
             user = User(username=username, email=email)
             user.set_password(password)
             
@@ -188,7 +186,6 @@ def login():
             if user and user.check_password(password):
                 login_user(user, remember=remember)
                 
-                # Security: Clear any existing session data
                 session.clear()
                 session['_fresh'] = True
                 
@@ -365,10 +362,7 @@ def generate_story(char_id, scenario_id):
         if character.user_id != current_user.id:
             abort(403)
         
-        # Generate story scene
         story_scene = generate_story_scene(character, scenario)
-        
-        # Store in session for later use
         session['current_story'] = story_scene
         
         return redirect(url_for('view_story', char_id=char_id, scenario_id=scenario_id))
@@ -387,7 +381,6 @@ def view_story(char_id, scenario_id):
         if character.user_id != current_user.id:
             abort(403)
         
-        # Get story from session or generate new one
         story_scene = session.get('current_story')
         if not story_scene:
             story_scene = generate_story_scene(character, scenario)
@@ -400,4 +393,82 @@ def view_story(char_id, scenario_id):
     except Exception as e:
         logger.error(f"Error viewing story: {str(e)}")
         flash('Failed to load story.', 'error')
+        return redirect(url_for('view_scenario'))
+
+@login_required
+def scavenger_hunt(scenario_id):
+    """Handle scavenger hunt view with error handling"""
+    try:
+        scenario = Scenario.query.get_or_404(scenario_id)
+        tasks = ScavengerHuntTask.query.filter_by(scenario_id=scenario_id).all()
+        
+        for task in tasks:
+            task.submissions = TaskSubmission.query.filter_by(
+                task_id=task.id,
+                user_id=current_user.id
+            ).order_by(TaskSubmission.submitted_at.desc()).all()
+        
+        return render_template_safe('scavenger_hunt.html',
+                                scenario=scenario,
+                                tasks=tasks)
+    except Exception as e:
+        logger.error(f"Error viewing scavenger hunt: {str(e)}")
+        flash('Failed to load scavenger hunt.', 'error')
+        return redirect(url_for('view_scenario'))
+
+@login_required
+def submit_task(task_id):
+    """Handle task submission with comprehensive error handling"""
+    try:
+        task = ScavengerHuntTask.query.get_or_404(task_id)
+        
+        if 'photo' not in request.files:
+            flash('No photo uploaded', 'error')
+            return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
+        
+        photo = request.files['photo']
+        if not photo.filename:
+            flash('No photo selected', 'error')
+            return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
+        
+        try:
+            photo_path = save_photo(photo)
+            if not photo_path:
+                raise ValueError("Failed to save photo")
+                
+            is_verified, confidence_score = verify_photo_content(
+                photo_path,
+                task.required_objects,
+                task.object_confidence,
+                task.required_pose,
+                task.required_location
+            )
+            
+            submission = TaskSubmission(
+                task_id=task.id,
+                user_id=current_user.id,
+                photo_path=photo_path,
+                confidence_score=confidence_score,
+                is_verified=is_verified
+            )
+            
+            db.session.add(submission)
+            db.session.commit()
+            
+            if is_verified:
+                flash('Task completed successfully!', 'success')
+            else:
+                flash('Photo verification failed. Please try again.', 'warning')
+                
+        except Exception as e:
+            logger.error(f"Error processing photo submission: {str(e)}")
+            flash('Error processing photo submission. Please try again.', 'error')
+            
+        cleanup_old_photos()
+        
+        return redirect(url_for('scavenger_hunt', scenario_id=task.scenario_id))
+        
+    except Exception as e:
+        logger.error(f"Error submitting task: {str(e)}")
+        flash('Failed to submit task.', 'error')
         return redirect(url_for('view_scenario'))
