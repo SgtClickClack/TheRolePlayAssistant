@@ -31,6 +31,7 @@ class CustomWSGIRequestHandler(WSGIRequestHandler):
 
 def verify_port_availability(port, retries=5):
     """Verify if port is available with improved retry mechanism"""
+    logger.info(f"Verifying port {port} availability")
     for attempt in range(retries):
         sock = None
         try:
@@ -40,7 +41,6 @@ def verify_port_availability(port, retries=5):
             sock.bind(('0.0.0.0', port))
             sock.listen(1)
             logger.info(f"Port {port} is available (attempt {attempt + 1})")
-            sock.close()
             return True
         except socket.error as e:
             logger.warning(f"Port {port} verification attempt {attempt + 1} failed: {str(e)}")
@@ -52,7 +52,7 @@ def verify_port_availability(port, retries=5):
                     sock.close()
                 except:
                     pass
-
+    
     logger.error(f"Port {port} verification failed after {retries} attempts")
     return False
 
@@ -60,11 +60,11 @@ def verify_server_running(port, max_attempts=30):
     """Verify if server is actually running and responding"""
     logger.info(f"Verifying server on port {port}")
     start_time = time.time()
-
+    
     for attempt in range(max_attempts):
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(0.5)
+            sock.settimeout(1)
             result = sock.connect_ex(('127.0.0.1', port))
             sock.close()
             if result == 0:
@@ -72,12 +72,12 @@ def verify_server_running(port, max_attempts=30):
                 return True
         except Exception as e:
             logger.debug(f"Server verification attempt {attempt + 1} failed: {str(e)}")
-
-        time.sleep(0.2)
-        if time.time() - start_time > 15:  # 15 seconds total timeout
+        
+        time.sleep(1)
+        if time.time() - start_time > 30:  # 30 seconds total timeout
             logger.error("Server verification timed out")
             return False
-
+    
     logger.error("Server verification failed")
     return False
 
@@ -94,7 +94,7 @@ def verify_database_connection(app, retries=5):
             logger.warning(f"Database connection attempt {attempt + 1} failed: {str(e)}")
             if attempt < retries - 1:
                 time.sleep(1)
-
+    
     logger.error(f"Database connection failed after {retries} attempts")
     return False
 
@@ -108,7 +108,7 @@ def cleanup_resources():
             db.engine.dispose()
         except:
             pass
-
+        
         # Flush output buffers
         sys.stdout.flush()
         sys.stderr.flush()
@@ -128,33 +128,33 @@ def run_flask_app():
         signal.signal(signal.SIGTERM, signal_handler)
         signal.signal(signal.SIGINT, signal_handler)
         atexit.register(cleanup_resources)
-
-        # Use port 5000 for development
-        port = int(os.environ.get('PORT', 5000))
-        host = '0.0.0.0'  # Required for Replit webview
+        
+        # Always use port 5000 for Replit
+        port = 5000
+        host = '0.0.0.0'
         
         logger.info(f"Starting server initialization on {host}:{port}")
         
         # Initial cleanup
         cleanup_resources()
-
+        
         # Verify port availability
         if not verify_port_availability(port, retries=5):
             logger.error(f"Port {port} is not available")
             return False
-
+        
         # Create Flask app
         logger.info("Creating Flask application")
         app = create_app()
         if not app:
             logger.error("Failed to create Flask application")
             return False
-
+        
         # Verify database connection
         if not verify_database_connection(app, retries=5):
             logger.error("Failed to verify database connection")
             return False
-
+        
         # Configure for Replit environment
         app.config.update(
             DEBUG=True,
@@ -167,7 +167,7 @@ def run_flask_app():
             MAX_CONTENT_LENGTH=16 * 1024 * 1024,  # 16MB max file size
             SEND_FILE_MAX_AGE_DEFAULT=0
         )
-
+        
         # Start server with improved configuration
         logger.info(f"Starting Flask application on {host}:{port}")
         try:
@@ -181,17 +181,17 @@ def run_flask_app():
                 request_handler=CustomWSGIRequestHandler,
                 static_files={'/static': 'static'}  # Enable static file serving
             )
-
+            
             # Verify server is running
             if not verify_server_running(port):
                 logger.error("Server failed to start properly")
                 return False
-
+            
             return True
         except Exception as e:
             logger.error(f"Server failed to start: {str(e)}")
             return False
-
+            
     except Exception as e:
         logger.error(f"Server initialization failed: {str(e)}")
         return False
