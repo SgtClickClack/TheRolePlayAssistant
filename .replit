@@ -142,6 +142,10 @@ args = "python3 example_tasks.py"
 run = ["sh", "-c", "python3 main.py"]
 
 [[ports]]
+localPort = 80
+externalPort = 3001
+
+[[ports]]
 localPort = 5000
 externalPort = 80
 
