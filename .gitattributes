@@ -1,6 +1,13 @@
-*	text=auto
+# Set default behavior to automatically normalize line endings.
+* text=auto
 
-/win32/*.bat	text eol=crlf
-/win32/*.sln	text eol=crlf
-/win32/*.vcxproj	text eol=crlf
-/win32/*.vcxproj.filters	text eol=crlf
+# Explicitly declare text files you want to always be normalized
+*.html text
+*.css text
+*.js text
+
+# Declare binary files to be left untouched
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
