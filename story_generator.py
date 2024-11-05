@@ -84,7 +84,9 @@ def generate_story_scene(character: Character, scenario: Scenario) -> Dict[str, 
 
     try:
         # Get user's spiciness preference or default to family-friendly
-        spiciness_level = getattr(current_user, 'spiciness_level', 1) if current_user.is_authenticated else 1
+        spiciness_level = 1  # Default to family-friendly
+        if hasattr(current_user, 'is_authenticated') and current_user.is_authenticated:
+            spiciness_level = getattr(current_user, 'spiciness_level', 1)
         
         # Generate story content
         response = client.chat.completions.create(

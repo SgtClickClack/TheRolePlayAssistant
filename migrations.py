@@ -1,4 +1,4 @@
-from app import app, db
+from app import create_app, db
 from sqlalchemy import text
 import logging
 
@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 
 def add_scavenger_hunt_tables():
     try:
+        app = create_app()
         with app.app_context():
             # Drop existing tables if they exist
             db.session.execute(text("""

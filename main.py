@@ -22,8 +22,8 @@ def kill_processes_on_port(port):
         for proc in psutil.process_iter(['pid', 'name']):
             try:
                 process = psutil.Process(proc.pid)
-                for conn in process.net_connections():
-                    if conn.laddr.port == port:
+                for conn in process.connections():
+                    if hasattr(conn, 'laddr') and conn.laddr.port == port:
                         process.terminate()
                         try:
                             process.wait(timeout=1)
@@ -71,6 +71,13 @@ if __name__ == "__main__":
         if not app:
             logger.error("Failed to create Flask application")
             sys.exit(1)
+
+        # Configure app for testing
+        app.config.update(
+            DEBUG=True,
+            TESTING=False,
+            SERVER_NAME=None
+        )
 
         # Start server
         logger.info(f"Starting Flask server on {host}:{port}")
