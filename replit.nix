@@ -1,5 +1,6 @@
 {pkgs}: {
   deps = [
+    pkgs.libev
     pkgs.libGLU
     pkgs.libGL
     pkgs.zlib

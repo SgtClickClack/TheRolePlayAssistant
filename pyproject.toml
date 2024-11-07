@@ -19,4 +19,13 @@ dependencies = [
     "opencv-python>=4.10.0.84",
     "opencv-python-headless",
     "werkzeug>=3.0.6",
+    "requests",
+    "flask-session>=0.8.0",
+    "sqlalchemy",
+    "xds-protos",
+    "psutil>=6.1.0",
+    "flask-wtf>=1.2.2",
+    "python-dotenv",
+    "jinja2",
+    "gevent>=24.10.3",
 ]

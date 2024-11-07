@@ -1,0 +1,46 @@
+.feedback-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.feedback-buttons button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.feedback-buttons button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.feedback-buttons button:hover:not(:disabled) {
+  transform: scale(1.2);
+}
+
+.feedback-message {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #333;
+  animation: fadeInOut 2s forwards;
+}
+
+.feedback-message.positive {
+  color: green;
+}
+
+.feedback-message.negative {
+  color: red;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+} 

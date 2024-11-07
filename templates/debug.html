@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <h1>Debug Page</h1>
+            <p class="lead">{{ message }}</p>
+            <div class="mt-4">
+                <h2>Template System Check</h2>
+                <p>Base template inheritance: Working</p>
+                <p>Variable rendering: {{ message }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
