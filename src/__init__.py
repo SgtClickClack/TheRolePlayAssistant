@@ -1,1 +1,1 @@
-# Empty file to make the directory a package
+   # Empty file is fine; it also makes the directory a package
